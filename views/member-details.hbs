@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/memberdetails.css">
+        <title>VIKASA Loyalty Management</title>
+    </head>
+    <body>
+        <div class="h1center">
+            <h1>User Details</h1>
+        </div>
+        <div class="form-div">
+            <form action="/update-user/?id={{user.id}}" method="POST">
+                <div>
+                    <label for="a">Member Id:</label>
+                    <input type="text" name="memberId" value="{{user.memberId}}"
+                        readonly="readonly">
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="b">Name:</label>
+                    <input class="editable" type="text" name="name"
+                        value="{{user.name}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="c">Email:</label>
+                    <input class="editable" type="text" name="email"
+                        value="{{user.email}}" readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="d">Mobile:</label>
+                    <input class="editable" type="text" name="mobile"
+                        value="{{user.mobile}}" readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="e">Preferred Language:</label>
+                    <input class="editable" type="text" name="lang"
+                        value="{{user.language}}" readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="f">Date of Birth:</label>
+                    <input class="editable" type="text" name="dob"
+                        value="{{mmddyyyy}}" readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="g">Member Since:</label>
+                    <input type="text" name="createdAt" value="{{user.createdAt}}"
+                        readonly>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="h">Updated Date:</label>
+                    <input type="text" name="updatedAt" value="{{user.updatedAt}}"
+                        readonly>
+                </div>
+
+                 <div class="lastbuttons">
+                    <input class="update-button" type="submit" value="Update">
+                    <a href="/delete-user/?id={{user.id}}"
+                    class="delete-button">Delete</a>
+                </div>
+
+            </form>
+        </div>
+    </body>
+    <script> 
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const editButtons = document.querySelectorAll(".edit-button");
+            const inputFields = document.querySelectorAll(".editable");
+
+            editButtons.forEach((button, index) => {
+                button.addEventListener("click", function() {
+                    if (button.innerText === "Edit") {
+                        inputFields[index].removeAttribute("readonly");
+                        console.log(inputFields[index])
+                        button.innerText = "Save";
+                        
+                    } else {
+                        button.innerText = "Edit";
+                        inputFields[index].setAttribute("readonly", "readonly");
+                    }
+                });
+            });
+        });
+    </script>
+</html>

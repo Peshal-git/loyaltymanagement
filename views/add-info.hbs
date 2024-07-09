@@ -1,0 +1,17 @@
+<h1>Additional details</h1>
+
+{{!-- {{#if error}}
+<h3 style="color: red;">{{error}}</h3>
+{{/if}} --}}
+
+<form action="/api/additional-info?id={{userUpdate.id}}" method="POST">
+    <label for="mobileInput">Enter your mobile number:</label>
+    <input type="tel" name="mobile" pattern="[0-9]*">
+    <br>
+    <br>
+    <label for="dateInput">Enter your date of birth:</label>
+    <input type="date" name="dob" placeholder="mm-dd-yyyy">
+    <br>
+    <br>
+    <input type = "submit" value="Submit">
+</form>

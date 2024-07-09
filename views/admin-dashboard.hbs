@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vikasa</title>
+    <link rel="stylesheet" href="/css/admindash.css">
+</head>
+<body>
+    <div class="dashboard">
+        <h1>Loyalty Management</h1>
+        <form action="/dashboard" method="GET">
+            <input type="text" id="searchInput" name="search">
+            <input type="submit" value="Search">
+        </form>
+        <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each user}}
+            <tr>
+                <td><a href="/member-details/?id={{id}}" >{{name}}</a></td>
+                <td>{{email}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    </div>
+</body>
+</html>
