@@ -4,44 +4,42 @@ const passport = require('passport')
 
 const customAuth = async (req, res, next) => {
     if (req.isAuthenticated()) {
-        return next()
+        next()
     }
     else {
-        const token = req.body.token || req.query.token || req.headers["authorization"]
+        const token = req.query.token
 
         if (!token) {
             return res.status(403).json({
                 success: false,
                 msg: 'A token is required for authentication'
             })
-        }
+        } else {
+            try {
+                const bearer = token.split(' ')
+                const bearerToken = bearer[1]
 
-        try {
-            const bearer = token.split(' ')
-            const bearerToken = bearer[1]
+                const blacklistedToken = await Blacklist.findOne({ token: bearerToken })
 
-            const blacklistedToken = await Blacklist.findOne({ token: bearerToken })
+                if (blacklistedToken) {
+                    return res.status(400).json({
+                        success: false,
+                        msg: 'This session has already expired. Please login again.'
+                    })
 
-            if (blacklistedToken) {
-                return res.status(400).json({
+                }
+
+                const decodedData = jwt.verify(bearerToken, process.env.ACCESS_TOKEN_SECRET)
+                req.user = decodedData
+                next()
+
+            } catch (error) {
+                return res.status(401).json({
                     success: false,
-                    msg: 'This session has already expired. Please login again.'
+                    msg: 'Invalid token'
                 })
-
             }
-
-            const decodedData = jwt.verify(bearerToken, process.env.ACCESS_TOKEN_SECRET)
-            req.user = decodedData
-
-
-        } catch (error) {
-            return res.status(401).json({
-                success: false,
-                msg: 'Invalid token'
-            })
         }
-
-        return next()
     }
 }
 

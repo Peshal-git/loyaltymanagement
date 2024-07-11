@@ -4,12 +4,13 @@ const router = express.Router()
 router.use(express.json())
 
 const bodyParser = require('body-parser')
-const { passwordStrengthValidator, adminUpdateValidator } = require('../helpers/validation')
-
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
+const { passwordStrengthValidator, adminUpdateValidator } = require('../helpers/validation')
+
 
 const userController = require('../controllers/userController')
+const auth = require('../middleware/auth')
 
 router.get('/mail-verification', userController.mailVerification)
 
@@ -20,10 +21,10 @@ router.get('/reset-success', userController.resetSuccess)
 router.get('/admin', userController.adminLogin)
 
 const adminCheck = (req, res, next) => {
-    if (!req.user.isAdmin) {
-        res.redirect('/admin')
-    } else {
+    if (req.user.isAdmin || req.user.user.isAdmin) {
         next()
+    } else {
+        res.redirect('/admin')
     }
 }
 
@@ -35,11 +36,12 @@ const userCheck = (req, res, next) => {
     }
 }
 
-router.get('/dashboard', adminCheck, userController.adminDashboard)
-router.get('/delete-user', adminCheck, userController.deleteUser)
-router.get('/member-details', adminCheck, userController.memberDetails)
-router.get('/provide-addinfo', userCheck, userController.addInfo)
-router.post('/update-user', userCheck, adminUpdateValidator, userController.updateByAdmin)
+router.get('/dashboard', auth, adminCheck, userController.adminDashboard)
+router.get('/delete-user', auth, adminCheck, userController.deleteUser)
+router.get('/member-details', auth, adminCheck, userController.memberDetails)
+router.get('/provide-addinfo', auth, userCheck, userController.addInfo)
+router.post('/update-user', auth, userCheck, adminUpdateValidator, userController.updateByAdmin)
+router.post('/login-from-api', userController.loginFromApi)
 
 
 module.exports = router

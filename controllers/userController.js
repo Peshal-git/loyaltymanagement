@@ -2,7 +2,7 @@ const User = require('../models/userModel')
 const Blacklist = require("../models/blacklist")
 const moment = require('moment')
 const bcrypt = require('bcryptjs')
-const { customAlphabet } = require('nanoid')
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const { validationResult } = require('express-validator')
 const mailer = require('../helpers/mailer')
@@ -456,7 +456,7 @@ const logoutUser = async (req, res) => {
 
 const adminLogin = async (req, res) => {
     try {
-        return res.render('admin-login')
+        res.render('admin-login')
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -472,9 +472,8 @@ const adminDashboard = async (req, res) => {
         if (query) {
             userData = await User.find({
                 $or: [
-                    { name: { $regex: query, $options: 'i' } }, // Case-insensitive search
+                    { name: { $regex: query, $options: 'i' } },
                     { email: { $regex: query, $options: 'i' } },
-                    // { mobile: { $regex: query, $options: 'i' } },
                 ],
             })
         }
@@ -612,6 +611,38 @@ const updateByAdmin = async (req, res) => {
     }
 }
 
+const weblogin = async (req, res) => {
+    try {
+        res.render('weblogin')
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+const loginFromApi = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const apiResponse = await fetch('http://localhost:8000/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
+
+        const data = await apiResponse.json();
+        token = `Bearer ${data.accessToken}`
+        res.redirect(`/dashboard?token=${token}`)
+
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 module.exports = {
     userRegister,
     mailVerification,
@@ -631,5 +662,7 @@ module.exports = {
     memberDetails,
     addInfo,
     updateDobAndMobile,
-    updateByAdmin
+    updateByAdmin,
+    weblogin,
+    loginFromApi
 }
