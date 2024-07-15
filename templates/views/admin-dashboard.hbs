@@ -24,7 +24,7 @@
         <tbody>
             {{#each user}}
             <tr>
-                <td><a href="/member-details/?id={{this.id}}&token={{../token}}" >{{this.name}}</a></td>
+                <td><a href="/profile-info?id={{this.id}}&token={{../token}}" >{{this.name}}</a></td>
                 <td>{{this.email}}</td>
             </tr>
             {{/each}}

@@ -523,14 +523,71 @@ const deleteUser = async (req, res) => {
     }
 }
 
-const memberDetails = async (req, res) => {
+const profileInformation = async (req, res) => {
     try {
         const id = req.query.id
         const userToShow = await User.findOne({ _id: id })
         const formattedDate = userToShow.dob.toISOString().split('T')[0]
         const parts = formattedDate.split('-');
         const mmddyyyy = `${parts[1]}-${parts[2]}-${parts[0]}`;
-        return res.render('member-details', { user: userToShow, mmddyyyy })
+        const token = req.headers["Authorization"]
+        return res.render('profile-info', { user: userToShow, mmddyyyy, token })
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+const systemData = async (req, res) => {
+    try {
+        const id = req.query.id
+        const userToShow = await User.findOne({ _id: id })
+        const token = req.headers["Authorization"]
+        return res.render('system-data', { user: userToShow, token })
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+const privacyAndPreferences = async (req, res) => {
+    try {
+        const id = req.query.id
+        const userToShow = await User.findOne({ _id: id })
+        const token = req.headers["Authorization"]
+        return res.render('privacy-preference', { user: userToShow, token })
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+const membershipInformation = async (req, res) => {
+    try {
+        const id = req.query.id
+        const userToShow = await User.findOne({ _id: id })
+        const token = req.headers["Authorization"]
+        return res.render('membership-info', { user: userToShow, token })
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+const reservationInformation = async (req, res) => {
+    try {
+        const id = req.query.id
+        const userToShow = await User.findOne({ _id: id })
+        const token = req.headers["Authorization"]
+        return res.render('reservation-info', { user: userToShow, token })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -652,10 +709,14 @@ module.exports = {
     adminLogin,
     adminDashboard,
     deleteUser,
-    memberDetails,
+    profileInformation,
     addInfo,
     updateDobAndMobile,
     updateByAdmin,
     weblogin,
-    adminLogout
+    adminLogout,
+    systemData,
+    privacyAndPreferences,
+    membershipInformation,
+    reservationInformation
 }

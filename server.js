@@ -16,10 +16,13 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 const staticPath = path.join(__dirname, "/public")
+const templatesPath = path.join(__dirname, "/templates/views")
+const partialsPath = path.join(__dirname, "/templates/partials")
 app.use(express.static(staticPath))
 
 app.set('view engine', 'hbs')
-app.set('views', './views')
+app.set('views', templatesPath)
+hbs.registerPartials(partialsPath)
 
 const port = process.env.SERVER_PORT | 8000
 
