@@ -9,6 +9,7 @@
 <body>
     <div class="dashboard">
         <h1>Loyalty Management</h1>
+        <h3><a href="/logout/?token={{token}}">Logout</a></h3>
         <form action="/dashboard" method="GET">
             <input type="text" id="searchInput" name="search">
             <input type="submit" value="Search">
@@ -23,8 +24,8 @@
         <tbody>
             {{#each user}}
             <tr>
-                <td><a href="/member-details/?id={{id}}" >{{name}}</a></td>
-                <td>{{email}}</td>
+                <td><a href="/member-details/?id={{this.id}}&token={{../token}}" >{{this.name}}</a></td>
+                <td>{{this.email}}</td>
             </tr>
             {{/each}}
         </tbody>

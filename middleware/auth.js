@@ -7,7 +7,7 @@ const customAuth = async (req, res, next) => {
         next()
     }
     else {
-        const token = req.query.token
+        const token = req.headers["Authorization"] || req.query.token || req.headers["authorization"]
 
         if (!token) {
             return res.status(403).json({
@@ -31,6 +31,7 @@ const customAuth = async (req, res, next) => {
 
                 const decodedData = jwt.verify(bearerToken, process.env.ACCESS_TOKEN_SECRET)
                 req.user = decodedData
+                req.headers["Authorization"] = token
                 next()
 
             } catch (error) {

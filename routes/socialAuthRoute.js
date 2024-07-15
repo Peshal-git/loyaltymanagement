@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const askForAddInfo = require('../middleware/additionalDetails')
+const { askForAddInfo } = require('../middleware/usefulMiddlewares')
 const userController = require('../controllers/userController')
 
 const passport = require('passport')

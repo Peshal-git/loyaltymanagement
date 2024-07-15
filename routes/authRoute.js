@@ -11,37 +11,21 @@ const { passwordStrengthValidator, adminUpdateValidator } = require('../helpers/
 
 const userController = require('../controllers/userController')
 const auth = require('../middleware/auth')
+const mid = require('../middleware/usefulMiddlewares')
 
 router.get('/mail-verification', userController.mailVerification)
-
 router.get('/reset-password', userController.resetPassword)
 router.post('/reset-password', passwordStrengthValidator, userController.updatePassword)
-
 router.get('/reset-success', userController.resetSuccess)
 router.get('/admin', userController.adminLogin)
 
-const adminCheck = (req, res, next) => {
-    if (req.user.isAdmin || req.user.user.isAdmin) {
-        next()
-    } else {
-        res.redirect('/admin')
-    }
-}
 
-const userCheck = (req, res, next) => {
-    if (!req.user) {
-        res.redirect('/admin')
-    } else {
-        next()
-    }
-}
-
-router.get('/dashboard', auth, adminCheck, userController.adminDashboard)
-router.get('/delete-user', auth, adminCheck, userController.deleteUser)
-router.get('/member-details', auth, adminCheck, userController.memberDetails)
-router.get('/provide-addinfo', auth, userCheck, userController.addInfo)
-router.post('/update-user', auth, userCheck, adminUpdateValidator, userController.updateByAdmin)
-router.post('/login-from-api', userController.loginFromApi)
-
+router.get('/dashboard', auth, mid.adminCheck, userController.adminDashboard)
+router.post('/dashboard', mid.getTokenFromLogin, auth, mid.adminCheck, userController.adminDashboard)
+router.get('/delete-user', auth, mid.adminCheck, userController.deleteUser)
+router.get('/member-details', auth, mid.adminCheck, userController.memberDetails)
+router.get('/provide-addinfo', auth, mid.userCheck, userController.addInfo)
+router.post('/update-user', auth, mid.userCheck, adminUpdateValidator, userController.updateByAdmin)
+router.get('/logout', auth, mid.logout, userController.adminLogout)
 
 module.exports = router

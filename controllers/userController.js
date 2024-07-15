@@ -314,15 +314,18 @@ const loginUser = async (req, res) => {
             })
         }
 
-        if (!userData.isVerified) {
-            return res.status(401).json({
-                success: false,
-                msg: "Please verify your account"
-            })
-        }
-
         const accessToken = await generateAccessToken({ user: userData })
         const refreshToken = await generateRefreshToken({ user: userData })
+
+        if (!userData.isVerified) {
+            return res.status(401).json({
+                success: true,
+                msg: "Please verify your account",
+                accessToken: accessToken,
+                refreshToken: refreshToken,
+                tokenType: 'Bearer'
+            })
+        }
 
         req.body.token = accessToken
         req.body.method = "email"
@@ -427,7 +430,7 @@ const refreshToken = async (req, res) => {
 
 const logoutUser = async (req, res) => {
     try {
-        const token = req.body.token || req.query.token || req.headers["authorization"]
+        const token = req.body.token || req.query.token || req.headers["Authorization"]
 
         const bearer = token.split(' ')
         const beaerToken = bearer[1]
@@ -465,6 +468,17 @@ const adminLogin = async (req, res) => {
     }
 }
 
+const adminLogout = async (req, res) => {
+    try {
+        res.redirect('/admin')
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
 const adminDashboard = async (req, res) => {
     try {
         let userData = await User.find()
@@ -477,8 +491,8 @@ const adminDashboard = async (req, res) => {
                 ],
             })
         }
-
-        return res.render('admin-dashboard', { user: userData })
+        const token = req.headers["Authorization"]
+        return res.render('admin-dashboard', { user: userData, token })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -622,27 +636,6 @@ const weblogin = async (req, res) => {
     }
 }
 
-const loginFromApi = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const apiResponse = await fetch('http://localhost:8000/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        });
-
-        const data = await apiResponse.json();
-        token = `Bearer ${data.accessToken}`
-        res.redirect(`/dashboard?token=${token}`)
-
-    } catch (error) {
-        console.error('Error during login:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-}
-
 module.exports = {
     userRegister,
     mailVerification,
@@ -664,5 +657,5 @@ module.exports = {
     updateDobAndMobile,
     updateByAdmin,
     weblogin,
-    loginFromApi
+    adminLogout
 }
