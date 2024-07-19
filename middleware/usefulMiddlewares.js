@@ -5,7 +5,7 @@ const askForAddInfo = async (req, res, next) => {
         const checkUser = await User.findById(userId)
 
         if (!checkUser.mobile || !checkUser.dob) {
-            res.redirect(`/provide-addinfo?id=${userId}`)
+            return res.redirect(`/provide-addinfo?id=${userId}`)
         }
 
         next()
@@ -19,7 +19,7 @@ const askForAddInfo = async (req, res, next) => {
 }
 
 const adminCheck = (req, res, next) => {
-    if (req.user.isAdmin || req.user.user.isAdmin) {
+    if (req.user?.isAdmin || req.user?.user?.isAdmin) {
         next()
     } else {
         res.redirect('/admin')

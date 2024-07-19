@@ -52,7 +52,7 @@ const userRegister = async (req, res) => {
             dob,
             mobile,
             language,
-            memberId: uniqueMemberId
+            memberId: uniqueMemberId,
         })
 
         const userData = await user.save()

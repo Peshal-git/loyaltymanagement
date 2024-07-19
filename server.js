@@ -2,7 +2,7 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const path = require('path')
 
-mongoose.connect('mongodb://127.0.0.1:27017/loginapis').then(() => {
+mongoose.connect(`${process.env.MONGODB_URI}/${process.env.DB_NAME}`).then(() => {
     console.log("Connected to database")
 })
 
