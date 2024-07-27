@@ -23,8 +23,16 @@
 
                 <div>
                     <label for="g">Privacy Policy Stamp Date:</label>
+
+                    {{#if user.privacy.createdAt}}
                     <input type="text" name="createdAt" value="{{makeDate user.privacy.createdAt}}"
                         readonly>
+ 
+                    {{else}}
+                    <input type="text" name="createdAt" value="No date available yet"
+                        readonly>
+                    {{/if}}
+                    
                 </div>
 
                 <br>
@@ -32,14 +40,19 @@
 
                 <div>
                     <label for="h">Privacy Policy Updated Date:</label>
+                    {{#if user.privacy.updatedAt}}
                     <input type="text" name="updatedAt" value="{{makeDate user.privacy.updatedAt}}"
                         readonly>
+                    {{else}}
+                    <input type="text" name="updatedAt" value="No date available yet"
+                        readonly>
+                    {{/if}}
                 </div>
 
                 <br>
                 <br>
 
-                                <div>
+                    <div>
                     <label for="b">Marketing Consent:</label>
                     <input class="editable" type="text" name="hasGivenMarketingConsent"
                         value="{{user.marketing.hasGivenMarketingConsent}}"
@@ -52,8 +65,13 @@
 
                 <div>
                     <label for="g">Marketing Consent Stamp Date:</label>
+                    {{#if user.marketing.createdAt}}
                     <input type="text" name="createdAt" value="{{makeDate user.marketing.createdAt}}"
+                    readonly>
+                    {{else}}
+                    <input type="text" name="createdAt" value="No date available yet"
                         readonly>
+                    {{/if}}
                 </div>
 
                 <br>
@@ -61,8 +79,13 @@
 
                 <div>
                     <label for="h">Marketing Consent Updated Date:</label>
+                    {{#if user.marketing.updatedAt}}
                     <input type="text" name="updatedAt" value="{{makeDate user.marketing.updatedAt}}"
+                    readonly>
+                    {{else}}
+                    <input type="text" name="updatedAt" value="No date available yet"
                         readonly>
+                    {{/if}}
                 </div>
 
                 <br>
