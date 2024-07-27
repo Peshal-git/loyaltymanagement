@@ -18,6 +18,7 @@ const PrivacySchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         required: true,
+        default: Date.now
     }
 }, {
     timestamps: true
@@ -30,6 +31,7 @@ const MarketingSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         required: true,
+        default: Date.now
     }
 }, {
     timestamps: true
