@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const userController = require('../controllers/userController')
-const { registerValidator, sendMailVerificationValidator, passwordResetValidator, loginValidator, updateProfileValidator, updateSocialAuthValidator } = require('../helpers/validation')
+const { registerValidator, sendMailVerificationValidator, passwordResetValidator, loginValidator, updateProfileValidator, updateSocialAuthValidator, dateAndTimeValidatorForRegestration } = require('../helpers/validation')
 
 const auth = require('../middleware/auth')
 
@@ -14,6 +14,10 @@ router.post('/send-mail-verification', sendMailVerificationValidator, userContro
 
 router.post('/forgot-password', passwordResetValidator, userController.forgotPassword)
 router.post('/login', loginValidator, userController.loginUser)
+router.post('/add-reservation', dateAndTimeValidatorForRegestration, userController.addReservation)
+router.post('/update-reservation', dateAndTimeValidatorForRegestration, userController.updateReservation)
+router.post('/policy-and-consent', userController.checkPrivacyAndMarketing)
+router.post('/update-member-info', userController.updateMemInfo)
 
 
 router.get('/profile', auth, userController.userProfile)

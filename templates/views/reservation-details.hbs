@@ -1,0 +1,227 @@
+        {{>navbar}}
+        <div class="form-div">
+            <form action="/update-reservation-details?id={{user.id}}&reservationIndex={{reservationIndex}}" method="POST">
+                <div>
+                    <label for="a">Member Id:</label>
+                    <input type="text" name="memberId" value="{{user.memberId}}"
+                        readonly="readonly">
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="b">Transaction Date:</label>
+                    <input class="editable" type="text" name="transactionDate"
+                        value="{{makeDate reservationObj.transactionDateTime}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="c">Transaction Time:</label>
+                    <input class="editable" type="text" name="transactionTime"
+                        value="{{makeTime reservationObj.transactionDateTime}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="d">Outlet Code:</label>
+                    <input class="editable" type="text" name="outletcode"
+                        value="{{reservationObj.outletcode}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="d">Shift Code:</label>
+                    <input class="editable" type="text" name="shiftcode"
+                        value="{{reservationObj.shiftcode}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="e">Check Number:</label>
+                    <input class="editable" type="text" name="checkNo"
+                        value="{{reservationObj.checkNo}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="f">Reference:</label>
+                    <input class="editable" type="text" name="reference"
+                        value="{{reservationObj.reference}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="g">Folio Number:</label>
+                    <input class="editable" type="text" name="folioNo"
+                        value="{{reservationObj.folioNo}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+                
+                <br>
+                <br>
+
+                <div>
+                    <label for="h">Room Number:</label>
+                    <input class="editable" type="text" name="roomNo"
+                        value="{{reservationObj.roomNo}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="i">Guest Number:</label>
+                    <input class="editable" type="text" name="guestNo"
+                        value="{{reservationObj.guestNo}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="j">Transaction Code:</label>
+                    <input class="editable" type="text" name="tranCode"
+                        value="{{reservationObj.tranCode}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="k">Bill Remark:</label>
+                    <input class="editable" type="text" name="billRemark"
+                        value="{{reservationObj.billRemark}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="l">Payment Remark:</label>
+                    <input class="editable" type="text" name="paymentRemark"
+                        value="{{reservationObj.paymentRemark}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="m">Payment Flag:</label>
+                    <input class="editable" type="text" name="paymentFlag"
+                        value="{{reservationObj.paymentFlag}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="n">Amount:</label>
+                    <input class="editable" type="text" name="amount"
+                        value="{{reservationObj.amount}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="o">Tax:</label>
+                    <input class="editable" type="text" name="tax"
+                        value="{{reservationObj.tax}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="p">Additional Tax:</label>
+                    <input class="editable" type="text" name="additionalTax"
+                        value="{{reservationObj.additionalTax}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="q">Service:</label>
+                    <input class="editable" type="text" name="service"
+                        value="{{reservationObj.service}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+               
+                <div class="lastbuttons">
+                    <input class="update-button" type="submit" value="Update">
+                    <a href="/delete-reservation?id={{user.id}}&reservationIndex={{reservationIndex}}"
+                    class="delete-button">Delete</a>
+                </div>
+
+            </form>
+        </div>
+    </body>
+    <script> 
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const editButtons = document.querySelectorAll(".edit-button");
+            const inputFields = document.querySelectorAll(".editable");
+
+            editButtons.forEach((button, index) => {
+                button.addEventListener("click", function() {
+                    if (button.innerText === "Edit") {
+                        inputFields[index].removeAttribute("readonly");
+                        console.log(inputFields[index])
+                        button.innerText = "Save";
+                        
+                    } else {
+                        button.innerText = "Edit";
+                        inputFields[index].setAttribute("readonly", "readonly");
+                    }
+                });
+            });
+        });
+    </script>
+</html>

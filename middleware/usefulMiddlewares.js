@@ -82,10 +82,126 @@ const logout = async (req, res, next) => {
     }
 }
 
+const updateMembershipInfo = async (req, res, next) => {
+    try {
+        const id = req.query.id
+        const userToUpdate = await User.findById(id)
+
+        const {
+            pointsAvailable,
+            lastVisit,
+            lastCommunication,
+            lastMarketingCommunication,
+            expiringPoints,
+            lastUsagePoints,
+            totalLifetimePoints
+
+        } = req.body
+
+        const response = await fetch('http://localhost:8000/api/update-member-info', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                memberId: userToUpdate.memberId,
+                pointsAvailable,
+                lastVisit,
+                lastCommunication,
+                lastMarketingCommunication,
+                expiringPoints,
+                lastUsagePoints,
+                totalLifetimePoints
+            })
+        })
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        next()
+
+    } catch (error) {
+        return res.json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+const updateReservationInfo = async (req, res, next) => {
+    try {
+        const { id, reservationIndex } = req.query
+        const userToUpdate = await User.findById(id)
+
+        const {
+            transactionDate,
+            transactionTime,
+            outletcode,
+            shiftcode,
+            checkNo,
+            reference,
+            folioNo,
+            roomNo,
+            guestNo,
+            tranCode,
+            billRemark,
+            paymentRemark,
+            paymentFlag,
+            amount,
+            tax,
+            additionalTax,
+            service } = req.body
+
+        const response = await fetch('http://localhost:8000/api/update-reservation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                reservationIndex,
+                memberId: userToUpdate.memberId,
+                transactionDate,
+                transactionTime,
+                outletcode,
+                shiftcode,
+                checkNo,
+                reference,
+                folioNo,
+                roomNo,
+                guestNo,
+                tranCode,
+                billRemark,
+                paymentRemark,
+                paymentFlag,
+                amount,
+                tax,
+                additionalTax,
+                service
+            })
+        })
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        next()
+
+    } catch (error) {
+        return res.json({
+            success: false,
+            msg: error.message
+        })
+    }
+
+}
+
 module.exports = {
     askForAddInfo,
     adminCheck,
     userCheck,
     getTokenFromLogin,
-    logout
+    logout,
+    updateMembershipInfo,
+    updateReservationInfo
 }

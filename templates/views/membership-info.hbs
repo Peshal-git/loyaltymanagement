@@ -1,6 +1,124 @@
         {{>navbar}}
         <div class="form-div">
-            Membership Information
+            <form action="/update-membership-info?id={{user.id}}" method="POST">
+                <div>
+                    <label for="a">Member Id:</label>
+                    <input type="text" name="memberId" value="{{user.memberId}}"
+                        readonly="readonly">
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="b">Member Since:</label>
+                    <input type="text" name="name"
+                        value="{{makeDate user.createdAt}}"
+                        readonly>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="c">Points Available:</label>
+                    <input class="editable" type="text" name="pointsAvailable" value="{{user.membershipInfo.pointsAvailable}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="d">Last Visit:</label>
+                    <input class="editable" type="text" name="lastVisit" value="{{makeDate user.membershipInfo.lastVisit}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="e">Last Communication:</label>
+                    <input class="editable" type="text" name="lastCommunication"
+                        value="{{makeDate user.membershipInfo.lastCommunication}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="f">Last Marketing Communication:</label>
+                    <input class="editable" type="text" name="lastMarketingCommunication" value="{{makeDate user.membershipInfo.lastMarketingCommunication}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="g">Expiring Points:</label>
+                    <input class="editable" type="text" name="expiringPoints" value="{{user.membershipInfo.expiringPoints}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+                
+                <br>
+                <br>
+
+                <div>
+                    <label for="h">Last Usage Points:</label>
+                    <input class="editable" type="text" name="lastUsagePoints" value="{{user.membershipInfo.lastUsagePoints}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+                
+                <br>
+                <br>
+
+                <div>
+                    <label for="i">Total lifetime Points:</label>
+                    <input class="editable" type="text" name="totalLifetimePoints" value="{{user.membershipInfo.totalLifetimePoints}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                
+                <div class="lastbuttons">
+                    <input class="update-button" type="submit" value="Update">
+                </div>
+
+            </form>
         </div>
     </body>
-    </html>
+    <script> 
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const editButtons = document.querySelectorAll(".edit-button");
+            const inputFields = document.querySelectorAll(".editable");
+
+            editButtons.forEach((button, index) => {
+                button.addEventListener("click", function() {
+                    if (button.innerText === "Edit") {
+                        inputFields[index].removeAttribute("readonly");
+                        console.log(inputFields[index])
+                        button.innerText = "Save";
+                        
+                    } else {
+                        button.innerText = "Edit";
+                        inputFields[index].setAttribute("readonly", "readonly");
+                    }
+                });
+            });
+        });
+    </script>
+</html>
+

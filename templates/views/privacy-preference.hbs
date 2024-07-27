@@ -1,6 +1,100 @@
         {{>navbar}}
         <div class="form-div">
-            Privacy and Preferences
+            <form action="/update-privacy-and-pref?id={{user.id}}" method="POST">
+                <div>
+                    <label for="a">Member Id:</label>
+                    <input type="text" name="memberId" value="{{user.memberId}}"
+                        readonly="readonly">
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="b">Privacy Policy:</label>
+                    <input class="editable" type="text" name="hasAcceptedPrivacyPolicy"
+                        value="{{user.privacy.hasAcceptedPrivacyPolicy}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="g">Privacy Policy Stamp Date:</label>
+                    <input type="text" name="createdAt" value="{{makeDate user.privacy.createdAt}}"
+                        readonly>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="h">Privacy Policy Updated Date:</label>
+                    <input type="text" name="updatedAt" value="{{makeDate user.privacy.updatedAt}}"
+                        readonly>
+                </div>
+
+                <br>
+                <br>
+
+                                <div>
+                    <label for="b">Marketing Consent:</label>
+                    <input class="editable" type="text" name="hasGivenMarketingConsent"
+                        value="{{user.marketing.hasGivenMarketingConsent}}"
+                        readonly>
+                    <button type="button" class="edit-button">Edit</button>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="g">Marketing Consent Stamp Date:</label>
+                    <input type="text" name="createdAt" value="{{makeDate user.marketing.createdAt}}"
+                        readonly>
+                </div>
+
+                <br>
+                <br>
+
+                <div>
+                    <label for="h">Marketing Consent Updated Date:</label>
+                    <input type="text" name="updatedAt" value="{{makeDate user.marketing.updatedAt}}"
+                        readonly>
+                </div>
+
+                <br>
+                <br>
+
+
+                 <div class="lastbuttons">
+                    <input class="update-button" type="submit" value="Update">
+                </div>
+
+            </form>
         </div>
     </body>
-    </html>
+    <script> 
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const editButtons = document.querySelectorAll(".edit-button");
+            const inputFields = document.querySelectorAll(".editable");
+
+            editButtons.forEach((button, index) => {
+                button.addEventListener("click", function() {
+                    if (button.innerText === "Edit") {
+                        inputFields[index].removeAttribute("readonly");
+                        console.log(inputFields[index])
+                        button.innerText = "Save";
+                        
+                    } else {
+                        button.innerText = "Edit";
+                        inputFields[index].setAttribute("readonly", "readonly");
+                    }
+                });
+            });
+        });
+    </script>
+</html>

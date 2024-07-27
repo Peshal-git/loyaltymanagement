@@ -5,6 +5,11 @@ const validateDate = (value) => {
     return dateRegex.test(value);
 }
 
+const validateTime = (value) => {
+    const timeRegex = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/
+    return timeRegex.test(value)
+};
+
 exports.registerValidator = [
     check('firstname', 'Name is required').not().isEmpty(),
     check('lastname', 'Name is required').not().isEmpty(),
@@ -100,5 +105,16 @@ exports.adminUpdateValidator = [
     check('mobile', 'Mobile number should contain 10 digits').isLength({
         min: 10,
         max: 10
+    }),
+]
+
+exports.dateAndTimeValidatorForRegestration = [
+    check('transactionDate', 'Date must be in correct format mm-dd-yyyy').custom(validateDate).isLength({
+        min: 10,
+        max: 10
+    }),
+    check('transactionTime', 'Time must be in correct format mm-dd-yyyy').custom(validateTime).isLength({
+        min: 8,
+        max: 8
     }),
 ]

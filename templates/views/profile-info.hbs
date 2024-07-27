@@ -1,6 +1,6 @@
         {{>navbar}}
         <div class="form-div">
-            <form action="/update-user/?id={{user.id}}" method="POST">
+            <form action="/update-profileinfo?id={{user.id}}" method="POST">
                 <div>
                     <label for="a">Member Id:</label>
                     <input type="text" name="memberId" value="{{user.memberId}}"
@@ -63,7 +63,7 @@
 
                 <div>
                     <label for="g">Member Since:</label>
-                    <input type="text" name="createdAt" value="{{user.createdAt}}"
+                    <input type="text" name="createdAt" value="{{makeDate user.createdAt}}"
                         readonly>
                 </div>
 
@@ -72,7 +72,7 @@
 
                 <div>
                     <label for="h">Updated Date:</label>
-                    <input type="text" name="updatedAt" value="{{user.updatedAt}}"
+                    <input type="text" name="updatedAt" value="{{makeDate user.updatedAt}}"
                         readonly>
                 </div>
 

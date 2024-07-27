@@ -1,6 +1,17 @@
-        {{>navbar}}
-        <div class="form-div">
-            Reservation Information
-        </div>
-    </body>
-    </html>
+{{>navbar}}
+<table>
+    <thead>
+        <tr>
+            <th>Transaction date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each user.reservation}}
+        <tr>
+            <td> {{startFromOne @index}}. <a href="/reservation-details/?id={{../user._id}}&reservationIndex={{@index}}"> {{makeDate this.transactionDateTime}}</a></td>
+        </tr>
+        {{/each}}
+</tbody>
+</table>
+</body>
+</html>
