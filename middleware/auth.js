@@ -1,19 +1,19 @@
 const jwt = require('jsonwebtoken')
 const Blacklist = require('../models/blacklist')
-const passport = require('passport')
+const User = require('../models/userModel')
 
 const customAuth = async (req, res, next) => {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() || req.body?.isAuthenticated) {
         next()
     }
     else {
-        const token = req.headers["Authorization"] || req.query.token || req.headers["authorization"]
+        let token = req.session.token
 
         if (!token) {
-            return res.status(403).json({
-                success: false,
-                msg: 'A token is required for authentication'
-            })
+            if (req.originalUrl.startsWith('/api/')) {
+                return res.status(401).json({ message: 'Unauthorized access' });
+            }
+            res.redirect('/')
         } else {
             try {
                 const bearer = token.split(' ')
@@ -30,7 +30,10 @@ const customAuth = async (req, res, next) => {
                 }
 
                 const decodedData = jwt.verify(bearerToken, process.env.ACCESS_TOKEN_SECRET)
-                req.user = decodedData
+
+                const decodedUser = await User.findById(decodedData._id)
+
+                req.user = decodedUser
                 req.headers["Authorization"] = token
                 next()
 

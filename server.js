@@ -1,17 +1,31 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 const path = require('path')
+require('./helpers/hbsHelpers')
 
 mongoose.connect(`${process.env.MONGODB_URI}/${process.env.DB_NAME}`).then(() => {
     console.log("Connected to database")
 })
 
 const express = require('express')
-const session = require('express-session')
 const app = express()
+const session = require('express-session')
+
 const hbs = require('hbs')
 const passport = require('passport')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser');
+app.use(cookieParser())
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -26,23 +40,24 @@ hbs.registerPartials(partialsPath)
 
 const port = process.env.SERVER_PORT | 8000
 
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-}))
+const authRoute = require('./routes/authRoute')
+app.use('/auth', authRoute)
 
-app.use(passport.initialize())
-app.use(passport.session())
+const publicRoute = require('./routes/publicRoute')
+app.use('/', publicRoute)
 
 const userRoute = require('./routes/userRoute')
-app.use('/api', userRoute)
+app.use('/', userRoute)
 
-const authRoute = require('./routes/authRoute')
-app.use('/', authRoute)
+const adminRoute = require('./routes/adminRoute')
+app.use('/', adminRoute)
 
-const socialAuthRoute = require('./routes/socialAuthRoute')
-app.use('/auth', socialAuthRoute)
+const apiRoute = require('./routes/apiRoute')
+app.use('/api', apiRoute)
+
+app.use((req, res) => {
+    res.redirect('/');
+})
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`)

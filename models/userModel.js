@@ -87,7 +87,8 @@ const ReservationSchema = new mongoose.Schema({
         type: String
     },
     tranCode: {
-        type: Number
+        type: Number,
+        unique: true
     },
     billRemark: {
         type: String
@@ -142,6 +143,14 @@ const userSchema = new mongoose.Schema({
         default: false
     },
     isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isMember: {
+        type: Boolean,
+        default: false
+    },
+    isVendor: {
         type: Boolean,
         default: false
     },

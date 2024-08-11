@@ -7,29 +7,39 @@
     <link rel="stylesheet" href="/css/admindash.css">
 </head>
 <body>
-    <div class="dashboard">
+    <div class="container">
         <h1>Loyalty Management</h1>
-        <h3><a href="/logout/?token={{token}}">Logout</a></h3>
-        <form action="/dashboard" method="GET">
-            <input type="text" id="searchInput" name="search">
-            <input type="submit" value="Search">
-        </form>
-        <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each user}}
-            <tr>
-                <td><a href="/profile-info?id={{this.id}}&token={{../token}}" >{{this.name}}</a></td>
-                <td>{{this.email}}</td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+        <div class="dashboard">
+            <form action="/dashboard" method="GET">
+                <div class="form-group">
+                    <input type="text" id="searchInput" name="search" placeholder="Search">
+                    <input type="submit" value="Search">
+                </div>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Add reservation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each user}}
+                    <tr>
+                        <td><a href="/profile-info?id={{this.id}}">{{this.name}}</a></td>
+                        <td>{{this.email}}</td>
+                        <td><h3><a href="/add-reservation?id={{this.id}}">+</a></h3></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <a href="/get-csv">Download the CSV file containing member information</a>
+            <h3><a href="/logout">Logout</a></h3>
+            {{#if message}}
+            <h3 style="color: blue;">{{message}}</h3>
+            {{/if}}
+        </div>
     </div>
 </body>
 </html>

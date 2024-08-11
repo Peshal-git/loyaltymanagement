@@ -20,13 +20,17 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        const currentUser = await User.findOne({ googleId: profile.id });
+        const currentUser = await User.findOne({ googleId: profile.id })
 
         if (currentUser) {
-            done(null, currentUser);
+            currentUser.systemData = {
+                authentication: accessToken
+            }
+            await currentUser.save()
+            done(null, currentUser)
         } else {
-            const val = await MemId.generateMemberId();
-            const uniqueMemberId = val.toString();
+            const val = await MemId.generateMemberId()
+            const uniqueMemberId = val.toString()
 
             const newUser = new User({
                 method: "Google",
@@ -34,11 +38,11 @@ passport.use(new GoogleStrategy({
                 googleId: profile.id,
                 email: profile.emails[0].value,
                 isVerified: true,
-                memberId: uniqueMemberId
+                memberId: uniqueMemberId,
             })
 
-            const savedUser = await newUser.save();
-            done(null, savedUser);
+            await newUser.save()
+            done(null, newUser)
         }
     } catch (error) {
         console.error("Error during authentication:", error);

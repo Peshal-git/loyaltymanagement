@@ -1,17 +1,19 @@
 {{>navbar}}
-<table>
+<table class="centered-table">
     <thead>
         <tr>
-            <th>Transaction date</th>
+            <th>Transaction Code</th>
+            <th>Transaction Date</th>
         </tr>
     </thead>
     <tbody>
         {{#each user.reservation}}
         <tr>
-            <td> {{startFromOne @index}}. <a href="/reservation-details/?id={{../user._id}}&reservationIndex={{@index}}"> {{makeDate this.transactionDateTime}}</a></td>
+            <td> {{startFromOne @index}}. <a href="/reservation-details/?id={{../user._id}}&reservationIndex={{@index}}"> {{this.tranCode}}</a></td>
+            <td> {{makeDate this.transactionDateTime}}</a></td>
         </tr>
         {{/each}}
-</tbody>
+    </tbody>
 </table>
 </body>
 </html>

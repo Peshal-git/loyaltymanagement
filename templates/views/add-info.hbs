@@ -1,17 +1,27 @@
-<h1>Additional details</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Additional Details</title>
+    <link rel="stylesheet" href="/css/add-info.css">
+</head>
+<body>
+    <h1>Additional details</h1>
+    <div class="container">
+    <form action="/update-dob-mobile?id={{userToUpdate.id}}" method="POST">
+        <label for="mobileInput">Enter your mobile number:</label>
+        <input type="tel" name="mobile" pattern="[0-9]*" value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}">
+        <br>
+        <label for="dateInput">Enter your date of birth:</label>
+        <input type="date" name="dob" value="{{#if enteredFields.dob}}{{enteredFields.dob}}{{/if}}">
+        <br>
+        <input type = "submit" value="Submit">
+    </form>
+    {{#if error}}
+            <h3 style="color: red;">{{error}}</h3>
+        {{/if}}
+</div>
 
-{{!-- {{#if error}}
-<h3 style="color: red;">{{error}}</h3>
-{{/if}} --}}
-
-<form action="/api/additional-info?id={{userUpdate.id}}" method="POST">
-    <label for="mobileInput">Enter your mobile number:</label>
-    <input type="tel" name="mobile" pattern="[0-9]*">
-    <br>
-    <br>
-    <label for="dateInput">Enter your date of birth:</label>
-    <input type="date" name="dob" placeholder="mm-dd-yyyy">
-    <br>
-    <br>
-    <input type = "submit" value="Submit">
-</form>
+</body>
+</html>

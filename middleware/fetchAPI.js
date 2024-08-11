@@ -1,53 +1,62 @@
 const User = require('../models/userModel')
-const askForAddInfo = async (req, res, next) => {
-    try {
-        const userId = req.user.id
-        const checkUser = await User.findById(userId)
 
-        if (!checkUser.mobile || !checkUser.dob) {
-            return res.redirect(`/provide-addinfo?id=${userId}`)
+const registerUser = async (req, res, next) => {
+    try {
+        const response = await fetch('http://localhost:8000/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(req.body)
+        })
+
+        const responseData = await response.json()
+
+        if (responseData?.errors) {
+            req.session.errorResponse = responseData?.errors[0]?.msg
+
+        }
+        else {
+            if (responseData?.msg) {
+                req.session.registrationMessage = responseData?.msg
+                const memberId = responseData?.user?.memberId
+                req.session.memberId = memberId
+            }
         }
 
         next()
     } catch (error) {
         return res.json({
             success: false,
-            msg: 'Additional info error'
+            msg: error.message
         })
     }
-
 }
 
-const adminCheck = (req, res, next) => {
-    if (req.user?.isAdmin || req.user?.user?.isAdmin) {
-        next()
-    } else {
-        res.redirect('/admin')
-    }
-}
-
-const userCheck = (req, res, next) => {
-    if (!req.user) {
-        res.redirect('/admin')
-    } else {
-        next()
-    }
-}
-
-const getTokenFromLogin = async (req, res, next) => {
+const setTokenInSession = async (req, res, next) => {
     try {
-        const { email, password } = req.body;
+        const { email, password } = req.body
+
         const apiResponse = await fetch('http://localhost:8000/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ email, password }),
-        });
+        })
 
-        const data = await apiResponse.json();
-        const token = `Bearer ${data.accessToken}`
-        req.headers['Authorization'] = token
+        const data = await apiResponse.json()
+
+        if (!data?.success) {
+            if (data?.errors) {
+                return res.render('weblogin', { error: data.errors[0].msg })
+            }
+            return res.render('weblogin', { error: data.msg })
+        }
+        else {
+            const token = `Bearer ${data.accessToken}`
+            req.session.token = token
+        }
         next()
 
     } catch (error) {
@@ -66,6 +75,13 @@ const logout = async (req, res, next) => {
                     'Authorization': token
                 },
             })
+
+            req.session.destroy((err) => {
+                if (err) {
+                    return res.status(500).send('Error clearing session data');
+                }
+            })
+
             next()
 
         } else {
@@ -193,15 +209,13 @@ const updateReservationInfo = async (req, res, next) => {
             msg: error.message
         })
     }
-
 }
 
+
 module.exports = {
-    askForAddInfo,
-    adminCheck,
-    userCheck,
-    getTokenFromLogin,
+    registerUser,
+    setTokenInSession,
     logout,
     updateMembershipInfo,
-    updateReservationInfo
+    updateReservationInfo,
 }

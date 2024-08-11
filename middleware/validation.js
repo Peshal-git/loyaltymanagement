@@ -1,14 +1,14 @@
 const { check } = require('express-validator')
 
 const validateDate = (value) => {
-    const dateRegex = /^(\d{2})-(\d{2})-(\d{4})$/;
-    return dateRegex.test(value);
-}
+    const mmddyyyyRegex = /^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/
+    const yyyymmddRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
 
-const validateTime = (value) => {
-    const timeRegex = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/
-    return timeRegex.test(value)
-};
+    if (mmddyyyyRegex.test(value) || yyyymmddRegex.test(value)) {
+        return true
+    }
+    return false
+}
 
 exports.registerValidator = [
     check('firstname', 'Name is required').not().isEmpty(),
@@ -33,17 +33,11 @@ exports.registerValidator = [
     }),
 ]
 
-exports.sendMailVerificationValidator = [
+exports.emailValidator = [
     check('email', 'Please include a valid email').isEmail().normalizeEmail({
         gmail_remove_dots: true
     }),
 
-]
-
-exports.passwordResetValidator = [
-    check('email', 'Please include a valid email').isEmail().normalizeEmail({
-        gmail_remove_dots: true
-    }),
 ]
 
 exports.passwordStrengthValidator = [
@@ -79,13 +73,7 @@ exports.updateProfileValidator = [
 
 exports.updateSocialAuthValidator = [
     check('dob', 'Date must be in correct format mm-dd-yyyy')
-        .custom((value) => {
-            function isValidDateFormat(dateString) {
-                const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
-                return regex.test(dateString);
-            }
-            return isValidDateFormat(value);
-        })
+        .custom(validateDate)
         .isLength({ min: 10, max: 10 }),
     check('mobile', 'Mobile number should contain 10 digits').isLength({
         min: 10,
@@ -105,16 +93,5 @@ exports.adminUpdateValidator = [
     check('mobile', 'Mobile number should contain 10 digits').isLength({
         min: 10,
         max: 10
-    }),
-]
-
-exports.dateAndTimeValidatorForRegestration = [
-    check('transactionDate', 'Date must be in correct format mm-dd-yyyy').custom(validateDate).isLength({
-        min: 10,
-        max: 10
-    }),
-    check('transactionTime', 'Time must be in correct format mm-dd-yyyy').custom(validateTime).isLength({
-        min: 8,
-        max: 8
     }),
 ]

@@ -1,11 +1,31 @@
-<form action="/dashboard" method="POST">
-    <label for="email">Enter your email:</label>
-    <input type="email" name="email">
-    <br>
-    <br>
-    <label for="password">Enter your password:</label>
-    <input type="password" name="password">
-    <br>
-    <br>
-    <input type = "submit" value="Submit">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/weblogin.css">
+</head>
+<body>
+    <div class="card">
+    <form action="/dashboard" method="POST" autocomplete="off">
+        <label for="email">Enter your email:</label>
+        <input type="email" name="email">
+        <br>
+        <br>
+        <label for="password">Enter your password:</label>
+        <input type="password" name="password">
+        <a href="/forgot-password"> Forgot Password? </a>
+        <br>
+        <br>
+        <input type="submit" class="register-btn" value="Login">
+    </form>
+    {{#if error}}
+            <h4 style="color: red;">{{error}}</h4>
+    {{/if}}
+    {{#if message}}
+            <h4 style="color: blue;">{{message}}. You may login.</h4>
+    {{/if}}
+    </div>
+</body>
+</html>

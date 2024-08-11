@@ -1,30 +1,23 @@
 const express = require('express')
 const router = express.Router()
 
-const userController = require('../controllers/userController')
-const { registerValidator, sendMailVerificationValidator, passwordResetValidator, loginValidator, updateProfileValidator, updateSocialAuthValidator, dateAndTimeValidatorForRegestration } = require('../helpers/validation')
-
-const auth = require('../middleware/auth')
-
 router.use(express.json())
 
-router.post('/register', registerValidator, userController.userRegister)
+const bodyParser = require('body-parser')
+router.use(bodyParser.json())
+router.use(bodyParser.urlencoded({ extended: true }))
 
-router.post('/send-mail-verification', sendMailVerificationValidator, userController.sendMailVerification)
+const userController = require('../controllers/userController')
+const auth = require('../middleware/auth')
+const { userCheck } = require('../middleware/middlewares')
+const { updateSocialAuthValidator } = require('../middleware/validation')
+const { registerUser, setTokenInSession } = require('../middleware/fetchAPI')
 
-router.post('/forgot-password', passwordResetValidator, userController.forgotPassword)
-router.post('/login', loginValidator, userController.loginUser)
-router.post('/add-reservation', dateAndTimeValidatorForRegestration, userController.addReservation)
-router.post('/update-reservation', dateAndTimeValidatorForRegestration, userController.updateReservation)
-router.post('/policy-and-consent', userController.checkPrivacyAndMarketing)
-router.post('/update-member-info', userController.updateMemInfo)
-
-
-router.get('/profile', auth, userController.userProfile)
-router.post('/update-profile', auth, updateProfileValidator, userController.updateProfile)
-router.post('/additional-info', auth, updateSocialAuthValidator, userController.updateDobAndMobile)
-router.get('/refresh-token', auth, userController.refreshToken)
-router.get('/logout', auth, userController.logoutUser)
-
+router.post('/consent', registerUser, setTokenInSession, userController.consentPage)
+router.get('/consent', auth, userCheck, userController.consentPage)
+router.get('/profile', auth, userCheck, userController.profilePage)
+router.get('/provide-addinfo', auth, userCheck, userController.addInfoPage)
+router.post('/update-dob-mobile', auth, userCheck, updateSocialAuthValidator, userController.updateDobAndMobile)
+router.post('/', auth, userCheck, userController.consentUpdate)
 
 module.exports = router

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VIKASA</title>
+        <link rel="stylesheet" href="/css/login.css">
+    </head>
+    <body>
+        <nav>
+            <h1>Vikasa</h1>
+        </nav>
+
+        <div class="card">
+            <div class="form">
+                <h3>Login with</h3>
+                <br>
+                <a class="google-btn" href="/auth/google">Google</a>
+                <br>
+                <a class="facebook-btn" href="/auth/facebook">Facebook</a>
+                <br>
+                <a class="local-btn" href="/auth/weblogin">Email</a>
+                <br>
+                <p>Not registered yet?</p>
+                <a href="/register"> Create a new account</a>
+            </div>
+            {{#if message}}
+            <h3 style="color: blue;">{{message}}</h3>
+            {{/if}}
+        </div>
+    </body>
+</html>

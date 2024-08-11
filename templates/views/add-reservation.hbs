@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Reservation</title>
+    <link rel="stylesheet" href="/css/addreservation.css">
+</head>
+<body>
+    <h2>Add Reservation</h2>
+    <div class="container"> 
+        <form action="/add-reservation?id={{id}}" method="post" class="reservation-form">
+            <div class="form-group">
+            <label for="transactionDate">Transaction Date:</label>
+            <input type="date" name="transactionDate" class="form-input" value="{{#if enteredFields.transactionDate}}{{enteredFields.transactionDate}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="transactionTime">Transaction Time:</label>
+            <input type="time" name="transactionTime" class="form-input" value="{{#if enteredFields.transactionTime}}{{enteredFields.transactionTime}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="outletcode">Outlet Code:</label>
+            <input type="text" name="outletcode" class="form-input" value="{{#if enteredFields.outletcode}}{{enteredFields.outletcode}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="shiftcode">Shift Code:</label>
+            <input type="text" name="shiftcode" class="form-input" value="{{#if enteredFields.shiftcode}}{{enteredFields.shiftcode}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="checkNo">Check No:</label>
+            <input type="text" name="checkNo" class="form-input" value="{{#if enteredFields.checkNo}}{{enteredFields.checkNo}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="reference">Reference:</label>
+            <input type="text" name="reference" class="form-input" value="{{#if enteredFields.reference}}{{enteredFields.reference}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="folioNo">Folio No:</label>
+            <input type="number" name="folioNo" class="form-input" value="{{#if enteredFields.folioNo}}{{enteredFields.folioNo}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="roomNo">Room No:</label>
+            <input type="number" name="roomNo" class="form-input" value="{{#if enteredFields.roomNo}}{{enteredFields.roomNo}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="guestNo">Guest No:</label>
+            <input type="text" name="guestNo" class="form-input" value="{{#if enteredFields.guestNo}}{{enteredFields.guestNo}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="tranCode">Transaction Code:</label>
+            <input type="number" name="tranCode" class="form-input" value="{{#if enteredFields.tranCode}}{{enteredFields.tranCode}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="billRemark">Bill Remark:</label>
+            <input type="text" name="billRemark" class="form-input" value="{{#if enteredFields.billRemark}}{{enteredFields.billRemark}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="paymentRemark">Payment Remark:</label>
+            <input type="text" name="paymentRemark" class="form-input" value="{{#if enteredFields.paymentRemark}}{{enteredFields.paymentRemark}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="paymentFlag">Payment Flag:</label>
+            <input type="text" name="paymentFlag" class="form-input" value="{{#if enteredFields.paymentFlag}}{{enteredFields.paymentFlag}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="number" name="amount" class="form-input" value="{{#if enteredFields.amount}}{{enteredFields.amount}}{{/if}}" required>
+            </div>
+
+
+            <div class="form-group">
+            <label for="tax">Tax:</label>
+            <input type="number" name="tax" class="form-input" value="{{#if enteredFields.tax}}{{enteredFields.tax}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="additionalTax">Additional Tax:</label>
+            <input type="number" name="additionalTax" class="form-input" value="{{#if enteredFields.additionalTax}}{{enteredFields.additionalTax}}{{/if}}" required>
+            </div>
+
+            <div class="form-group">
+            <label for="service">Service:</label>
+            <input type="number" name="service" class="form-input" value="{{#if enteredFields.service}}{{enteredFields.service}}{{/if}}" required>
+            </div>
+
+            <button type="submit">Confirm reservation</button>
+        </form>
+        {{#if error}}
+            <h3 style="color: red;">{{error}}</h3>
+        {{/if}}
+    </div>
+</body>
+</html>
