@@ -11,9 +11,16 @@ const userController = require('../controllers/userController')
 const auth = require('../middleware/auth')
 const { userCheck } = require('../middleware/middlewares')
 const { updateSocialAuthValidator } = require('../middleware/validation')
-const { registerUser, setTokenInSession } = require('../middleware/fetchAPI')
+const { registerUser, createToken } = require('../middleware/fetchAPI')
+const passport = require('passport')
+require('../config/passportSetup')
 
-router.post('/consent', registerUser, setTokenInSession, userController.consentPage)
+router.post('/register', registerUser, createToken, passport.authenticate('local', {
+    failureRedirect: '/weblogin'
+}), (req, res, next) => {
+    next()
+}, userController.consentPage)
+
 router.get('/consent', auth, userCheck, userController.consentPage)
 router.get('/profile', auth, userCheck, userController.profilePage)
 router.get('/provide-addinfo', auth, userCheck, userController.addInfoPage)

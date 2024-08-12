@@ -16,25 +16,10 @@ router.get("/login/success", dobAndMobileCheck, consentCheck, adminCheck, (req, 
     res.redirect('/dashboard')
 })
 
-// router.get("/login/failed", (req, res) => {
-//     res.status(401).json({
-//         error: true,
-//         message: "Login failed"
-//     })
-// })
-
 router.get("/google/redirect", passport.authenticate('google', {
     successRedirect: "/auth/login/success",
     failureRedirect: "/auth/login/failed"
-}), (req, res) => {
-    const { accessToken, refreshToken } = req.user
-    res.json({
-        accessToken,
-        refreshToken
-    })
-})
-
-//askForAddInfo
+}))
 
 router.get("/facebook", passport.authenticate('facebook', {
     scope: ['email']

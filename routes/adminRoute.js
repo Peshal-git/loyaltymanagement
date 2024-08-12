@@ -10,12 +10,20 @@ const { adminUpdateValidator } = require('../middleware/validation')
 
 const adminController = require('../controllers/adminController')
 const { adminCheck } = require('../middleware/middlewares')
-const { updateMembershipInfo, updateReservationInfo, setTokenInSession } = require('../middleware/fetchAPI')
+const { updateMembershipInfo, updateReservationInfo, createToken } = require('../middleware/fetchAPI')
+const passport = require('passport')
+require('../config/passportSetup')
 
 const auth = require('../middleware/auth')
 
 router.get('/dashboard', auth, adminCheck, adminController.adminDashboard)
-router.post('/dashboard', setTokenInSession, auth, adminCheck, adminController.adminDashboard)
+
+router.post('/dashboard', createToken, passport.authenticate('local', {
+    failureRedirect: '/weblogin'
+}), (req, res, next) => {
+    next()
+}, auth, adminCheck, adminController.adminDashboard)
+
 router.get('/add-reservation', auth, adminCheck, adminController.addReservationPage)
 router.post('/add-reservation', auth, adminCheck, adminController.makeReservation)
 

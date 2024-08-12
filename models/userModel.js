@@ -88,7 +88,6 @@ const ReservationSchema = new mongoose.Schema({
     },
     tranCode: {
         type: Number,
-        unique: true
     },
     billRemark: {
         type: String

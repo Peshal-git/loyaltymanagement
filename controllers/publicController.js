@@ -170,23 +170,12 @@ const sendMailToChangePassword = async (req, res) => {
 const logout = async (req, res) => {
     try {
         req.logout((err) => {
-            console.log("Error in logging out: ", err)
+            if (err) {
+                console.log("Error in logging out: ", err)
+            } else {
+                console.log("Logged out")
+            }
         })
-        const token = req.session?.user?.systemData?.authentication
-
-        if (token) {
-            const bearer = token.split(' ')
-            const beaerToken = bearer[1]
-
-            const newBlacklist = new Blacklist({
-                token: beaerToken
-            })
-
-            await newBlacklist.save()
-            req.session.destroy((err) => {
-                console.log("Error in clearing session: ", err)
-            })
-        }
 
         const message = "Successfully logged out!"
         res.render('main-login', { message })

@@ -2,12 +2,27 @@ const User = require('../models/userModel')
 
 const registerUser = async (req, res, next) => {
     try {
+        const { firstname,
+            lastname,
+            email,
+            password,
+            dob,
+            mobile,
+            language } = req.body
         const response = await fetch('http://localhost:8000/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(req.body)
+            body: JSON.stringify({
+                firstname,
+                lastname,
+                email,
+                password,
+                dob,
+                mobile,
+                language
+            })
         })
 
         const responseData = await response.json()
@@ -33,7 +48,7 @@ const registerUser = async (req, res, next) => {
     }
 }
 
-const setTokenInSession = async (req, res, next) => {
+const createToken = async (req, res, next) => {
     try {
         const { email, password } = req.body
 
@@ -53,10 +68,6 @@ const setTokenInSession = async (req, res, next) => {
             }
             return res.render('weblogin', { error: data.msg })
         }
-        else {
-            const token = `Bearer ${data.accessToken}`
-            req.session.token = token
-        }
         next()
 
     } catch (error) {
@@ -67,29 +78,16 @@ const setTokenInSession = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
     try {
-        const token = req.headers["Authorization"]
-        if (token) {
-            await fetch('http://localhost:8000/api/logout', {
-                method: 'GET',
-                headers: {
-                    'Authorization': token
-                },
-            })
+        const token = req.user.systemData.authentication
 
-            req.session.destroy((err) => {
-                if (err) {
-                    return res.status(500).send('Error clearing session data');
-                }
-            })
+        await fetch('http://localhost:8000/api/logout', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            },
+        })
 
-            next()
-
-        } else {
-            req.logout(() => {
-                next()
-            })
-        }
-
+        next()
     } catch (error) {
         return res.json({
             success: false,
@@ -214,7 +212,7 @@ const updateReservationInfo = async (req, res, next) => {
 
 module.exports = {
     registerUser,
-    setTokenInSession,
+    createToken,
     logout,
     updateMembershipInfo,
     updateReservationInfo,
