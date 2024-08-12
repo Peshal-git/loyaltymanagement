@@ -78,14 +78,15 @@ const createToken = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
     try {
-        const token = req.user.systemData.authentication
-
-        await fetch('http://localhost:8000/api/logout', {
-            method: 'GET',
-            headers: {
-                'Authorization': token
-            },
-        })
+        if (req.user?.systemData?.authentication) {
+            const token = req.user?.systemData?.authentication
+            await fetch('http://localhost:8000/api/logout', {
+                method: 'GET',
+                headers: {
+                    'Authorization': token
+                },
+            })
+        }
 
         next()
     } catch (error) {
