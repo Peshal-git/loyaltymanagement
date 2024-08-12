@@ -28,11 +28,15 @@ const registerUser = async (req, res, next) => {
         const responseData = await response.json()
 
         if (responseData?.errors) {
-            req.session.errorResponse = responseData?.errors[0]?.msg
-
+            const enteredFields = req.body
+            return res.render('register', { enteredFields, error: responseData.errors[0].msg })
         }
         else {
-            if (responseData?.msg) {
+            if (!responseData.success) {
+                const enteredFields = req.body
+                return res.render('register', { enteredFields, error: responseData.msg })
+            }
+            else {
                 req.session.registrationMessage = responseData?.msg
                 const memberId = responseData?.user?.memberId
                 req.session.memberId = memberId
