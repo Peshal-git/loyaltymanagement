@@ -38,7 +38,7 @@ app.set('view engine', 'hbs')
 app.set('views', templatesPath)
 hbs.registerPartials(partialsPath)
 
-const PORT = process.env.PORT | 8000
+const PORT = process.env.PORT || 8000
 
 const authRoute = require('./routes/authRoute')
 app.use('/auth', authRoute)
