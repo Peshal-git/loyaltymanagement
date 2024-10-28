@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,5 +11,53 @@
         <h1>Welcome to your profile page, {{user.name}}</h1>
         <a href="http://localhost:8000/logout" class="logout-link">Logout</a>
     </div>
+</body>
+</html> --}}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Display Page</title>
+     <link rel="stylesheet" href="/css/user-profile.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+          <img src="/images/logo.png" width="119" height="100" alt="Vikasa logo"/>
+        </div>
+
+    </div>
+	<div class="namaste">
+	  <blockquote>
+	    <blockquote>
+	      <blockquote>
+	        <blockquote>
+	          <h3><em>NAMASTE&nbsp;</em></h3>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+    </div>
+    <div class="container">
+        <div class="member-card">
+       
+            <h2>{{user.name}}</h2>
+            <p><strong>Member ID:</strong> {{user.memberId}}</p>
+            <p><strong>Email:</strong> {{user.email}}</p>
+            <p><strong>Mobile:</strong> {{user.mobile}}</p>
+			<p><strong>Preferred Language: </strong> {{user.language}} </p>
+			<p><strong>DOB: </strong> {{mmddyyyy}} </p>
+            <p><strong>Member Since: </strong> {{makeDate user.createdAt}} </p>
+
+            <a href="http://localhost:8000/logout" class="logout-link">
+        <button class="btn2">Log out</button>
+        </a>
+			
+      </div>
+</div>
 </body>
 </html>
