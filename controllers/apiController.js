@@ -43,7 +43,7 @@ const userRegister = async (req, res) => {
         let admin = false
         let verified = false
 
-        if (email && email.endsWith('@vikasa.com')) {
+        if (email && email.endsWith('@dosink.com')) {
             admin = true
             verified = true
         }
