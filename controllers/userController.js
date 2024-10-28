@@ -83,7 +83,10 @@ const profilePage = async (req, res) => {
         else {
             userData = req.user
         }
-        res.render('user-profile', { user: userData })
+        const formattedDate = userData.dob.toISOString().split('T')[0]
+        const parts = formattedDate.split('-');
+        const mmddyyyy = `${parts[1]}-${parts[2]}-${parts[0]}`;
+        res.render('user-profile', { user: userData, mmddyyyy })
     } catch (error) {
         return res.status(400).json({
             success: false,
