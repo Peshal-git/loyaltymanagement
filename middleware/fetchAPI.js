@@ -72,9 +72,9 @@ const createToken = async (req, res, next) => {
 
         if (!data?.success) {
             if (data?.errors) {
-                return res.render('weblogin', { error: data.errors[0].msg })
+                return res.render('main-login', { error: data.errors[0].msg })
             }
-            return res.render('weblogin', { error: data.msg })
+            return res.render('main-login', { error: data.msg })
         }
         next()
 

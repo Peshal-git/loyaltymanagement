@@ -347,9 +347,9 @@ const updateReservationInfo = async (req, res) => {
     }
 }
 
-const weblogin = async (req, res) => {
+const mainlogin = async (req, res) => {
     try {
-        res.render('weblogin')
+        res.render('main-login')
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -410,7 +410,7 @@ module.exports = {
     deleteReservation,
     profileInformation,
     updateProfile,
-    weblogin,
+    mainlogin,
     systemData,
     privacyAndPreferences,
     membershipInformation,

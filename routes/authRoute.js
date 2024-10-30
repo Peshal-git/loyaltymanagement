@@ -30,6 +30,6 @@ router.get('/facebook/redirect', passport.authenticate('facebook', {
     failureRedirect: '/'
 }))
 
-router.get('/weblogin', adminController.weblogin)
+router.get('/mainlogin', adminController.mainlogin)
 
 module.exports = router

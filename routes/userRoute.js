@@ -16,7 +16,7 @@ const passport = require('passport')
 require('../config/passportSetup')
 
 router.post('/register', registerUser, createToken, passport.authenticate('local', {
-    failureRedirect: '/weblogin'
+    failureRedirect: '/'
 }), (req, res, next) => {
     next()
 }, userController.consentPage)

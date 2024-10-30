@@ -19,7 +19,7 @@ const auth = require('../middleware/auth')
 router.get('/dashboard', auth, adminCheck, adminController.adminDashboard)
 
 router.post('/dashboard', createToken, passport.authenticate('local', {
-    failureRedirect: '/weblogin'
+    failureRedirect: '/'
 }), (req, res, next) => {
     next()
 }, auth, adminCheck, adminController.adminDashboard)

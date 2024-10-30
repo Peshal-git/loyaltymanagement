@@ -1,0 +1,216 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Inknut Antiqua", serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to top, #D5DCE4 0%, #667391 100%); 
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 310px;
+}
+
+.logo-section {
+    flex: 1;
+    text-align: center;
+}
+
+.logo-section img {
+    width: 250px; /* Adjust logo size as needed */
+    margin-bottom: 20px;
+}
+
+.logo-section h1 {
+    font-size: 2.5em;
+    color: #333; /* Placeholder color for logo text */
+}
+
+.signin-box {
+    flex: 1;
+    width: 400px;
+    min-width: 400px;
+    background: #ffffff; /* White background for sign-in box */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.signin-box h2 {
+    font-size: 1.3em;
+    color: #848181;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+form {
+    text-align: left;
+}
+
+.signin-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #555; /* Placeholder color for sign-in button */
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #fff;
+    cursor: pointer;
+}
+
+.signin-btn:hover{
+    background: linear-gradient(to bottom, #D5DCE4 0%, #8899ad 100%);
+}
+
+.signup-link {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.signup-now{
+    margin-top: 10px;
+}
+
+.signup-now a{
+    font-size: 0.9em;
+    color: #555;
+    text-decoration: underline;
+}
+
+.signup-link a:hover {
+    color: #667391;
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.forgot-password a {
+    color: #555;
+    text-decoration: underline;
+    font-size: 0.7em; /* Optional: Adjust font size */
+}
+
+.forgot-password a:hover {
+    color: #667391 /* Optional: Change color on hover */
+}
+
+label {
+    color: #333333;
+    display: block;
+    font-size: 0.9em;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+input[type="email"],
+input[type="password"] {
+    background-color: #F5F5F5;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}
+
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+    color: #333; /* Adjust if you want a different color for placeholder text */
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #667391; /* Optional: Change border color on focus */
+    background-color: #c9cfda;
+    outline: none;
+}
+
+.facebook-button, .google-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;  /* Border color */
+    border-radius: 8px;      /* Rounded corners */
+    padding: 8px 12px;       /* Padding around content */
+    background-color: #ffffff; /* Background color */
+    cursor: pointer;
+    font-size: 16px;         /* Adjust font size as needed */
+    width: 160px;
+}
+
+.facebook-button .logo, .google-button .logo {
+    width: 30px;              /* Set the width of the logo to 30px */
+    height: auto;             /* Maintain aspect ratio */
+    margin-right: 8px;        /* Space between logo and text */
+}
+
+.facebook-button:hover, .google-button:hover {
+    background: linear-gradient(to bottom, #D5DCE4 0%, #8899ad 100%); /* Slightly darker on hover */
+}
+
+.facebook-button:focus, .google-button:focus {
+    outline: none;            /* Remove default outline */
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Add focus shadow */
+}
+
+@media (max-width: 968px) {
+    body {
+        padding: 40px 0; /* Adds more space above and below the entire page */
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px; /* Ensures space around content on smaller screens */
+    }
+
+    .logo-section {
+        order: -1;
+        margin-bottom: 20px;
+    }
+
+    .logo-section img {
+        transform: translateY(-20px);
+    }
+
+    .signin-box {
+        width: 90%;
+        min-width: auto;
+    }
+
+    .social-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .facebook-button, .google-button {
+        width: 100%;
+    }
+}
+
+a{
+    text-decoration: none;
+    color: #333;
+}

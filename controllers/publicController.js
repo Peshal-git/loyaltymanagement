@@ -118,7 +118,7 @@ const updatePassword = async (req, res) => {
         await PasswordReset.deleteMany({ user_id })
 
         const message = "Password Updated Successfully."
-        return res.render('weblogin', { message })
+        return res.render('main-login', { message })
 
     } catch (error) {
         return res.render('404')
