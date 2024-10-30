@@ -1,5 +1,9 @@
 const User = require('../models/userModel')
 
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+    ? process.env.API_BASE_URL_PROD
+    : process.env.API_BASE_URL_DEV;
+
 const registerUser = async (req, res, next) => {
     try {
         const { firstname,
@@ -9,7 +13,7 @@ const registerUser = async (req, res, next) => {
             dob,
             mobile,
             language } = req.body
-        const response = await fetch('http://localhost:8000/api/register', {
+        const response = await fetch(`${API_BASE_URL}/api/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -56,7 +60,7 @@ const createToken = async (req, res, next) => {
     try {
         const { email, password } = req.body
 
-        const apiResponse = await fetch('http://localhost:8000/api/login', {
+        const apiResponse = await fetch(`${API_BASE_URL}/api/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -84,7 +88,7 @@ const logout = async (req, res, next) => {
     try {
         if (req.user?.systemData?.authentication) {
             const token = req.user?.systemData?.authentication
-            await fetch('http://localhost:8000/api/logout', {
+            await fetch(`${API_BASE_URL}/api/logout`, {
                 method: 'GET',
                 headers: {
                     'Authorization': token
@@ -117,7 +121,7 @@ const updateMembershipInfo = async (req, res, next) => {
 
         } = req.body
 
-        const response = await fetch('http://localhost:8000/api/update-member-info', {
+        const response = await fetch(`${API_BASE_URL}/api/update-member-info`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -172,7 +176,7 @@ const updateReservationInfo = async (req, res, next) => {
             additionalTax,
             service } = req.body
 
-        const response = await fetch('http://localhost:8000/api/update-reservation', {
+        const response = await fetch(`${API_BASE_URL}/api/update-reservation`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

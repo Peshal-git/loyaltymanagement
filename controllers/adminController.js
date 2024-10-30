@@ -4,6 +4,10 @@ const CsvParser = require('json2csv').Parser
 
 const { validationResult } = require('express-validator')
 
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+    ? process.env.API_BASE_URL_PROD
+    : process.env.API_BASE_URL_DEV;
+
 const adminDashboard = async (req, res) => {
     try {
         let userData = await User.find()
@@ -79,7 +83,7 @@ const makeReservation = async (req, res) => {
             return res.render('add-reservation', { error, id, enteredFields })
         }
 
-        const response = await fetch('http://localhost:8000/api/add-reservation', {
+        const response = await fetch(`${API_BASE_URL}/api/add-reservation`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

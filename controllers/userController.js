@@ -1,6 +1,10 @@
 const User = require('../models/userModel')
 const { validationResult } = require('express-validator')
 
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+    ? process.env.API_BASE_URL_PROD
+    : process.env.API_BASE_URL_DEV;
+
 const consentPage = async (req, res) => {
     try {
         let memberId
@@ -51,7 +55,7 @@ const consentUpdate = async (req, res) => {
             marketingConsent = false
         }
 
-        await fetch('http://localhost:8000/api/policy-and-consent', {
+        await fetch(`${API_BASE_URL}/api/policy-and-consent`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
