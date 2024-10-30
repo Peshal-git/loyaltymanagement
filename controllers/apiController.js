@@ -7,6 +7,9 @@ const MemId = require('../helpers/memberIdGen')
 const randomstring = require('randomstring')
 const PasswordReset = require('../models/passwordReset')
 
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+    ? process.env.API_BASE_URL_PROD
+    : process.env.API_BASE_URL_DEV;
 
 const userRegister = async (req, res) => {
 
@@ -65,7 +68,7 @@ const userRegister = async (req, res) => {
 
         const userData = await user.save()
 
-        const msg = '<p> Hello, ' + name + '. Please <a href="http://127.0.0.1:8000/mail-verification?id=' + userData._id + '">Verify</a> your email. </p>'
+        const msg = '<p> Hello, ' + name + `. Please <a href="${API_BASE_URL}/mail-verification?id=` + userData._id + '">Verify</a> your email. </p>'
 
         mailer.sendMail(email, 'Mail Verification', msg)
 
@@ -132,7 +135,7 @@ const sendMailVerification = async (req, res) => {
             })
         }
 
-        const msg = '<p> Hello, ' + userData.name + '. Please <a href="http://127.0.0.1:8000/mail-verification?id=' + userData._id + '">Verify</a> your email. </p>'
+        const msg = '<p> Hello, ' + userData.name + `. Please <a href="${API_BASE_URL}/mail-verification?id=` + userData._id + '">Verify</a> your email. </p>'
 
         mailer.sendMail(userData.email, 'Mail Verification', msg)
 
@@ -174,7 +177,7 @@ const forgotPassword = async (req, res) => {
         }
 
         const randomString = randomstring.generate()
-        const msg = '<p>Hello, ' + userData.name + ', Please click <a href = "http://127.0.0.1:8000/reset-password?token=' + randomString + '">here</a> to reset your password. </p>'
+        const msg = '<p>Hello, ' + userData.name + `, Please click <a href = "${API_BASE_URL}/reset-password?token=` + randomString + '">here</a> to reset your password. </p>'
 
         await PasswordReset.deleteMany({ user_id: userData._id })
 

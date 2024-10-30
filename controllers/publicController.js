@@ -144,7 +144,7 @@ const sendMailToChangePassword = async (req, res) => {
         }
 
         const randomString = randomstring.generate()
-        const msg = '<p>Hello, ' + userData.name + ', Please click <a href = "http://127.0.0.1:8000/reset-password?token=' + randomString + '">here</a> to reset your password. </p>'
+        const msg = '<p>Hello, ' + userData.name + `, Please click <a href = "${API_BASE_URL}/reset-password?token=` + randomString + '">here</a> to reset your password. </p>'
 
         await PasswordReset.deleteMany({ user_id: userData._id })
 
