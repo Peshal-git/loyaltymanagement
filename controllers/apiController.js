@@ -23,6 +23,7 @@ const userRegister = async (req, res) => {
 
         const { firstname, lastname, email, password, dob, mobile, language } = req.body
         const name = firstname + ' ' + lastname
+        let uniqueMemberId
 
         const userExits = await User.findOne({ email })
 
