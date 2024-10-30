@@ -9,7 +9,7 @@
 <body>
     <div>
         <h1>Welcome to your profile page, {{user.name}}</h1>
-        <a href="http://localhost:8000/logout" class="logout-link">Logout</a>
+        <a href="/logout" class="logout-link">Logout</a>
     </div>
 </body>
 </html> --}}
@@ -53,7 +53,7 @@
 			<p><strong>DOB: </strong> {{mmddyyyy}} </p>
             <p><strong>Member Since: </strong> {{makeDate user.createdAt}} </p>
 
-            <a href="http://localhost:8000/logout" class="logout-link">
+            <a href="/logout" class="logout-link">
         <button class="btn2">Log out</button>
         </a>
 			
