@@ -148,7 +148,7 @@ const userSchema = new mongoose.Schema({
     },
     isMember: {
         type: Boolean,
-        default: false
+        default: true
     },
     isVendor: {
         type: Boolean,
