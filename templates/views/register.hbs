@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -57,6 +57,85 @@
         </form>
         {{#if error}}
             <h3 style="color: red;">{{error}}</h3>
+        {{/if}}
+    </div>
+
+</body>
+</html> --}}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vikasa Registration</title>
+    <link rel="stylesheet" href="/css/register.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <img src="/images/vikasa-logo.png" alt="Vikasa Logo">
+        </div>
+        <h1 class="welcome-text">Welcome to Vikasa</h1>
+    </header>
+
+    <div class="whole-form">
+        <form action="/register" method="post" class="registration-form" autocomplete="off">
+            <div class="left-column">
+                <div class="form-group">
+                    <label for="first-name">Name</label>
+                    <div class="name-fields">
+                        <input type="text" name="firstname" placeholder="First Name" required value="{{#if enteredFields.firstname}}{{enteredFields.firstname}}{{/if}}">
+                        <input type="text" name="lastname" placeholder="Last Name" required value="{{#if enteredFields.lastname}}{{enteredFields.lastname}}{{/if}}">
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" placeholder="example@example.com" required value="{{#if enteredFields.email}}{{enteredFields.email}}{{/if}}">
+                </div>
+    
+                <div class="form-group">
+                    <label for="mobile">Mobile</label>
+                    <input type="tel" name="mobile" placeholder="Please enter a valid number" required value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}">
+                </div>
+    
+                <div class="form-group checkboxes">
+                    <label><input type="checkbox" name="hasAcceptedPrivacyPolicy" value="true" required> I agree to the Privacy Policy</label>
+                    <label><input type="checkbox" name="hasGivenMarketingConsent" value="true"> I agree to receive marketing communications</label>
+                </div>
+            </div>
+    
+            <div class="right-column">
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" name="dob" required value="{{#if enteredFields.dob}}{{enteredFields.dob}}{{/if}}">
+                </div>
+    
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" placeholder="Enter a strong password" required value="{{#if enteredFields.password}}{{enteredFields.password}}{{/if}}">
+                </div>
+    
+                <div class="form-group">
+                    <label for="language">Preferred Language</label>
+                    <select name="language" required value="{{#if enteredFields.language}}{{enteredFields.language}}{{/if}}">
+                        <option value="English">English</option>
+                        <option value="Thai">Thai</option>
+                    </select>
+                </div>
+    
+                <button type="submit" class="register-button">Register</button>
+                <p class="sign-in">Already a member? <br> <a href="#">Sign in</a></p>
+            </div>
+        </form>
+
+        {{#if error}}
+            <h3 style="color: #CD5C5C;">{{error}}</h3>
         {{/if}}
     </div>
 

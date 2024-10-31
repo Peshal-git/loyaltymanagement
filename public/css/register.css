@@ -1,59 +1,144 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Inknut Antiqua", serif;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 130px; /* Adjust height as desired */
+    background: linear-gradient(to top, #D5DCE4 0%, #667391 100%); 
+    color: white;
+    flex-shrink: 1;
+}
+
+.logo img {
+    height: 100px; /* Adjust logo height as needed */
+    margin-right: 400px;
+    margin-top: 10px;
+}
+
+.welcome-text {
+    font-size: 1.9rem;
+    font-weight: bold;
+}
+
+.whole-form {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    align-items: flex-start;
+    background-color: #ffffff;
+    flex-shrink: 0;
 }
 
-.container {
-    background-color: #fff;
+.registration-form {
+    display: flex;
+    gap: 50px;
+    width: 1000px;
+    background-color: #ffffff;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
+.left-column,
+.right-column {
+    width: 50%;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-label {
+.form-group label {
     display: block;
+    font-weight: bold;
     margin-bottom: 5px;
+}
+
+.name-fields {
+    display: flex;
+    gap: 10px;
+}
+
+.name-fields input {
+    flex: 1;
 }
 
 input[type="text"],
 input[type="email"],
-input[type="password"],
+input[type="tel"],
 input[type="date"],
-input[type="number"],
-select {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
+input[type="password"],
+select{
     width: 100%;
     padding: 10px;
-    background-color: #5cb85c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #F5F5F5;
+    font-size: 1rem;
 }
 
-button:hover {
-    background-color: #4cae4c;
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+input[type="password"]:focus{
+    border-color: #667391; /* Optional: Change border color on focus */
+    background-color: #c9cfda;
+    outline: none;
+}
+
+.checkboxes {
+    margin-top: 10px;
+}
+
+.checkboxes label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.register-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.register-button:hover {
+    background: linear-gradient(to bottom, #D5DCE4 0%, #8899ad 100%);
+}
+
+.sign-in {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.sign-in a {
+    color: #555;
+    text-decoration: underline;
+}
+
+.sign-in a:hover {
+    color: #667391
+}
+
+input[type="checkbox"] {
+    margin-right: 8px; /* Adjust the value as needed */
 }
