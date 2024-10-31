@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
+    <title>Registration and Consent Form</title>
     <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" href="/css/consent.css">
 </head>
 <body>
+
+    <!-- Registration Form Section -->
     <div class="container">
         <h2>Registration Form</h2>
         <form action="/register" method="post" autocomplete="off">
@@ -41,11 +44,21 @@
                     <option value="Thai">Thai</option>
                 </select>
             </div>
+            <div>
+                <label>
+                <input type="checkbox" name="hasAcceptedPrivacyPolicy" value="true" required> I agree to the Privacy Policy
+                </label>
+                <label>
+                <input type="checkbox" name="hasGivenMarketingConsent" value="true"> I agree to receive marketing communications
+                </label>
+            </div>
+
             <button type="submit">Register</button>
         </form>
         {{#if error}}
             <h3 style="color: red;">{{error}}</h3>
         {{/if}}
     </div>
+
 </body>
 </html>

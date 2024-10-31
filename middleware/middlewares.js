@@ -45,7 +45,7 @@ const loginCheck = (req, res, next) => {
 
 const consentCheck = (req, res, next) => {
     if (!req.user?.privacy?.hasAcceptedPrivacyPolicy) {
-        res.redirect('/consent')
+        res.redirect('/update-dob-mobile')
     } else {
         next()
     }

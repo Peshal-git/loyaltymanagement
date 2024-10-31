@@ -12,7 +12,9 @@ const registerUser = async (req, res, next) => {
             password,
             dob,
             mobile,
-            language } = req.body
+            language,
+            hasAcceptedPrivacyPolicy,
+            hasGivenMarketingConsent } = req.body
         const response = await fetch(`${API_BASE_URL}/api/register`, {
             method: 'POST',
             headers: {
@@ -25,7 +27,9 @@ const registerUser = async (req, res, next) => {
                 password,
                 dob,
                 mobile,
-                language
+                language,
+                hasAcceptedPrivacyPolicy,
+                hasGivenMarketingConsent
             })
         })
 

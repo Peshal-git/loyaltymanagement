@@ -19,12 +19,10 @@ router.post('/register', registerUser, createToken, passport.authenticate('local
     failureRedirect: '/'
 }), (req, res, next) => {
     next()
-}, userController.consentPage)
+}, auth, userCheck, userController.dashboardRedirect)
 
-router.get('/consent', auth, userCheck, userController.consentPage)
 router.get('/profile', auth, userCheck, userController.profilePage)
 router.get('/provide-addinfo', auth, userCheck, userController.addInfoPage)
-router.post('/update-dob-mobile', auth, userCheck, updateSocialAuthValidator, userController.updateDobAndMobile)
-router.post('/', auth, userCheck, userController.consentUpdate)
+router.post('/update-dob-mobile', auth, userCheck, updateSocialAuthValidator, userController.updateAdditionalInfoAndConsent)
 
 module.exports = router

@@ -11,100 +11,6 @@ const API_BASE_URL = process.env.NODE_ENV === 'production'
     ? process.env.API_BASE_URL_PROD
     : process.env.API_BASE_URL_DEV;
 
-const userRegister = async (req, res) => {
-
-    try {
-        const errors = validationResult(req)
-
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                msg: "Errors",
-                errors: errors.array()
-            })
-        }
-
-        const { firstname, lastname, email, password, dob, mobile, language } = req.body
-        const name = firstname + ' ' + lastname
-        let uniqueMemberId
-
-        const userExits = await User.findOne({ email })
-
-        if (userExits) {
-            return res.status(400).json({
-                success: false,
-                msg: "Email already exists!"
-            })
-        }
-
-        MemId.generateMemberId().then((val) => {
-            uniqueMemberId = val.toString()
-        })
-
-
-        const hashpassword = await bcrypt.hash(password, 10)
-
-        let admin = false
-        let verified = false
-
-        if (email && email.endsWith('@dosink.com')) {
-            admin = true
-            verified = true
-        }
-
-        const user = new User({
-            name,
-            email,
-            systemData: {
-                password: hashpassword,
-            },
-            dob,
-            mobile,
-            language,
-            memberId: uniqueMemberId,
-            isVerified: verified,
-            isAdmin: admin
-        })
-
-        const userData = await user.save()
-
-        const msg = '<p> Hello, ' + name + `. Please <a href="${API_BASE_URL}/mail-verification?id=` + userData._id + '">Verify</a> your email. </p>'
-
-        mailer.sendMail(email, 'Mail Verification', msg)
-
-        const accessToken = await tokenGen.generateAccessToken({ user: userData })
-        const refreshToken = await tokenGen.generateRefreshToken({ user: userData })
-
-        await User.findByIdAndUpdate(userData._id, {
-            $set: {
-                "systemData.authentication": accessToken
-            }
-        })
-
-        if (!userData.isVerified) {
-            return res.status(401).json({
-                success: true,
-                msg: "Please verify your account",
-                accessToken: accessToken,
-                refreshToken: refreshToken,
-                tokenType: 'Bearer'
-            })
-        }
-
-        return res.status(200).json({
-            success: true,
-            msg: "Registered successfully",
-            user: userData
-        })
-
-    } catch (error) {
-        return res.status(400).json({
-            success: false,
-            msg: error.message
-        })
-    }
-}
-
 const sendMailVerification = async (req, res) => {
     try {
         const errors = validationResult(req)
@@ -420,50 +326,117 @@ const updateReservation = async (req, res) => {
     }
 }
 
-const updatePrivacyAndMarketing = async (req, res) => {
+
+const registerAndUpdateConsent = async (req, res) => {
     try {
-        const { memberId, hasAcceptedPrivacyPolicy, hasGivenMarketingConsent } = req.body
-        const userExits = await User.findOne({ memberId })
-
-        if (!userExits) {
-            return res.status(200).json({
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
                 success: false,
-                msg: "User does not exist"
-            })
-
-        } else {
-            let privacyCreated = new Date()
-            let marketingCreated = new Date()
-            if (userExits?.privacy?.createdAt) {
-                privacyCreated = userExits.privacy.createdAt
-            }
-            if (userExits?.marketing?.createdAt) {
-                marketingCreated = userExits.marketing.createdAt
-            }
-            const updatedUserData = await User.findByIdAndUpdate({ _id: userExits._id }, {
-                $set: {
-                    "privacy.hasAcceptedPrivacyPolicy": hasAcceptedPrivacyPolicy,
-                    "marketing.hasGivenMarketingConsent": hasGivenMarketingConsent,
-                    "privacy.createdAt": privacyCreated,
-                    "marketing.createdAt": marketingCreated,
-                },
-            }, { new: true })
-
-            return res.status(200).json({
-                success: true,
-                msg: "Policy and Content updated successfully",
-                user: updatedUserData
-            })
-
+                msg: "Validation errors occurred",
+                errors: errors.array()
+            });
         }
 
+        const {
+            firstname,
+            lastname,
+            email,
+            password,
+            dob,
+            mobile,
+            language,
+            hasAcceptedPrivacyPolicy,
+            hasGivenMarketingConsent
+        } = req.body;
+
+        const name = firstname + ' ' + lastname;
+        const userExists = await User.findOne({ email });
+
+        if (userExists) {
+            return res.status(400).json({
+                success: false,
+                msg: "Email already exists!"
+            });
+        }
+
+        
+        const uniqueMemberId = await MemId.generateMemberId();
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        
+        let admin = false;
+        let verified = false;
+        if (email.endsWith('@dosink.com')) {
+            admin = true;
+            verified = true;
+        }
+
+        const user = new User({
+            name,
+            email,
+            systemData: {
+                password: hashedPassword,
+            },
+            dob,
+            mobile,
+            language,
+            memberId: uniqueMemberId,
+            isVerified: verified,
+            isAdmin: admin,
+            privacy: {
+                hasAcceptedPrivacyPolicy: hasAcceptedPrivacyPolicy,
+                createdAt: new Date(),
+            },
+            marketing: {
+                hasGivenMarketingConsent: hasGivenMarketingConsent,
+                createdAt: new Date(),
+            }
+        });
+
+        // Save user data
+        const userData = await user.save();
+
+        // Send verification email
+        const msg = `<p> Hello, ${name}. Please <a href="${API_BASE_URL}/mail-verification?id=${userData._id}">Verify</a> your email. </p>`;
+        mailer.sendMail(email, 'Mail Verification', msg);
+
+        // Generate tokens
+        const accessToken = await tokenGen.generateAccessToken({ user: userData });
+        const refreshToken = await tokenGen.generateRefreshToken({ user: userData });
+
+        // Update user authentication token in database
+        await User.findByIdAndUpdate(userData._id, {
+            $set: {
+                "systemData.authentication": accessToken
+            }
+        });
+
+        if (!userData.isVerified) {
+            return res.status(401).json({
+                success: true,
+                msg: "Please verify your account",
+                accessToken,
+                refreshToken,
+                tokenType: 'Bearer'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            msg: "Registered and consent updated successfully",
+            user: userData
+        });
+
     } catch (error) {
-        return res.status(400).json({
+        return res.status(500).json({
             success: false,
-            msg: error.message
-        })
+            msg: "An error occurred",
+            error: error.message
+        });
     }
-}
+};
+
 
 const updateMemInfo = async (req, res) => {
     try {
@@ -601,15 +574,14 @@ const refreshToken = async (req, res) => {
 
 
 module.exports = {
-    userRegister,
     sendMailVerification,
     forgotPassword,
     loginUser,
     addReservation,
     updateReservation,
-    updatePrivacyAndMarketing,
     updateMemInfo,
     userProfile,
     updateProfile,
     refreshToken,
+    registerAndUpdateConsent
 }

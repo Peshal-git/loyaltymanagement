@@ -26,7 +26,8 @@ const PrivacySchema = new mongoose.Schema({
 
 const MarketingSchema = new mongoose.Schema({
     hasGivenMarketingConsent: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     createdAt: {
         type: Date,
