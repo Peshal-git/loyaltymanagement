@@ -29,3 +29,7 @@ hbs.registerHelper('makeTime', function (value) {
         return "Time not available"
     }
 })
+
+hbs.registerHelper('isActive', function (currentPage, page) {
+    return currentPage === page ? 'active' : '';
+});

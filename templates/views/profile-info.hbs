@@ -1,109 +1,101 @@
-        {{>navbar}}
-        <div class="form-div">
-            <form action="/update-profileinfo?id={{user.id}}" method="POST">
-                <div>
-                    <label for="a">Member Id:</label>
-                    <input type="text" name="memberId" value="{{user.memberId}}"
-                        readonly="readonly">
-                </div>
-
-                <br>
-                <br>
-
-                <div>
-                    <label for="b">Name:</label>
-                    <input class="editable" type="text" name="name"
-                        value="{{user.name}}"
-                        readonly>
-                    <button type="button" class="edit-button">Edit</button>
-                </div>
-
-                <br>
-                <br>
-
-                <div>
-                    <label for="c">Email:</label>
-                    <input class="editable" type="text" name="email"
-                        value="{{user.email}}" readonly>
-                    <button type="button" class="edit-button">Edit</button>
-                </div>
-
-                <br>
-                <br>
-
-                <div>
-                    <label for="d">Mobile:</label>
-                    <input class="editable" type="text" name="mobile"
-                        value="{{user.mobile}}" readonly>
-                    <button type="button" class="edit-button">Edit</button>
-                </div>
-
-                <br>
-                <br>
-
-                <div>
-                    <label for="e">Preferred Language:</label>
-                    <input class="editable" type="text" name="lang"
-                        value="{{user.language}}" readonly>
-                    <button type="button" class="edit-button">Edit</button>
-                </div>
-
-                <br>
-                <br>
-
-                <div>
-                    <label for="f">Date of Birth:</label>
-                    <input class="editable" type="text" name="dob"
-                        value="{{mmddyyyy}}" readonly>
-                    <button type="button" class="edit-button">Edit</button>
-                </div>
-
-                <br>
-                <br>
-
-                <div>
-                    <label for="g">Member Since:</label>
-                    <input type="text" name="createdAt" value="{{makeDate user.createdAt}}"
-                        readonly>
-                </div>
-
-                <br>
-                <br>
-
-                <div>
-                    <label for="h">Updated Date:</label>
-                    <input type="text" name="updatedAt" value="{{makeDate user.updatedAt}}"
-                        readonly>
-                </div>
-
-                 <div class="lastbuttons">
-                    <input class="update-button" type="submit" value="Update">
-                    <a href="/delete-user/?id={{user.id}}"
-                    class="delete-button">Delete</a>
-                </div>
-
-            </form>
+{{>navbar}}
+  <div class="whole-form">
+    <form class="profile-form" action="/update-profileinfo?id={{user.id}}" method="POST">
+      <div class="left-column">
+        <div class="form-group">
+          <label for="a">Member Id:</label>
+          <input type="text" name="memberId" value="{{user.memberId}}" readonly="readonly">
         </div>
-    </body>
-    <script> 
+        
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <div class="input-wrapper">
+            <input class="editable" type="text" name="name" value="{{user.name}}" readonly>
+            <span class="edit-icon">&#9998;</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <div class="input-wrapper">
+          <input class="editable" type="text" name="email" value="{{user.email}}" readonly>
+          <span class="edit-icon">&#9998;</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="mobile">Mobile:</label>
+          <div class="input-wrapper">
+          <input class="editable" type="text" name="mobile" value="{{user.mobile}}" readonly>
+          <span class="edit-icon">&#9998;</span>
+          </div>
+        </div>
+      </div>
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const editButtons = document.querySelectorAll(".edit-button");
-            const inputFields = document.querySelectorAll(".editable");
+      <div class="right-column">
+        <div class="form-group">
+          <label for="language">Preferred Language:</label>
+          <div class="input-wrapper">
+          <input class="editable" type="text" name="lang" value="{{user.language}}" readonly>
+          <span class="edit-icon">&#9998;</span>
+          </div>
+        </div>
 
-            editButtons.forEach((button, index) => {
-                button.addEventListener("click", function() {
-                    if (button.innerText === "Edit") {
-                        inputFields[index].removeAttribute("readonly");
-                        console.log(inputFields[index])
-                        button.innerText = "Save";
-                        
-                    } else {
-                        button.innerText = "Edit";
-                        inputFields[index].setAttribute("readonly", "readonly");
-                    }
-                });
-            });
+        <div class="form-group">
+          <label for="dob">Date of Birth:</label>
+          <div class="input-wrapper">
+          <input class="editable" type="text" name="dob" value="{{mmddyyyy}}" readonly>
+          <span class="edit-icon">&#9998;</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="createdDate">Member Since:</label>
+          <input type="text" name="createdAt" value="{{makeDate user.createdAt}}" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="updatedDate">Updated Date:</label>
+          <input type="text" name="updatedAt" value="{{makeDate user.updatedAt}}" readonly>
+        </div>
+
+        <div class="lastbuttons">
+        <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
+        <a href="/delete-user/?id={{user.id}}" class="delete-button">&#x1F5D1; Delete</a>
+        </div>
+
+      </div>
+      
+    </form>
+  
+  
+</div>
+</body>
+
+<script>
+  document.querySelectorAll('.form-group').forEach(group => {
+    const inputField = group.querySelector('.editable');
+    const editIcon = group.querySelector('.edit-icon');
+
+    if (inputField && editIcon) {
+        editIcon.addEventListener('click', function() {
+            inputField.removeAttribute('readonly'); // Make the input editable
+            inputField.focus(); // Set focus to the input field
+
+            const end = inputField.value.length;
+            inputField.setSelectionRange(end, end);
         });
-    </script>
+
+        inputField.addEventListener('focus', function() {
+            editIcon.style.visibility = 'hidden'; // Hide the icon when input is focused
+        });
+
+        inputField.addEventListener('blur', function() {
+            editIcon.style.visibility = 'visible'; // Show the icon when input loses focus
+        });
+    }
+  });
+
+</script>
+
 </html>

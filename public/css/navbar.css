@@ -1,0 +1,344 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inknut Antiqua", serif;
+}
+
+body {
+  min-height: 100vh;
+  background: #fff;
+  margin-top: 80px;
+  margin-left: 300px;
+}
+
+/* Top Navigation Bar */
+.top-nav {
+  position: fixed;
+  width: calc(100% - 300px); /* Adjusted to not overlap with the sidebar */
+  left: 300px; /* Start next to the sidebar */
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2C2F3A;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 1.2rem;
+  z-index: 1;
+}
+
+.top-nav a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.top-nav a:hover {
+  background-color: #fff;
+  color: #161a2d;
+}
+
+.top-nav .dashboard-link {
+  font-weight: 500;
+}
+
+.top-nav .logout-link .material-symbols-outlined {
+  font-size: 1.5rem;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  background: #667391;
+  padding: 25px 20px;
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+
+.sidebar .sidebar-header {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar .sidebar-header img {
+  width: 42px;
+}
+
+.sidebar .sidebar-header h2 {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  white-space: nowrap;
+  margin-left: 23px;
+}
+
+.sidebar-links h4 {
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+  margin: 10px 0;
+  position: relative;
+}
+
+.sidebar-links h4 span {
+  opacity: 1;
+}
+
+.sidebar-links .menu-separator {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(1);
+  transform: translateY(-50%);
+  background: #fff;
+  transform-origin: right;
+  transition-delay: 0.2s;
+}
+
+.sidebar-links {
+  list-style: none;
+  height: 80%;
+  scrollbar-width: none;
+}
+
+.sidebar-links::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar-links li a {
+  display: flex;
+  align-items: center;
+  gap: 0 20px;
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+  padding: 15px 10px;
+  text-decoration: none;
+  transition: 0.2s ease;
+  border-radius: 4px;
+}
+
+.sidebar-links li a:hover {
+  color: #161a2d;
+  background: #fff;
+}
+
+.sidebar:hover {
+  background: #667391;
+}
+
+.whole-form {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #ffffff;
+  flex-shrink: 0;
+}
+
+.profile-form, .systemdata-form, .privacy-form, .membership-form, .rdetails-form {
+  display: flex;
+  gap: 50px;
+  width: 1000px;
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+.systemdata-form{
+  flex-direction: column;
+  gap: 0px;
+}
+
+.left-column,
+.right-column {
+  width: 50%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.name-fields {
+  display: flex;
+  gap: 10px;
+}
+
+.name-fields input {
+  flex: 1;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"]{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #F5F5F5;
+  font-size: 1rem;
+}
+  
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus{
+  border-color: #667391; /* Optional: Change border color on focus */
+  background-color: #c9cfda;
+  outline: none;
+}
+
+.spacer {
+  height: 110px; /* Adjust height to control spacing */
+  width: 100%; /* Ensures full width in flex column */
+}
+
+.centered-table {
+  width: 100%;
+  border-collapse: collapse; /* Remove space between cells */
+}
+
+.centered-table th,
+.centered-table td {
+  padding: 10px; /* Add padding for readability */
+  text-align: center; /* Center-align text */
+  border-bottom: 1px solid #ddd; /* Light border below each row */
+}
+
+.centered-table th {
+  background-color: #f4f4f4; /* Light background color for headers */
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.centered-table a {
+  color: #007BFF; /* Link color */
+  text-decoration: none; /* Remove underline */
+}
+
+.centered-table a:hover {
+  text-decoration: underline; /* Underline on hover for links */
+}
+
+.centered-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Subtle row striping */
+}
+
+.centered-table tbody tr:hover {
+  background-color: #f1f1f1; /* Row highlight on hover */
+}
+
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.editable {
+  width: 100%;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+.edit-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #667391;
+  cursor: pointer;
+}
+
+.lastbuttons {
+  display: flex; /* Enable flexbox layout */
+  justify-content: center; /* Center the buttons horizontally */
+  gap: 20px; /* Space between buttons, adjust as needed */
+  float: right;
+}
+
+.lastbuttons .update-button, 
+.lastbuttons .delete-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px; /* Adjust space between icon and text */
+  padding: 10px 15px; /* Adjust padding for better button appearance */
+  font-size: 18px;
+  width: 200px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.lastbuttons .delete-button {
+  background-color: #d75f5f; /* Background color for delete button */
+  color: white; /* Text color */
+}
+
+.lastbuttons .update-button {
+  background-color: #6c7c9f; /* Background color for update button */
+  color: white; /* Text color */
+}
+
+.lastbuttons .update-button:hover,
+.lastbuttons .delete-button:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.addreservation-button {
+  margin-top: 10px; 
+  /* width: 100%; */
+  /* border-collapse: collapse; */
+  float: right;
+}
+
+.single-column{
+  width: 90%;
+  margin: 0 auto; /* Center the table on the page */
+}
+
+.addreservation-button .add-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px; /* Adjust space between icon and text */
+  padding: 10px 15px; /* Adjust padding for better button appearance */
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 5px; /* Rounded corners */
+  background-color: green; /* Background color for add button */
+  color: white; /* Text color */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.addreservation-button .add-button:hover {
+  background-color: #005700; /* Darker shade on hover for add button */
+}
+
+.sidebar-links a.active {
+  color: #ffffff;  
+  border-left: 4px solid #D5DCE4;  
+}

@@ -1,20 +1,18 @@
         {{>navbar}}
-        <div class="form-div">
-            <form>
+        <div class="whole-form">
+            <form class="systemdata-form">
 
                 {{#if user.systemData.password}}
-                <div>
+                <div class="form-group">
                     <label for="a">Password:</label>
                     <input type="text" name="password" value="{{user.systemData.password}}"
                         readonly="readonly">
                 </div>
                 {{/if}}    
 
-                <br>
-                <br>
-
+                
                 {{#if user.systemData.authentication}}
-                <div>
+                <div class="form-group">
                     <label for="b">Authentication:</label>
                     <input type="text" name="authentication"
                         value="{{user.systemData.authentication}}"

@@ -1,5 +1,7 @@
 {{>navbar}}
-<table class="centered-table">
+
+<div class="single-column">
+    <table class="centered-table">
     <thead>
         <tr>
             <th>Transaction Code</th>
@@ -15,5 +17,12 @@
         {{/each}}
     </tbody>
 </table>
+
+<div class="addreservation-button"> 
+    <a href="/add-reservation?id={{user.id}}" class="add-button">&#x271A; Add reservation</a>
+</div>
+
+</div>
+
 </body>
 </html>

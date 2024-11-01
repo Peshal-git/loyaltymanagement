@@ -186,7 +186,7 @@ const profileInformation = async (req, res) => {
         const formattedDate = userToShow.dob.toISOString().split('T')[0]
         const parts = formattedDate.split('-');
         const mmddyyyy = `${parts[1]}-${parts[2]}-${parts[0]}`;
-        return res.render('profile-info', { user: userToShow, mmddyyyy })
+        return res.render('profile-info', { user: userToShow, mmddyyyy, activePage: 'profile'})
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -199,7 +199,7 @@ const systemData = async (req, res) => {
     try {
         const id = req.query.id
         const userToShow = await User.findOne({ _id: id })
-        return res.render('system-data', { user: userToShow })
+        return res.render('system-data', { user: userToShow, activePage: 'system' })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -212,7 +212,7 @@ const privacyAndPreferences = async (req, res) => {
     try {
         const id = req.query.id
         const userToShow = await User.findOne({ _id: id })
-        return res.render('privacy-preference', { user: userToShow })
+        return res.render('privacy-preference', { user: userToShow, activePage: 'privacy' })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -225,7 +225,7 @@ const membershipInformation = async (req, res) => {
     try {
         const id = req.query.id
         const userToShow = await User.findOne({ _id: id })
-        return res.render('membership-info', { user: userToShow })
+        return res.render('membership-info', { user: userToShow, activePage: 'membership' })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -239,7 +239,7 @@ const reservationInformation = async (req, res) => {
         const id = req.query.id
         const requestedUser = await User.findOne({ _id: id })
 
-        return res.render('reservation-info', { user: requestedUser })
+        return res.render('reservation-info', { user: requestedUser, activePage: 'reservation' })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -255,7 +255,7 @@ const reservationDetails = async (req, res) => {
         const userToShow = await User.findById(id)
         const reservationObj = userToShow.reservation[reservationIndex]
 
-        return res.render('reservation-details', { user: userToShow, reservationObj, reservationIndex })
+        return res.render('reservation-details', { user: userToShow, reservationObj, reservationIndex, activePage: 'reservation' })
     } catch (error) {
         return res.status(400).json({
             success: false,
