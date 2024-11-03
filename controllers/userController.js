@@ -25,10 +25,8 @@ const profilePage = async (req, res) => {
         else {
             userData = req.user
         }
-        const formattedDate = userData.dob.toISOString().split('T')[0]
-        const parts = formattedDate.split('-');
-        const mmddyyyy = `${parts[1]}-${parts[2]}-${parts[0]}`;
-        res.render('user-profile', { user: userData, mmddyyyy })
+
+        res.render('user-profile', { user: userData })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -86,7 +84,8 @@ const updateAdditionalInfoAndConsent = async (req, res) => {
             "marketing.hasGivenMarketingConsent": hasGivenMarketingConsent,
             "privacy.createdAt": privacyCreated,
             "marketing.createdAt": marketingCreated,
-        };
+            "membershipInfo.pointsAvailable": 100.00   
+        }
 
         const updatedUser = await User.findByIdAndUpdate(id, { $set: data }, { new: true });
 

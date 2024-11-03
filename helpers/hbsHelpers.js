@@ -33,3 +33,8 @@ hbs.registerHelper('makeTime', function (value) {
 hbs.registerHelper('isActive', function (currentPage, page) {
     return currentPage === page ? 'active' : '';
 });
+
+hbs.registerHelper("formatPoints", function (points) {
+    return points.toFixed(2);
+  });
+  

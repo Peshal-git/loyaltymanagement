@@ -391,6 +391,9 @@ const registerAndUpdateConsent = async (req, res) => {
             marketing: {
                 hasGivenMarketingConsent: hasGivenMarketingConsent,
                 createdAt: new Date(),
+            },
+            membershipInfo: {
+                pointsAvailable: 100.00
             }
         });
 
