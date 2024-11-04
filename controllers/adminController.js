@@ -142,16 +142,20 @@ const deleteUser = async (req, res) => {
             res.redirect('/dashboard')
         }
         else {
-            return res.status(400).json({
-                success: false,
-                msg: "Cannot delete admin"
-            })
+            let userData = await User.find()
+            const query = req.query.search
+            if (query) {
+                userData = await User.find({
+                    $or: [
+                        { name: { $regex: query, $options: 'i' } },
+                        { email: { $regex: query, $options: 'i' } },
+                    ],
+                })
+            }
+            res.render('admin-dashboard', {user: userData, error: "Cannot delete admin"})
         }
     } catch (error) {
-        return res.status(400).json({
-            success: false,
-            msg: error.message
-        })
+        res.render('admin-dashboard', {error: error.message})
     }
 }
 

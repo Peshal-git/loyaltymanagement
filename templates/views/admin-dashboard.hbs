@@ -12,7 +12,7 @@
 </head>
 <body>
     <nav class="top-nav">
-    <a href="#" class="dashboard-link">
+    <a href="/" class="dashboard-link">
       <img src="/images/vikasa-name.png" alt="Vikasa">
     </a>
     <div class="nav-links">
@@ -23,8 +23,6 @@
 <div class="main-container">
 <div class="container">
   <div class="header">
-
-    
         <div class="search-container">
             <form action="/dashboard" method="GET">
                 <input type="text" class="search-bar" name="search" placeholder="Search...">
@@ -79,6 +77,9 @@
     </tbody>
   </table>
 
+    {{#if error}}
+    <h4 style="color: #CD5C5C;">{{error}}</h4>
+    {{/if}}
     {{#if message}}
         <h3 style="color: #667391;">{{message}}</h3>
     {{/if}}
