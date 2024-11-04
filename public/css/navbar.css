@@ -342,3 +342,7 @@ input[type="date"]:focus{
   color: #ffffff;  
   border-left: 4px solid #D5DCE4;  
 }
+
+.single-column p{
+  padding: 20px;
+}

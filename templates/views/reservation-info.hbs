@@ -1,6 +1,7 @@
 {{>navbar}}
 
 <div class="single-column">
+    {{#if user.reservation.length}}
     <table class="centered-table">
     <thead>
         <tr>
@@ -17,6 +18,9 @@
         {{/each}}
     </tbody>
 </table>
+{{else}}
+    <p>No reservations yet.</p>
+{{/if}}
 
 <div class="addreservation-button"> 
     <a href="/add-reservation?id={{user.id}}" class="add-button">&#x271A; Add reservation</a>

@@ -35,6 +35,10 @@ hbs.registerHelper('isActive', function (currentPage, page) {
 });
 
 hbs.registerHelper("formatPoints", function (points) {
+    if (points === undefined || isNaN(points)) {
+        return "0.00";
+    }
     return points.toFixed(2);
-  });
+});
+
   

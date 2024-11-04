@@ -23,7 +23,7 @@
             <div class="left-column">
                 <div class="form-group">
                     <label for="mobileInput">Enter your mobile number:</label>
-                    <input type="tel" id="mobileInput" name="mobile" pattern="[0-9]*" value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}" placeholder="Please enter a valid number">
+                    <input type="tel" name="mobile" pattern="[0-9]*" value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}" placeholder="Please enter a valid number">
                 </div>
     
                 <div class="form-group checkboxes">
@@ -35,7 +35,7 @@
             <div class="right-column">
                 <div class="form-group">
                     <label for="dateInput">Enter your date of birth:</label>
-                    <input type="date" id="dateInput" name="dob" value="{{#if enteredFields.dob}}{{enteredFields.dob}}{{/if}}">
+                    <input type="date" id="date-input" max="" name="dob" value="{{#if enteredFields.dob}}{{enteredFields.dob}}{{/if}}">
                 </div>
        
                 <button type="submit" class="register-button">Continue</button>
@@ -48,4 +48,8 @@
     </div>
 
 </body>
+<script>
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById("date-input").setAttribute("max",today);
+</script>
 </html>
