@@ -176,61 +176,31 @@ const loginUser = async (req, res) => {
     }
 }
 
-const addReservation = async (req, res) => {
+const addTransaction = async (req, res) => {
     try {
         const {
             memberId,
-            transactionDate,
-            transactionTime,
-            outletcode,
-            shiftcode,
-            checkNo,
-            reference,
-            folioNo,
-            roomNo,
-            guestNo,
-            tranCode,
-            billRemark,
-            paymentRemark,
-            paymentFlag,
+            spendingType,
             amount,
-            tax,
-            additionalTax,
-            service } = req.body
+            pointsGained,
+            tranCode
+        } = req.body
 
         const existingProfile = await User.findOne({ memberId })
 
-        const dotTime = transactionTime
-        const timeParts = dotTime.split(':');
-        const timeWithSecs = `${timeParts[0]}:${timeParts[1]}:00`
-
-        const transDateAndTime = new Date(`${transactionDate}T${timeWithSecs}`);
-
         if (existingProfile) {
-            existingProfile.reservation.push({
-                transactionDateTime: transDateAndTime,
-                outletcode,
-                shiftcode,
-                checkNo,
-                reference,
-                folioNo,
-                roomNo,
-                guestNo,
-                tranCode,
-                billRemark,
-                paymentRemark,
-                paymentFlag,
+            existingProfile.transaction.push({
+                spendingType,
                 amount,
-                tax,
-                additionalTax,
-                service
+                pointsGained,
+                tranCode
             })
         }
         const updatedProfile = await existingProfile.save()
 
         return res.status(200).json({
             success: true,
-            msg: "Reservation added successfully",
+            msg: "Transaction added successfully",
             user: updatedProfile
         })
 
@@ -242,7 +212,7 @@ const addReservation = async (req, res) => {
     }
 }
 
-const updateReservation = async (req, res) => {
+const updateTransaction = async (req, res) => {
     try {
         const errors = validationResult(req)
 
@@ -257,52 +227,21 @@ const updateReservation = async (req, res) => {
         const {
             reservationIndex,
             memberId,
-            transactionDate,
-            transactionTime,
-            outletcode,
-            shiftcode,
-            checkNo,
-            reference,
-            folioNo,
-            roomNo,
-            guestNo,
-            tranCode,
-            billRemark,
-            paymentRemark,
-            paymentFlag,
+            spendingType,
             amount,
-            tax,
-            additionalTax,
-            service } = req.body
+            pointsGained,
+            tranCode
+        } = req.body
 
         const existingProfile = await User.findOne({ memberId })
 
-        const mmddyyyy = transactionDate
-        const parts = mmddyyyy.split('-');
-        const dateInYyyymmdd = `${parts[2]}-${parts[0]}-${parts[1]}`
-
-        const transDateAndTime = new Date(`${dateInYyyymmdd}T${transactionTime}`);
-
         if (existingProfile) {
-            if (reservationIndex >= 0 && reservationIndex < existingProfile.reservation.length) {
-                existingProfile.reservation[reservationIndex] = {
-                    transactionDateTime: transDateAndTime,
-                    outletcode,
-                    shiftcode,
-                    checkNo,
-                    reference,
-                    folioNo,
-                    roomNo,
-                    guestNo,
-                    tranCode,
-                    billRemark,
-                    paymentRemark,
-                    paymentFlag,
+            if (reservationIndex >= 0 && reservationIndex < existingProfile.transaction.length) {
+                existingProfile.transaction[reservationIndex] = {
+                    spendingType,
                     amount,
-                    tax,
-                    additionalTax,
-                    service
-
+                    pointsGained,
+                    tranCode
                 }
             } else {
                 console.log('Index out of bounds')
@@ -314,7 +253,7 @@ const updateReservation = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            msg: "Reservation updated successfully",
+            msg: "Transaction updated successfully",
             user: updatedProfile
         })
 
@@ -393,9 +332,9 @@ const registerAndUpdateConsent = async (req, res) => {
                 createdAt: new Date(),
             },
             membershipInfo: {
-                pointsAvailable: 100.00
+                pointsAvailable: 0.00
             }
-        });
+        })
 
         // Save user data
         const userData = await user.save();
@@ -438,7 +377,7 @@ const registerAndUpdateConsent = async (req, res) => {
             error: error.message
         });
     }
-};
+}
 
 
 const updateMemInfo = async (req, res) => {
@@ -580,8 +519,8 @@ module.exports = {
     sendMailVerification,
     forgotPassword,
     loginUser,
-    addReservation,
-    updateReservation,
+    addTransaction,
+    updateTransaction,
     updateMemInfo,
     userProfile,
     updateProfile,

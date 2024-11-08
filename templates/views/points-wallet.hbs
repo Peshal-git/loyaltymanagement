@@ -1,0 +1,36 @@
+{{>navbar}}
+
+<div class="single-column">
+    {{#if user.transaction.length}}
+<table class="centered-table">
+    <thead>
+        <tr>
+            <th>Transaction Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each user.transaction}}
+        <tr>
+            <td>
+                <a href="/transaction-details/?id={{../user._id}}&reservationIndex={{@index}}" class="full-link">
+                    {{startFromOne @index}}. {{this.tranCode}}
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{else}}
+    <p>No transaction yet.</p>
+{{/if}}
+
+<div class="addreservation-button"> 
+    <a href="/add-transaction?id={{user.id}}" class="add-button">&#x271A; Add transaction</a>
+</div>
+
+</div>
+
+</div>
+</body>
+</html>

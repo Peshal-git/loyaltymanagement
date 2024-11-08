@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile</title>
+  <title>Vikasa</title>
   <link rel="stylesheet" href="/css/navbar.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,33 +12,47 @@
 </head>
 <body>
   <!-- Top Navigation Bar -->
-  <nav class="top-nav">
-    {{!-- <a href="/" class="dashboard-link">
-      <span class="material-symbols-outlined">dashboard</span>
-    </a> --}}
+  {{!-- <nav class="top-nav">
+    <a href="/" class="dashboard-link">
+      <span class="material-symbols-outlined">dashboard</span> Home
+    </a>
     <a href="/" class="dashboard-link">
       <span>{{user.name}}</span>
     </a>
     <a href="/logout" class="logout-link">
-      <span class="material-symbols-outlined">logout</span>
+      <span class="material-symbols-outlined">logout</span> Logout
     </a>
-  </nav>
+  </nav> --}}
 
+  <nav class="top-nav">
+    <a href="#" class="dashboard-link">
+      <span>{{user.name}}</span>
+    </a>
+    <div class="nav-links">
+        <a href="/" class="home-link">Home</a>
+        <a href="/logout" class="logout-link">Logout</a>
+    </div>
+  </nav>
   <!-- Sidebar -->
   <aside class="sidebar">
+    <a href="/">
     <div class="sidebar-header">
       <img src="/images/vikasa-no-name.png" alt="logo" />
       <h2>Vikasa</h2>
     </div>
+    </a>
     <ul class="sidebar-links">
       <h4><span>-------------------------------</span></h4>
       <li><a href="/profile-info?id={{user.id}}" class="{{isActive activePage 'profile'}}"><span class="material-symbols-outlined"> account_circle </span>Profile</a></li>
       <li><a href="/privacy-pref?id={{user.id}}" class="{{isActive activePage 'privacy'}}"><span class="material-symbols-outlined"> settings </span>Privacy and Preference</a></li>
       <li><a href="/membership-info?id={{user.id}}" class="{{isActive activePage 'membership'}}"><span class="material-symbols-outlined"> groups </span>Membership Info</a></li>
-      <li><a href="/reservation-info?id={{user.id}}" class="{{isActive activePage 'reservation'}}"><span class="material-symbols-outlined"> flag </span>Reservation Info</a></li>
-      <li><a href="/system-data?id={{user.id}}" class="{{isActive activePage 'system'}}"><span class="material-symbols-outlined"> folder </span>System Data</a></li>
-      <li><a href="/"><span class="material-symbols-outlined"> dashboard </span>Back to Dashboard</a></li>
+      <li><a href="/points-wallet?id={{user.id}}" class="{{isActive activePage 'pointsWallet'}}"><span class="material-symbols-outlined"> flag </span>Points Wallet</a></li>
+      <li><a href="/redemption?id={{user.id}}" class="{{isActive activePage 'redemption'}}"><span class="material-symbols-outlined"> folder </span>Redemptions</a></li>
+      <li><a href="/discounts?id={{user.id}}" class="{{isActive activePage 'discounts'}}"><span class="material-symbols-outlined"> dashboard </span>Discounts</a></li>
       <li><a href="/logout"><span class="material-symbols-outlined"> logout </span>Logout</a></li>
     </ul>
 
   </aside>
+  <div class="main-container">
+
+  

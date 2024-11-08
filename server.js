@@ -2,9 +2,11 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const path = require('path')
 require('./helpers/hbsHelpers')
+const initPricingScheme = require('./helpers/initPricingScheme')
 
-mongoose.connect(`${process.env.MONGODB_URI}/${process.env.DB_NAME}`).then(() => {
+mongoose.connect(`${process.env.MONGODB_URI}/${process.env.DB_NAME}`).then(async () => {
     console.log("Connected to database")
+    await initPricingScheme();
 })
 
 const express = require('express')

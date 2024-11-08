@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const Pricing = require('../models/pricingModel')
 const moment = require('moment')
 const CsvParser = require('json2csv').Parser
 
@@ -34,10 +35,12 @@ const adminDashboard = async (req, res) => {
     }
 }
 
-const addReservationPage = async (req, res) => {
+const addTransactionPage = async (req, res) => {
     try {
         const { id } = req.query
-        res.render('add-reservation', { id })
+        const user = await User.findById(id)
+
+        res.render('add-transaction', { user, id })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -46,67 +49,43 @@ const addReservationPage = async (req, res) => {
     }
 }
 
-const makeReservation = async (req, res) => {
+const makeTransaction = async (req, res) => {
     try {
         const { id } = req.query
         const user = await User.findById(id)
-        const { transactionDate,
-            transactionTime,
-            outletcode,
-            shiftcode,
-            checkNo,
-            reference,
-            folioNo,
-            roomNo,
-            guestNo,
-            tranCode,
-            billRemark,
-            paymentRemark,
-            paymentFlag,
+        const { 
+            spendingType,
             amount,
-            tax,
-            additionalTax,
-            service } = req.body
+            pointsGained,
+            tranCode
+         } = req.body
 
         const enteredFields = req.body
 
         const tranCodes = await User.aggregate([
-            { $unwind: "$reservation" },
-            { $project: { _id: 0, tranCode: "$reservation.tranCode" } }
+            { $unwind: "$transaction" },
+            { $project: { _id: 0, tranCode: "$transaction.tranCode" } }
         ])
 
         const tranCodeValues = tranCodes.map(item => item.tranCode)
-        const tranCodeExists = tranCodeValues.includes(Number(tranCode))
+        const tranCodeExists = tranCodeValues.includes(tranCode)
 
         if (tranCodeExists) {
             const error = 'Transaction code already exists. Try a new one.'
-            return res.render('add-reservation', { error, id, enteredFields })
+            return res.render('add-transaction', { error, id, enteredFields })
         }
 
-        const response = await fetch(`${API_BASE_URL}/api/add-reservation`, {
+        const response = await fetch(`${API_BASE_URL}/api/add-transaction`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 memberId: user.memberId,
-                transactionDate,
-                transactionTime,
-                outletcode,
-                shiftcode,
-                checkNo,
-                reference,
-                folioNo,
-                roomNo,
-                guestNo,
-                tranCode,
-                billRemark,
-                paymentRemark,
-                paymentFlag,
+                spendingType,
                 amount,
-                tax,
-                additionalTax,
-                service
+                pointsGained,
+                tranCode
             })
         })
 
@@ -118,10 +97,10 @@ const makeReservation = async (req, res) => {
 
         if (responseData?.errors) {
             const error = responseData?.errors[0]?.msg
-            return res.render('add-reservation', { error, id })
+            return res.render('add-transaction', { error, id })
         }
 
-        const message = "Reservation Done"
+        const message = "Transaction Done"
         req.session.reservationMessage = message
         return res.redirect('/dashboard')
 
@@ -159,19 +138,19 @@ const deleteUser = async (req, res) => {
     }
 }
 
-const deleteReservation = async (req, res) => {
+const deleteTransaction = async (req, res) => {
     try {
         const { id, reservationIndex } = req.query
         const requestedUser = await User.findById(id)
 
-        if (reservationIndex < 0 || reservationIndex >= requestedUser.reservation.length) {
+        if (reservationIndex < 0 || reservationIndex >= requestedUser.transaction.length) {
             return res.status(400).json({
                 success: false,
                 msg: 'Invalid reservation index'
             });
         }
 
-        requestedUser.reservation.splice(reservationIndex, 1);
+        requestedUser.transaction.splice(reservationIndex, 1);
         await requestedUser.save();
         res.redirect('/dashboard')
 
@@ -199,11 +178,11 @@ const profileInformation = async (req, res) => {
     }
 }
 
-const systemData = async (req, res) => {
+const redemption = async (req, res) => {
     try {
         const id = req.query.id
         const userToShow = await User.findOne({ _id: id })
-        return res.render('system-data', { user: userToShow, activePage: 'system' })
+        return res.render('redemption', { user: userToShow, activePage: 'redemption' })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -229,6 +208,14 @@ const membershipInformation = async (req, res) => {
     try {
         const id = req.query.id
         const userToShow = await User.findOne({ _id: id })
+
+        const totalPoints = userToShow.transaction.reduce((total, transaction) => {
+            return total + (transaction.pointsGained || 0)
+          }, 0)
+        
+        userToShow.membershipInfo.pointsAvailable = totalPoints;
+        await userToShow.save();
+        
         return res.render('membership-info', { user: userToShow, activePage: 'membership' })
     } catch (error) {
         return res.status(400).json({
@@ -238,12 +225,12 @@ const membershipInformation = async (req, res) => {
     }
 }
 
-const reservationInformation = async (req, res) => {
+const pointsWallet = async (req, res) => {
     try {
         const id = req.query.id
         const requestedUser = await User.findOne({ _id: id })
 
-        return res.render('reservation-info', { user: requestedUser, activePage: 'reservation' })
+        return res.render('points-wallet', { user: requestedUser, activePage: 'pointsWallet' })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -252,14 +239,14 @@ const reservationInformation = async (req, res) => {
     }
 }
 
-const reservationDetails = async (req, res) => {
+const transactionDetails = async (req, res) => {
     try {
 
         const { id, reservationIndex } = req.query
         const userToShow = await User.findById(id)
-        const reservationObj = userToShow.reservation[reservationIndex]
+        const transactionObj = userToShow.transaction[reservationIndex]
 
-        return res.render('reservation-details', { user: userToShow, reservationObj, reservationIndex, activePage: 'reservation' })
+        return res.render('transaction-details', { user: userToShow, transactionObj, reservationIndex, activePage: 'pointsWallet' })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -267,6 +254,23 @@ const reservationDetails = async (req, res) => {
         })
     }
 }
+
+const discounts = async (req, res) => {
+    try {
+
+        const { id } = req.query
+        const userToShow = await User.findById(id)
+
+        return res.render('discounts', { user: userToShow, activePage: 'discounts' })
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+
 
 const updateProfile = async (req, res) => {
     try {
@@ -340,7 +344,7 @@ const updateMembershipInfo = async (req, res) => {
     }
 }
 
-const updateReservationInfo = async (req, res) => {
+const updateTransactionInfo = async (req, res) => {
     try {
         res.redirect('/dashboard')
     } catch (error) {
@@ -406,22 +410,54 @@ const getCSV = async (req, res) => {
     }
 }
 
+const getDiscount = async(req,res) => {
+    try {
+        const id = req.query.id
+        const user = await User.findOne({ _id: id })
+        const discountPercent = await Pricing.findOne({ "tierDiscount.tier": user.tier })
+        if (discountPercent.tierDiscount) {
+            res.json({ discount: discountPercent.tierDiscount.discount });
+        } else {
+            res.status(404).send('Discount not found');
+        }
+    } catch (err) {
+        res.status(500).send('Server error');
+    }
+}
+
+const getMultiplier = async(req,res) => {
+    try {
+        const typeSelected = req.query.spendingType
+        const multiplierForSpending = await Pricing.findOne({ "spendingMultiplier.spendingType": typeSelected })
+        if (multiplierForSpending.spendingMultiplier) {
+            res.json({ multiplier: multiplierForSpending.spendingMultiplier.multiplier })
+        } else {
+            res.status(404).send('Multiplier not found')
+        }
+    } catch (err) {
+        res.status(500).send('Server error');
+    }
+}
+
 module.exports = {
     adminDashboard,
-    addReservationPage,
-    makeReservation,
+    addTransactionPage,
+    makeTransaction,
     deleteUser,
-    deleteReservation,
+    deleteTransaction,
     profileInformation,
     updateProfile,
     mainlogin,
-    systemData,
+    redemption,
     privacyAndPreferences,
     membershipInformation,
-    reservationInformation,
-    reservationDetails,
+    pointsWallet,
+    transactionDetails,
+    discounts,
     updatePrivacyAndPreference,
     updateMembershipInfo,
-    updateReservationInfo,
-    getCSV
+    updateTransactionInfo,
+    getCSV,
+    getDiscount,
+    getMultiplier
 }

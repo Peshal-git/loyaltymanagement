@@ -26,6 +26,13 @@ const profilePage = async (req, res) => {
             userData = req.user
         }
 
+        const totalPoints = userData.transaction.reduce((total, transaction) => {
+            return total + (transaction.pointsGained || 0)
+        }, 0)
+        
+        userData.membershipInfo.pointsAvailable = totalPoints;
+        await userData.save();
+
         res.render('user-profile', { user: userData })
     } catch (error) {
         return res.status(400).json({
@@ -84,7 +91,7 @@ const updateAdditionalInfoAndConsent = async (req, res) => {
             "marketing.hasGivenMarketingConsent": hasGivenMarketingConsent,
             "privacy.createdAt": privacyCreated,
             "marketing.createdAt": marketingCreated,
-            "membershipInfo.pointsAvailable": 100.00   
+            "membershipInfo.pointsAvailable": 0.00
         }
 
         const updatedUser = await User.findByIdAndUpdate(id, { $set: data }, { new: true });

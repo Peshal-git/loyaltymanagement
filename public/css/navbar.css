@@ -38,7 +38,13 @@ body {
   transition: background-color 0.2s ease;
 }
 
-.top-nav a:hover {
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.top-nav .logout-link:hover, .home-link:hover,
+.top-nav .activities-link:hover {
   background-color: #fff;
   color: #161a2d;
 }
@@ -47,9 +53,11 @@ body {
   font-weight: 500;
 }
 
-.top-nav .logout-link .material-symbols-outlined {
+.top-nav .logout-link .material-symbols-outlined,
+.top-nav .home-link .material-symbols-outlined {
   font-size: 1.5rem;
 }
+
 
 /* Sidebar */
 .sidebar {
@@ -186,9 +194,11 @@ body {
 }
 
 input[type="text"],
+input[type="number"],
 input[type="email"],
 input[type="tel"],
-input[type="date"]{
+input[type="date"],
+select{
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -198,9 +208,11 @@ input[type="date"]{
 }
   
 input[type="text"]:focus,
+input[type="number"]:focus,
 input[type="email"]:focus,
 input[type="tel"]:focus,
-input[type="date"]:focus{
+input[type="date"]:focus,
+select:focus{
   border-color: #667391; /* Optional: Change border color on focus */
   background-color: #c9cfda;
   outline: none;
@@ -345,4 +357,90 @@ input[type="date"]:focus{
 
 .single-column p{
   padding: 20px;
+}
+
+.centered-table td {
+  position: relative;
+}
+
+.full-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: black;
+  padding: 8px;
+}
+
+a{
+  text-decoration: none;
+}
+
+
+/* Centering the tables container */
+.dmtable-container {
+  width: 80%;
+  margin: 0 auto; /* Centers the tables horizontally */
+  text-align: center; /* Ensures text inside the table is also centered */
+}
+
+/* Styling for both discount and multiplier tables */
+.dm-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  background-color: #f8f9fc;
+  margin-bottom: 20px; /* Adds spacing between the two tables */
+  table-layout: fixed; /* Ensures columns are spaced evenly */
+}
+
+/* Table header and cells */
+.dm-table th,
+.dm-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+/* Ensuring table headers are bold */
+.dm-table th {
+  font-weight: bold;
+  color: #555;
+}
+
+/* Set fixed width for each column to ensure equal spacing between columns */
+.dm-table th:nth-child(1),
+.dm-table td:nth-child(1) {
+  width: 50%;
+}
+
+.dm-table th:nth-child(2),
+.dm-table td:nth-child(2) {
+  width: 50%;
+}
+
+/* Table row styling */
+.dm-table tbody tr {
+  background-color: white;
+  cursor: pointer;
+}
+
+.dm-table tbody tr:hover {
+  background-color: #E1E4F0;
+  cursor: pointer;
+}
+
+/* Styling for the table data cells */
+.dm-table td {
+  color: #333;
+}
+
+/* Center the text inside the <thead> and <tbody> */
+.dm-table thead {
+  text-align: center;
+}
+
+.dm-table tbody {
+  text-align: center;
 }

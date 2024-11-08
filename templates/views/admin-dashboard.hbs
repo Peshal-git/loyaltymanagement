@@ -16,7 +16,7 @@
       <img src="/images/vikasa-name.png" alt="Vikasa">
     </a>
     <div class="nav-links">
-        <a href="/logout" class="logout-link"><span class="material-symbols-outlined">logout</span></a>
+        <a href="/logout" class="logout-link"> Logout </a>
     </div>
   </nav>
 
@@ -42,9 +42,9 @@
     <thead>
       <tr>
         <th><input type="checkbox"></th>
-        <th>Reg</th>
         <th>Member Name</th>
         <th>Email</th>
+        <th>Contact</th>
         <th></th>
       </tr>
     </thead>
@@ -52,9 +52,9 @@
         {{#each user}}
         <tr onclick="window.location.href='/profile-info?id={{this.id}}'">
         <td><input type="checkbox" onclick="event.stopPropagation(); openOptionsMenu(event);"></td>
-        <td>{{startFromOne @index}}</td>
         <td>{{this.name}}</td>
         <td>{{this.email}}</td>
+        <td>{{this.mobile}}</td>
         <td>
             <div class="options-container">
                 <img src="/images/three-dots.png" alt="Options" class="options-icon" onclick="event.stopPropagation(); toggleDropdown(event);">

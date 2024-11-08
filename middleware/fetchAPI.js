@@ -142,8 +142,13 @@ const updateMembershipInfo = async (req, res, next) => {
             })
         })
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json()
+
+        if (!data?.success) {
+            if (data?.errors) {
+                return res.render('membership-info', { error: data.errors[0].msg })
+            }
+            return res.render('membership-info', { error: data.msg })
         }
 
         next()
@@ -156,31 +161,34 @@ const updateMembershipInfo = async (req, res, next) => {
     }
 }
 
-const updateReservationInfo = async (req, res, next) => {
+const updateTransactionInfo = async (req, res, next) => {
     try {
         const { id, reservationIndex } = req.query
         const userToUpdate = await User.findById(id)
 
         const {
-            transactionDate,
-            transactionTime,
-            outletcode,
-            shiftcode,
-            checkNo,
-            reference,
-            folioNo,
-            roomNo,
-            guestNo,
-            tranCode,
-            billRemark,
-            paymentRemark,
-            paymentFlag,
+            spendingType,
             amount,
-            tax,
-            additionalTax,
-            service } = req.body
+            pointsGained,
+            tranCode    
+        } = req.body
 
-        const response = await fetch(`${API_BASE_URL}/api/update-reservation`, {
+        const enteredFields = req.body
+
+        const tranCodes = await User.aggregate([
+            { $unwind: "$transaction" },
+            { $project: { _id: 0, tranCode: "$transaction.tranCode" } }
+        ])
+
+        const tranCodeValues = tranCodes.map(item => item.tranCode)
+        const tranCodeExists = tranCodeValues.includes(tranCode)
+
+        if (tranCodeExists) {
+            const error = 'Transaction code already exists. Try a new one.'
+            return res.render('transaction-details', { error, reservationIndex, id, enteredFields, user: userToUpdate })
+        }
+
+        const response = await fetch(`${API_BASE_URL}/api/update-transaction`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -188,28 +196,20 @@ const updateReservationInfo = async (req, res, next) => {
             body: JSON.stringify({
                 reservationIndex,
                 memberId: userToUpdate.memberId,
-                transactionDate,
-                transactionTime,
-                outletcode,
-                shiftcode,
-                checkNo,
-                reference,
-                folioNo,
-                roomNo,
-                guestNo,
-                tranCode,
-                billRemark,
-                paymentRemark,
-                paymentFlag,
+                spendingType,
                 amount,
-                tax,
-                additionalTax,
-                service
+                pointsGained,
+                tranCode 
             })
         })
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json()
+
+        if (!data?.success) {
+            if (data?.errors) {
+                return res.render('transaction-details', { error: data.errors[0].msg })
+            }
+            return res.render('transaction-details', { error: data.msg })
         }
 
         next()
@@ -228,5 +228,5 @@ module.exports = {
     createToken,
     logout,
     updateMembershipInfo,
-    updateReservationInfo,
+    updateTransactionInfo
 }

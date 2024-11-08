@@ -41,4 +41,10 @@ hbs.registerHelper("formatPoints", function (points) {
     return points.toFixed(2);
 });
 
-  
+hbs.registerHelper("getValue", function(transactionField, enteredField) {
+    return transactionField || enteredField;
+});
+
+hbs.registerHelper("getTier", function(userTier, enteredField) {
+    return userTier || enteredField;
+});

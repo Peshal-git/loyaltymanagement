@@ -13,7 +13,7 @@
 <body>
   <!-- Top Navigation Bar -->
   <nav class="top-nav">
-    <a href="#" class="dashboard-link">
+    <a href="/" class="dashboard-link">
       <img src="/images/vikasa-name.png" alt="Vikasa">
     </a>
     <div class="nav-links">
@@ -89,7 +89,7 @@
         <div class="separator"></div>
         
         <div class="profile-field">
-            <label for="member-since">Member Since</label>
+            <label for="member-since">Anniversary Date</label>
             <div class="field-content">
                 <input type="text" name="member-since" value="{{makeDate user.createdAt}}" readonly>
             </div>
@@ -121,7 +121,7 @@
       <!-- Bottom Division for Credit Card -->
       <div class="credit-card">
         <div class="card-logo"><img src="/images/vikasa-logo.png" alt="Logo" width="50"></div>
-        <div class="card-type">SILVER</div>
+        <div class="card-type">{{user.tier}}</div>
         <div class="card-details">
           <div>{{user.name}}</div>
           <div>{{user.memberId}}</div>
