@@ -294,6 +294,7 @@ select:focus{
   justify-content: center;
   gap: 50px; /* Adjust space between icon and text */
   padding: 10px 15px; /* Adjust padding for better button appearance */
+  margin-bottom: 20px;
   font-size: 18px;
   width: 200px;
   border: none;
@@ -443,4 +444,8 @@ a{
 
 .dm-table tbody {
   text-align: center;
+}
+
+.dm-table .multiplier-table{
+  margin-top: 20px;
 }

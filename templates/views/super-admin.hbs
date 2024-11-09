@@ -1,0 +1,92 @@
+{{>navbar}}
+
+<div class="dmtable-container">
+
+    <form action="/discount-control?id={{user.id}}" method="POST">
+        <table class="dm-table discount-table">
+            <thead>
+                <tr>
+                    <th>Tier</th>
+                    <th>Discount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Balance</td>
+                    <td><input type="text" name="balanceDiscountp" value="{{discounts.balanceDiscount}}%" required /></td>
+                </tr>
+                <tr>
+                    <td>Vitality</td>
+                    <td><input type="text" name="vitalityDiscountp" value="{{discounts.vitalityDiscount}}%" required /></td>
+                </tr>
+                <tr>
+                    <td>Harmony</td>
+                    <td><input type="text" name="harmonyDiscountp" value="{{discounts.harmonyDiscount}}%" required /></td>
+                </tr>
+                <tr>
+                    <td>Serenity</td>
+                    <td><input type="text" name="serenityDiscountp" value="{{discounts.serenityDiscount}}%" required /></td>
+                </tr>
+            </tbody>
+        </table>
+
+        {{#if discountError}}
+        <h4 style="color: #CD5C5C;">{{discountError}}</h4>
+        {{/if}}
+        {{#if discountMessage}}
+        <h4 style="color: #667391;">{{discountMessage}}</h4>
+        {{/if}}
+
+        <div class="lastbuttons">
+            <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
+        </div>
+        
+    </form>
+
+
+    <form action="/multiplier-control?id={{user.id}}" method="POST">
+        <table class="dm-table multiplier-table">
+            <thead>
+                <tr>
+                    <th>Service Type</th>
+                    <th>Multiplier</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Life Café</td>
+                    <td><input type="text" name="lifeCafeMultiplier" value="{{multipliers.lifeCafeMultiplier}}" required /></td>
+                </tr>
+                <tr>
+                    <td>Yoga Class</td>
+                    <td><input type="text" name="yogaClassMultiplier" value="{{multipliers.yogaClassMultiplier}}" required /></td>
+                </tr>
+                <tr>
+                    <td>Vita Spa</td>
+                    <td><input type="text" name="vitaSpaMultiplier" value="{{multipliers.vitaSpaMultiplier}}" required /></td>
+                </tr>
+                <tr>
+                    <td>Retreats and YTT Packages</td>
+                    <td><input type="text" name="retreatsMultiplier" value="{{multipliers.retreatsMultiplier}}" required /></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        {{#if multiplierError}}
+        <h4 style="color: #CD5C5C;">{{multiplierError}}</h4>
+        {{/if}}
+        {{#if multiplierMessage}}
+        <h4 style="color: #667391;">{{multiplierMessage}}</h4>
+        {{/if}}
+
+        <div class="lastbuttons">
+            <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
+        </div>
+
+
+    </form>
+</div>
+</div>
+<br>
+</body>
+</html>

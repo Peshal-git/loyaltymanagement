@@ -1,7 +1,9 @@
 const User = require('../models/userModel')
 const Pricing = require('../models/pricingModel')
+const getValues = require('../helpers/getValues')
 const moment = require('moment')
 const CsvParser = require('json2csv').Parser
+
 
 const { validationResult } = require('express-validator')
 
@@ -261,7 +263,14 @@ const discounts = async (req, res) => {
         const { id } = req.query
         const userToShow = await User.findById(id)
 
-        return res.render('discounts', { user: userToShow, activePage: 'discounts' })
+        const discounts = await getValues.getDiscountValues()
+        const multipliers = await getValues.getMultiplierValues()
+
+        if (req.user?.isSuperAdmin || req.user?.user?.isSuperAdmin) {
+            return res.render('super-admin', { user: userToShow, activePage: 'discounts', discounts, multipliers })
+        } else {
+            return res.render('discounts', { user: userToShow, activePage: 'discounts', discounts, multipliers })
+        }
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -439,6 +448,101 @@ const getMultiplier = async(req,res) => {
     }
 }
 
+const updateDiscounts = async(req,res) => {
+    try {
+        const { id } = req.query
+        const userToShow = await User.findById(id)
+
+        var discounts = await getValues.getDiscountValues()
+        var multipliers = await getValues.getMultiplierValues()
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const discountError = errors.errors[0].msg
+            return res.render('super-admin', { discountError, user: userToShow, discounts, multipliers })
+        }
+
+        const {
+            balanceDiscountp,
+            vitalityDiscountp,
+            harmonyDiscountp,
+            serenityDiscountp
+        } = req.body;
+
+        const balanceDiscountNew = parseFloat(balanceDiscountp.replace('%', ''));
+        const vitalityDiscountNew = parseFloat(vitalityDiscountp.replace('%', ''));
+        const harmonyDiscountNew = parseFloat(harmonyDiscountp.replace('%', ''));
+        const serenityDiscountNew = parseFloat(serenityDiscountp.replace('%', ''));
+
+        await Pricing.updateOne({ "tierDiscount.tier": "Balance" }, { $set: { "tierDiscount.discount": balanceDiscountNew } })
+        await Pricing.updateOne({ "tierDiscount.tier": "Vitality" }, { $set: { "tierDiscount.discount": vitalityDiscountNew } })
+        await Pricing.updateOne({ "tierDiscount.tier": "Harmony" }, { $set: { "tierDiscount.discount": harmonyDiscountNew } })
+        await Pricing.updateOne({ "tierDiscount.tier": "Serenity" }, { $set: { "tierDiscount.discount": serenityDiscountNew } })
+
+        discounts = await getValues.getDiscountValues()
+        multipliers = await getValues.getMultiplierValues()
+
+        const discountMessage = "Discounts Updated"
+        return res.render('super-admin', { discountMessage, user: userToShow , activePage: 'discounts', discounts, multipliers})
+
+    } catch (error) {
+        const { id } = req.query
+        const userToShow = await User.findById(id)
+
+        console.log("Error")
+
+        const discounts = await getValues.getDiscountValues()
+        const multipliers = await getValues.getMultiplierValues()
+
+        return res.render('super-admin', { discountError: "An error occured", user: userToShow, activePage: 'discounts', discounts, multipliers  })
+    }
+}
+
+const updateMultipliers = async(req,res) => {
+    try {
+        const { id } = req.query
+        const userToShow = await User.findById(id)
+
+        var discounts = await getValues.getDiscountValues()
+        var multipliers = await getValues.getMultiplierValues()
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const multiplierError = errors.errors[0].msg
+            return res.render('super-admin', { multiplierError, user: userToShow, discounts, multipliers })
+        }
+
+        const {
+            lifeCafeMultiplier,
+            yogaClassMultiplier,
+            vitaSpaMultiplier,
+            retreatsMultiplier
+        } = req.body;
+
+        await Pricing.updateOne({ "spendingMultiplier.spendingType": "Life Café" }, { $set: { "spendingMultiplier.multiplier": lifeCafeMultiplier } })
+        await Pricing.updateOne({ "spendingMultiplier.spendingType": "Yoga Class" }, { $set: { "spendingMultiplier.multiplier": yogaClassMultiplier } })
+        await Pricing.updateOne({ "spendingMultiplier.spendingType": "Vita Spa" }, { $set: { "spendingMultiplier.multiplier": vitaSpaMultiplier } })
+        await Pricing.updateOne({ "spendingMultiplier.spendingType": "Retreats and YTT Packages" }, { $set: { "spendingMultiplier.multiplier": retreatsMultiplier } })
+
+        discounts = await getValues.getDiscountValues()
+        multipliers = await getValues.getMultiplierValues()
+
+        const multiplierMessage = "Multipliers Updated"
+        return res.render('super-admin', { multiplierMessage, user: userToShow , activePage: 'discounts', discounts, multipliers})
+
+    } catch (error) {
+        const { id } = req.query
+        const userToShow = await User.findById(id)
+
+        console.log("Error")
+
+        const discounts = await getValues.getDiscountValues()
+        const multipliers = await getValues.getMultiplierValues()
+
+        return res.render('super-admin', { multiplierError: "An error occured", user: userToShow, activePage: 'discounts', discounts, multipliers  })
+    }
+}
+
 module.exports = {
     adminDashboard,
     addTransactionPage,
@@ -459,5 +563,7 @@ module.exports = {
     updateTransactionInfo,
     getCSV,
     getDiscount,
-    getMultiplier
+    getMultiplier,
+    updateDiscounts,
+    updateMultipliers
 }

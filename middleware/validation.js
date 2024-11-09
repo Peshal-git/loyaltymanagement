@@ -100,3 +100,28 @@ exports.transactionUpdateValidator = [
     check('tranCode', 'Transaction Code is required').not().isEmpty(),
     check('amount', 'Please enter the amount').not().isEmpty()
 ]
+
+exports.discountsUpdateValidator = [
+    check('balanceDiscountp')
+        .not().isEmpty().withMessage('Fill all the fields')
+        .matches(/^\d+(\.\d+)?%?$/).withMessage('Must be a number with at most one "%" symbol'),
+    
+    check('vitalityDiscountp')
+        .not().isEmpty().withMessage('Fill all the fields')
+        .matches(/^\d+(\.\d+)?%?$/).withMessage('Must be a number with at most one "%" symbol'),
+    
+    check('harmonyDiscountp')
+        .not().isEmpty().withMessage('Fill all the fields')
+        .matches(/^\d+(\.\d+)?%?$/).withMessage('Must be a number with at most one "%" symbol'),
+    
+    check('serenityDiscountp')
+        .not().isEmpty().withMessage('Fill all the fields')
+        .matches(/^\d+(\.\d+)?%?$/).withMessage('Must be a number with at most one "%" symbol')
+];
+
+exports.multipliersUpdateValidator = [
+    check('lifeCafeMultiplier', 'Fill all the fields').not().isEmpty(),
+    check('yogaClassMultiplier', 'Fill all the fields').not().isEmpty(),
+    check('vitaSpaMultiplier', 'Fill all the fields').not().isEmpty(),
+    check('retreatsMultiplier', 'Fill all the fields').not().isEmpty()
+]

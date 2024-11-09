@@ -27,6 +27,14 @@ const adminCheck = (req, res, next) => {
     }
 }
 
+const superAdminCheck = (req, res, next) => {
+    if (req.user?.isSuperAdmin || req.user?.user?.isSuperAdmin) {
+        next()
+    } else {
+        res.redirect('/')
+    }
+}
+
 const userCheck = (req, res, next) => {
     if (!req.user) {
         res.redirect('/')
@@ -57,4 +65,5 @@ module.exports = {
     userCheck,
     loginCheck,
     consentCheck,
+    superAdminCheck
 }

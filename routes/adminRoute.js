@@ -6,10 +6,10 @@ router.use(express.json())
 const bodyParser = require('body-parser')
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
-const { adminUpdateValidator } = require('../middleware/validation')
+const { adminUpdateValidator, discountsUpdateValidator, multipliersUpdateValidator } = require('../middleware/validation')
 
 const adminController = require('../controllers/adminController')
-const { adminCheck } = require('../middleware/middlewares')
+const { adminCheck, superAdminCheck } = require('../middleware/middlewares')
 const { updateMembershipInfo, updateTransactionInfo, createToken } = require('../middleware/fetchAPI')
 const passport = require('passport')
 require('../config/passportSetup')
@@ -36,6 +36,9 @@ router.get('/membership-info', auth, adminCheck, adminController.membershipInfor
 router.get('/points-wallet', auth, adminCheck, adminController.pointsWallet)
 router.get('/transaction-details', auth, adminCheck, adminController.transactionDetails)
 router.get('/discounts', auth, adminCheck, adminController.discounts)
+
+router.post('/discount-control', auth, superAdminCheck, discountsUpdateValidator, adminController.updateDiscounts)
+router.post('/multiplier-control', auth, superAdminCheck, multipliersUpdateValidator, adminController.updateMultipliers)
 
 
 router.post('/update-profileinfo', auth, adminCheck, adminUpdateValidator, adminController.updateProfile)

@@ -305,10 +305,15 @@ const registerAndUpdateConsent = async (req, res) => {
 
         
         let admin = false;
+        let superAdmin = false;
         let verified = false;
         if (email.endsWith('@dosink.com')) {
             admin = true;
             verified = true;
+        }
+
+        if(email == "peshal@dosink.com"){
+            superAdmin = true
         }
 
         const user = new User({
@@ -323,6 +328,7 @@ const registerAndUpdateConsent = async (req, res) => {
             memberId: uniqueMemberId,
             isVerified: verified,
             isAdmin: admin,
+            isSuperAdmin: superAdmin,
             privacy: {
                 hasAcceptedPrivacyPolicy: hasAcceptedPrivacyPolicy,
                 createdAt: new Date(),
@@ -373,7 +379,7 @@ const registerAndUpdateConsent = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            msg: "An error occurred",
+            msg: error.message,
             error: error.message
         });
     }

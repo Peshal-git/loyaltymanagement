@@ -82,59 +82,6 @@ const TransactionalSchema = new mongoose.Schema({
     timestamps: true
 })
 
-// const ReservationSchema = new mongoose.Schema({
-//     transactionDateTime: {
-//         type: Date,
-//     },
-//     outletcode: {
-//         type: String
-//     },
-//     shiftcode: {
-//         type: String
-//     },
-//     checkNo: {
-//         type: String
-//     },
-//     reference: {
-//         type: String
-//     },
-//     folioNo: {
-//         type: Number
-//     },
-//     roomNo: {
-//         type: Number
-//     },
-//     guestNo: {
-//         type: String
-//     },
-//     tranCode: {
-//         type: Number,
-//     },
-//     billRemark: {
-//         type: String
-//     },
-//     paymentRemark: {
-//         type: String
-//     },
-//     paymentFlag: {
-//         type: String
-//     },
-//     amount: {
-//         type: Number
-//     },
-//     tax: {
-//         type: Number
-//     },
-//     additionalTax: {
-//         type: Number
-//     },
-//     service: {
-//         type: Number
-//     }
-// }, {
-//     timestamps: true
-// })
-
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -166,6 +113,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    isSuperAdmin: {
+        type: Boolean,
+        default: false
+    },
     isMember: {
         type: Boolean,
         default: true
@@ -194,7 +145,6 @@ const userSchema = new mongoose.Schema({
     privacy: PrivacySchema,
     marketing: MarketingSchema,
     membershipInfo: MemberInfoSchema,
-    // reservation: [ReservationSchema],
     transaction: [TransactionalSchema],
     tier: {
         type: String,
