@@ -19,7 +19,7 @@
     <div class="nav-links">
         <a href="/profile" class="activities-link">Home</a>
         <a href="/activities" class="activities-link">Activities</a>
-        <a href="/logout" class="logout-link"><span class="material-symbols-outlined">logout</span></a>
+        <a href="/logout" class="logout-link">Logout</a>
     </div>
   </nav>
 
@@ -33,7 +33,6 @@
           <label for="name">Name</label>
           <div class="field-content">
             <input class="editable" type="text" name="name" value="{{user.name}}" readonly>
-            <button type="button" class="edit-button">✎</button>
           </div>
         </div>
 
@@ -52,7 +51,7 @@
             <label for="email">Email</label>
             <div class="field-content">
                 <input type="email" class="editable" name="email" value="{{user.email}}" readonly>
-                <button type="button" class="edit-button">✎</button>
+                
             </div>
         </div>
         
@@ -62,7 +61,6 @@
             <label for="mobile">Mobile</label>
             <div class="field-content">
                 <input type="tel" class="editable" name="mobile" value="{{user.mobile}}" readonly>
-                <button type="button" class="edit-button">✎</button>
             </div>
         </div>
         
@@ -72,7 +70,7 @@
             <label for="language">Preferred Language</label>
             <div class="field-content">
                 <input type="text" class="editable" name="language" value="{{user.language}}" readonly>
-                <button type="button" class="edit-button">✎</button>
+                {{!-- <button type="button" class="edit-button">✎</button> --}}
             </div>
         </div>
         
@@ -82,7 +80,7 @@
             <label for="dob">Date of Birth</label>
             <div class="field-content">
                 <input type="text" class="editable" name="dob" value="{{makeDate user.dob}}" readonly>
-                 <button type="button" class="edit-button">✎</button>
+                 
             </div>
         </div>
         
@@ -108,7 +106,7 @@
     <!-- Right Division -->
     <div class="right-division">
       <!-- Top Division for Loyalty Card -->
-      <div class="loyalty-card">
+      {{!-- <div class="loyalty-card">
         <div class="card-content">
           <h2>Loyalty Card</h2>
           <p class="points-label">Current Points</p>
@@ -117,22 +115,47 @@
           <p class="redeem-text">Redeem your points</p>
           <img src="/images/trophy.png" alt="Trophy Icon" class="trophy-icon">
         </div>
-      </div>
-      <!-- Bottom Division for Credit Card -->
-      <div class="credit-card">
-        <div class="card-logo"><img src="/images/vikasa-logo.png" alt="Logo" width="50"></div>
-        <div class="card-type">{{user.tier}}</div>
-        <div class="card-details">
-          <div>{{user.name}}</div>
-          <div>{{user.memberId}}</div>
-        </div>
-        <div class="card-circles">
-          <div class="circle"></div>
-          <div class="circle"></div>
-        </div>
-      </div>
+      </div> --}}
+      
+
+{{!-- <div class="credit-card {{lowercase user.tier}}"> --}}
+
+    <img src="/images/balance.svg" alt="Logo" class="balance-card">
+
+    {{!-- <div class="card-logo">
+    {{#if (eq user.tier "Serenity")}}
+        <img src="/images/vikasa-logo-lighter.png" alt="Logo" width="50">
+    {{else}}
+        <img src="/images/vikasa-logo.png" alt="Logo" width="50">
+    {{/if}}
     </div>
+
+    <div class="card-type">{{user.tier}}</div>
+    <div class="card-details">
+        <div class="card-name">{{user.name}}</div>
+        <div class="card-info">
+            <div class="info-item">
+                <span class="info-value">{{makeDate user.dob}}</span>
+                <span class="label">Date of Birth</span>
+            </div>
+            <div class="info-item">
+                <span class="info-value">{{makeDate user.createdAt}}</span>
+                <span class="label">Member Since</span>
+            </div>
+            <div class="info-item">
+                <span class="info-value">{{formatPoints user.membershipInfo.pointsAvailable}}</span>
+                <span class="label">Points</span>
+            </div>
+        </div>
+    </div>
+    <div class="card-circles">
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div> --}}
+
+    {{!-- </div> --}}
   </div>
+</div>
 </body>
 <script>
   document.querySelectorAll('.profile-field').forEach(group => {

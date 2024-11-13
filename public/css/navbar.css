@@ -8,7 +8,7 @@
 body {
   min-height: 100vh;
   background: #fff;
-  margin-top: 80px;
+  margin-top: 100px;
   margin-left: 300px;
 }
 
@@ -77,10 +77,17 @@ body {
 .sidebar .sidebar-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.sidebar .sidebar-header img {
-  width: 42px;
+.logo-image {
+  width: 50px; 
+}
+
+.name-image {
+  width: 150px;
+  margin-right: 40px;
 }
 
 .sidebar .sidebar-header h2 {
@@ -336,7 +343,7 @@ select:focus{
   align-items: center;
   justify-content: center;
   gap: 5px; /* Adjust space between icon and text */
-  padding: 10px 15px; /* Adjust padding for better button appearance */
+  padding: 0px 15px; /* Adjust padding for better button appearance */
   font-size: 16px;
   border: none;
   cursor: pointer;
@@ -413,12 +420,12 @@ a{
 /* Set fixed width for each column to ensure equal spacing between columns */
 .dm-table th:nth-child(1),
 .dm-table td:nth-child(1) {
-  width: 50%;
+  width: 70%;
 }
 
 .dm-table th:nth-child(2),
 .dm-table td:nth-child(2) {
-  width: 50%;
+  width: 30%;
 }
 
 /* Table row styling */
@@ -448,4 +455,110 @@ a{
 
 .dm-table .multiplier-table{
   margin-top: 20px;
+}
+
+.points-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; 
+  background-color: #f8f9fc;
+  }
+  
+  .points-table th,
+  .points-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  }
+  
+  .points-table th {
+  font-weight: 600;
+  color: #555;
+  }
+  
+  .points-table td {
+  color: #333;
+  }
+  
+  .points-table input[type="checkbox"] {
+  cursor: pointer;
+  }
+  
+  .points-table tbody tr {
+  background-color: white; 
+  cursor: pointer;
+  }
+  
+  .points-table tbody tr:hover {
+  background-color: #E1E4F0;
+  cursor: pointer;
+  }
+  
+  .options-icon {
+  width: 20px;
+  cursor: pointer;
+  opacity: 0.7;
+  }
+  
+  .options-icon:hover {
+  opacity: 1;
+  }
+  
+  
+  .options-container {
+  position: relative; 
+  display: inline-block; 
+  }
+    
+  .options-dropdown {
+  display: none; 
+  position: absolute; 
+  right: 0; 
+  background-color: white; 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 4px; 
+  z-index: 1000; 
+  min-width: 160px;
+  }
+  
+  .options-dropdown a {
+  display: flex; 
+  align-items: center; 
+  padding: 8px 12px; 
+  color: #333; 
+  text-decoration: none;
+  }
+  
+  .options-dropdown a:hover {
+  background-color: #f0f0f0; 
+  color: #161a2d;
+  }
+  
+  .edit-icon-drop, .delete-icon-drop {
+  margin-right: 8px;
+  }
+
+.table-card {
+  background-color: #ffffff; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.1); 
+  padding: 20px; 
+  margin: 20px 0; 
+  width: 100%; 
+}
+
+.category-name {
+  border-bottom: 2px solid #555;
+  padding-bottom: 10px;
+  margin-bottom: 20px; 
+}
+
+.category-name p {
+  font-size: 18px; 
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333; 
+  margin: 0; 
+  text-align: center; 
 }

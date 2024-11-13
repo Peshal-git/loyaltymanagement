@@ -146,7 +146,7 @@ input[type="password"]:focus {
     outline: none;
 }
 
-.facebook-button, .google-button {
+.facebook-button, .google-button, .apple-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -159,19 +159,25 @@ input[type="password"]:focus {
     width: 160px;
 }
 
-.facebook-button .logo, .google-button .logo {
+.facebook-button .logo, .google-button .logo, .apple-button .logo {
     width: 30px;              /* Set the width of the logo to 30px */
     height: auto;             /* Maintain aspect ratio */
     margin-right: 8px;        /* Space between logo and text */
 }
 
-.facebook-button:hover, .google-button:hover {
+.facebook-button:hover, .google-button:hover, .apple-button:hover {
     background: linear-gradient(to bottom, #D5DCE4 0%, #8899ad 100%); /* Slightly darker on hover */
 }
 
-.facebook-button:focus, .google-button:focus {
+.facebook-button:focus, .google-button:focus, .apple-button:focus {
     outline: none;            /* Remove default outline */
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Add focus shadow */
+}
+
+.apple-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 968px) {
@@ -205,7 +211,7 @@ input[type="password"]:focus {
         gap: 10px;
     }
 
-    .facebook-button, .google-button {
+    .facebook-button, .google-button, .apple-button {
         width: 100%;
     }
 }

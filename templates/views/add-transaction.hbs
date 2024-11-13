@@ -41,9 +41,22 @@
                         <input type="number" name="amount" id="amount" class="form-input" value="{{getValue transactionObj.amount enteredFields.amount}}" placeholder="Enter amount" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" style="display: none;">
                         <label for="multiplier">Multiplier</label>
                         <input type="number" name="multiplier" id="multiplier" class="form-input" value="" readonly>
+                    </div>
+
+                </div>
+
+                <div class="right-column">
+                    <div class="form-group" style="display: none;">
+                        <label for="tier">Tier</label>
+                        <input type="text" name="tier" class="form-input" value="{{getTier user.tier enteredFields.tier}}" readonly>
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <label for="tranCode">Transaction Code</label>
+                        <input type="text" name="tranCode" class="form-input" value="{{getValue transactionObj.tranCode enteredFields.tranCode}}">
                     </div>
 
                     <div class="form-group">
@@ -51,18 +64,6 @@
                         <input type="number" name="netAmount" id="netAmount" class="form-input" value="" readonly>
                     </div>
 
-                </div>
-
-                <div class="right-column">
-                    <div class="form-group">
-                        <label for="tier">Tier</label>
-                        <input type="text" name="tier" class="form-input" value="{{getTier user.tier enteredFields.tier}}" readonly>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tranCode">Transaction Code</label>
-                        <input type="text" name="tranCode" class="form-input" value="{{getValue transactionObj.tranCode enteredFields.tranCode}}" required>
-                    </div>
 
                     <div class="form-group">
                         <label for="pointsGained">Points Gained</label>
@@ -124,7 +125,7 @@
 
         if (!isNaN(amount) && amount > 0 && !isNaN(multiplier)) {
             const points = amount * multiplier;
-            document.getElementById("pointsGained").value = points.toFixed(2);
+            document.getElementById("pointsGained").value = points.toFixed(0);
         } else {
             document.getElementById("pointsGained").value = "";
         }

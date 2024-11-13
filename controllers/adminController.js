@@ -4,7 +4,6 @@ const getValues = require('../helpers/getValues')
 const moment = require('moment')
 const CsvParser = require('json2csv').Parser
 
-
 const { validationResult } = require('express-validator')
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
@@ -58,24 +57,8 @@ const makeTransaction = async (req, res) => {
         const { 
             spendingType,
             amount,
-            pointsGained,
-            tranCode
+            pointsGained
          } = req.body
-
-        const enteredFields = req.body
-
-        const tranCodes = await User.aggregate([
-            { $unwind: "$transaction" },
-            { $project: { _id: 0, tranCode: "$transaction.tranCode" } }
-        ])
-
-        const tranCodeValues = tranCodes.map(item => item.tranCode)
-        const tranCodeExists = tranCodeValues.includes(tranCode)
-
-        if (tranCodeExists) {
-            const error = 'Transaction code already exists. Try a new one.'
-            return res.render('add-transaction', { error, id, enteredFields })
-        }
 
         const response = await fetch(`${API_BASE_URL}/api/add-transaction`, {
             method: 'POST',
@@ -86,8 +69,7 @@ const makeTransaction = async (req, res) => {
                 memberId: user.memberId,
                 spendingType,
                 amount,
-                pointsGained,
-                tranCode
+                pointsGained
             })
         })
 
@@ -104,7 +86,7 @@ const makeTransaction = async (req, res) => {
 
         const message = "Transaction Done"
         req.session.reservationMessage = message
-        return res.redirect('/dashboard')
+        return res.redirect(`/points-wallet?id=${id}`)
 
     } catch (error) {
         return res.status(400).json({
@@ -154,7 +136,7 @@ const deleteTransaction = async (req, res) => {
 
         requestedUser.transaction.splice(reservationIndex, 1);
         await requestedUser.save();
-        res.redirect('/dashboard')
+        res.redirect(`/points-wallet?id=${id}`)
 
     } catch (error) {
         return res.status(400).json({
@@ -310,7 +292,7 @@ const updateProfile = async (req, res) => {
             $set: data
         }, { new: true })
 
-        res.redirect('/dashboard');
+        res.redirect(`/profile-info?id=${id}`);
 
     } catch (error) {
         return res.status(400).json({
@@ -332,7 +314,7 @@ const updatePrivacyAndPreference = async (req, res) => {
             }
         }, { new: true })
 
-        res.redirect('/dashboard');
+        res.redirect(`/privacy-pref?id=${id}`);
 
     } catch (error) {
         return res.status(400).json({
@@ -344,7 +326,7 @@ const updatePrivacyAndPreference = async (req, res) => {
 
 const updateMembershipInfo = async (req, res) => {
     try {
-        res.redirect('/dashboard')
+        res.redirect(`/membership-info`)
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -355,7 +337,8 @@ const updateMembershipInfo = async (req, res) => {
 
 const updateTransactionInfo = async (req, res) => {
     try {
-        res.redirect('/dashboard')
+        const id = req.query.id
+        res.redirect(`/points-wallet?id=${id}`)
     } catch (error) {
         return res.status(400).json({
             success: false,

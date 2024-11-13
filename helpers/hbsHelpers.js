@@ -48,3 +48,11 @@ hbs.registerHelper("getValue", function(transactionField, enteredField) {
 hbs.registerHelper("getTier", function(userTier, enteredField) {
     return userTier || enteredField;
 });
+
+hbs.registerHelper('lowercase', function(str) {
+    return str.toLowerCase();
+});
+
+hbs.registerHelper("eq", function (a, b) {
+    return a === b;
+  });

@@ -169,24 +169,8 @@ const updateTransactionInfo = async (req, res, next) => {
         const {
             spendingType,
             amount,
-            pointsGained,
-            tranCode    
+            pointsGained
         } = req.body
-
-        const enteredFields = req.body
-
-        const tranCodes = await User.aggregate([
-            { $unwind: "$transaction" },
-            { $project: { _id: 0, tranCode: "$transaction.tranCode" } }
-        ])
-
-        const tranCodeValues = tranCodes.map(item => item.tranCode)
-        const tranCodeExists = tranCodeValues.includes(tranCode)
-
-        if (tranCodeExists) {
-            const error = 'Transaction code already exists. Try a new one.'
-            return res.render('transaction-details', { error, reservationIndex, id, enteredFields, user: userToUpdate })
-        }
 
         const response = await fetch(`${API_BASE_URL}/api/update-transaction`, {
             method: 'POST',
@@ -198,8 +182,7 @@ const updateTransactionInfo = async (req, res, next) => {
                 memberId: userToUpdate.memberId,
                 spendingType,
                 amount,
-                pointsGained,
-                tranCode 
+                pointsGained
             })
         })
 
@@ -209,7 +192,7 @@ const updateTransactionInfo = async (req, res, next) => {
             if (data?.errors) {
                 return res.render('transaction-details', { error: data.errors[0].msg })
             }
-            return res.render('transaction-details', { error: data.msg })
+            return res.render('points-wallet', { error: data.msg })
         }
 
         next()

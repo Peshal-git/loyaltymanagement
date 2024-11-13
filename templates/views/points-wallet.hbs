@@ -2,35 +2,79 @@
 
 <div class="single-column">
     {{#if user.transaction.length}}
-<table class="centered-table">
+
+<table class="points-table">
     <thead>
-        <tr>
-            <th>Transaction Code</th>
-        </tr>
+      <tr>
+        {{!-- <th><input type="checkbox"></th> --}}
+        <th>Spending Type</th>
+        <th>Amount</th>
+        <th>Points Gained</th>
+        <th></th>
+      </tr>
     </thead>
     <tbody>
         {{#each user.transaction}}
-        <tr>
-            <td>
-                <a href="/transaction-details/?id={{../user._id}}&reservationIndex={{@index}}" class="full-link">
-                    {{startFromOne @index}}. {{this.tranCode}}
-                </a>
-            </td>
+        <tr onclick="window.location.href='/transaction-details/?id={{../user.id}}&reservationIndex={{@index}}'">
+        {{!-- <td><input type="checkbox" onclick="event.stopPropagation(); openOptionsMenu(event);"></td> --}}
+        <td>{{this.spendingType}}</td>
+        <td>{{this.amount}}</td>
+        <td>{{this.pointsGained}}</td>
+        <td>
+            <div class="options-container">
+                <img src="/images/three-dots.png" alt="Options" class="options-icon" onclick="event.stopPropagation(); toggleDropdown(event);">
+                <div class="options-dropdown">
+                    <a href="/transaction-details/?id={{../user.id}}&reservationIndex={{@index}}">
+                        <span class="edit-icon-drop">&#9998;</span> Edit
+                    </a>
+                    <a href="/delete-transaction/?id={{../user.id}}" onclick="return confirm('Are you sure you want to delete this transaction?');">
+                        <span class="delete-icon-drop">&#x1F5D1;</span> Delete
+                    </a>
+                </div>
+            </div>
+        </td>
         </tr>
-        {{/each}}
+         {{/each}}
+      
     </tbody>
-</table>
+  </table>
 
 {{else}}
     <p>No transaction yet.</p>
 {{/if}}
 
 <div class="addreservation-button"> 
-    <a href="/add-transaction?id={{user.id}}" class="add-button">&#x271A; Add transaction</a>
+    <a href="/add-transaction?id={{user.id}}" class="add-button">&#x271A; </a>
 </div>
 
 </div>
 
 </div>
 </body>
+<script>
+function toggleDropdown(event) {
+  const dropdown = event.target.nextElementSibling; // Get the next sibling (dropdown menu)
+  const isVisible = dropdown.style.display === "block"; // Check if it's currently visible
+  dropdown.style.display = isVisible ? "none" : "block"; // Toggle visibility
+
+  // Close other dropdowns if needed
+  const allDropdowns = document.querySelectorAll('.options-dropdown');
+  allDropdowns.forEach((otherDropdown) => {
+    if (otherDropdown !== dropdown) {
+      otherDropdown.style.display = "none";
+    }
+  });
+
+  event.stopPropagation(); // Prevent the event from bubbling up to the row click
+}
+
+// Optionally, close the dropdown when clicking outside
+document.addEventListener('click', function(event) {
+  const allDropdowns = document.querySelectorAll('.options-dropdown');
+  allDropdowns.forEach((dropdown) => {
+    dropdown.style.display = "none"; // Hide dropdowns when clicking outside
+  });
+});
+
+</script>
 </html>

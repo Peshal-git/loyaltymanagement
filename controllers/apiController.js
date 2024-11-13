@@ -6,6 +6,7 @@ const mailer = require('../helpers/mailer')
 const MemId = require('../helpers/memberIdGen')
 const randomstring = require('randomstring')
 const PasswordReset = require('../models/passwordReset')
+const uniqueTranCode = require('../helpers/uniqueTranCode')
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
     ? process.env.API_BASE_URL_PROD
@@ -182,10 +183,11 @@ const addTransaction = async (req, res) => {
             memberId,
             spendingType,
             amount,
-            pointsGained,
-            tranCode
+            pointsGained
         } = req.body
 
+        const tranCode = await uniqueTranCode.generateUniqueCode()
+        
         const existingProfile = await User.findOne({ memberId })
 
         if (existingProfile) {
@@ -229,27 +231,26 @@ const updateTransaction = async (req, res) => {
             memberId,
             spendingType,
             amount,
-            pointsGained,
-            tranCode
+            pointsGained
         } = req.body
 
         const existingProfile = await User.findOne({ memberId })
 
         if (existingProfile) {
             if (reservationIndex >= 0 && reservationIndex < existingProfile.transaction.length) {
-                existingProfile.transaction[reservationIndex] = {
-                    spendingType,
-                    amount,
-                    pointsGained,
-                    tranCode
-                }
-            } else {
-                console.log('Index out of bounds')
-            }
-        } else {
-            console.log('Profile not found')
+                await User.findOneAndUpdate(
+                    { memberId }, 
+                    {
+                        $set: {
+                            [`transaction.${reservationIndex}.spendingType`]: spendingType,
+                            [`transaction.${reservationIndex}.amount`]: amount,
+                            [`transaction.${reservationIndex}.pointsGained`]: pointsGained
+                        }
+                    })
+                }        
         }
-        const updatedProfile = await existingProfile.save()
+
+        const updatedProfile = await User.findOne({ memberId })
 
         return res.status(200).json({
             success: true,

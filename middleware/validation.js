@@ -97,7 +97,6 @@ exports.adminUpdateValidator = [
 ]
 
 exports.transactionUpdateValidator = [
-    check('tranCode', 'Transaction Code is required').not().isEmpty(),
     check('amount', 'Please enter the amount').not().isEmpty()
 ]
 

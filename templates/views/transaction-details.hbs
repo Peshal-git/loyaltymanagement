@@ -4,41 +4,33 @@
             <div class="left-column">
 
                 <div class="form-group">
-                    <label for="j">Transaction Code:</label>
-                    <div class="input-wrapper">
-                    <input class="editable" type="text" name="tranCode"
-                        value="{{getValue transactionObj.tranCode enteredFields.tranCode}}"
-                        readonly required>
-                    <span class="edit-icon">&#9998;</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <label for="spendingType">Spending Type:</label>
                     <select name="spendingType" id="spendingType" required value="{{transactionObj.spendingType}}">
-                        <option value="Life Café">Life Café</option>
-                        <option value="Yoga Class">Yoga Class</option>
-                        <option value="Vita Spa">Vita Spa</option>
-                        <option value="Retreats and YTT Packages">Retreats and YTT Packages</option>
+                        <option value="Life Café" {{#if (eq transactionObj.spendingType "Life Café")}}selected{{/if}}>Life Café</option>
+                        <option value="Yoga Class" {{#if (eq transactionObj.spendingType "Yoga Class")}}selected{{/if}}>Yoga Class</option>
+                        <option value="Vita Spa" {{#if (eq transactionObj.spendingType "Vita Spa")}}selected{{/if}}>Vita Spa</option>
+                        <option value="Retreats and YTT Packages" {{#if (eq transactionObj.spendingType "Retreats and YTT Packages")}}selected{{/if}}>Retreats and YTT Packages</option>
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="display: none;">
                     <label for="multiplier">Multiplier</label>
                     <input type="number" name="multiplier" id="multiplier" value="" readonly>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="display: none;">
                         <label for="tier">Tier</label>
                         <input type="text" name="tier" class="form-input" value="{{user.tier}}" readonly>
+                </div>
+
+                 <div class="form-group">
+                        <label for="netAmount">Net Amount</label>
+                        <input type="number" name="netAmount" id="netAmount" class="form-input" value="" readonly>
                 </div>
 
             </div>
 
             <div class="right-column">
-
-                 <div class="form-group spacer">
-                </div>
 
                 <div class="form-group">
                     <label for="n">Amount:</label>
@@ -57,10 +49,6 @@
                         readonly>
                 </div>
 
-                <div class="form-group">
-                        <label for="netAmount">Net Amount</label>
-                        <input type="number" name="netAmount" id="netAmount" class="form-input" value="" readonly>
-                </div>
 
                 {{#if error}}
                 <h4 style="color: #CD5C5C;">{{error}}</h4>
@@ -149,7 +137,7 @@
 
         if (!isNaN(amount) && amount > 0 && !isNaN(multiplier)) {
             const points = amount * multiplier;
-            document.getElementById("pointsGained").value = points.toFixed(2);
+            document.getElementById("pointsGained").value = points.toFixed(0);
         } else {
             document.getElementById("pointsGained").value = "";
         }
