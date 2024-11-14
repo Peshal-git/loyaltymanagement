@@ -164,8 +164,8 @@
 
     if (inputField && editIcon) {
         editIcon.addEventListener('click', function() {
-            inputField.removeAttribute('readonly'); // Make the input editable
-            inputField.focus(); // Set focus to the input field
+            inputField.removeAttribute('readonly'); 
+            inputField.focus();
 
             const end = inputField.value.length;
             inputField.setSelectionRange(end, end);

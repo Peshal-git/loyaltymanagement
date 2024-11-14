@@ -56,7 +56,7 @@
         <td>{{this.email}}</td>
         <td>{{this.mobile}}</td>
         <td>
-            <div class="options-container">
+            {{!-- <div class="options-container">
                 <img src="/images/three-dots.png" alt="Options" class="options-icon" onclick="event.stopPropagation(); toggleDropdown(event);">
                 <div class="options-dropdown">
                     <a href="/profile-info?id={{this.id}}">
@@ -69,7 +69,14 @@
                         <span class="add-icon">&#43;</span> Add Reservation
                     </a>
                 </div>
-            </div>
+            </div> --}}
+            <a href="/add-transaction?id={{this.id}}">
+                <span class="add-icon">&#43;</span>
+            </a>
+            <a href="/redemption?id={{this.id}}">
+                <span class="minus-icon">&minus;</span>
+            </a>
+
         </td>
         </tr>
          {{/each}}
@@ -85,6 +92,21 @@
     {{/if}}
 </div>
 </div>
+
+<div class="pagination">
+    <a href="?page={{prevPage}}" class="page-link" aria-label="Previous">&lsaquo; Prev</a>
+    
+    {{#each pages}}
+    <a href="?page={{this}}" class="page-link {{#if (eq this ../currentPage)}}active{{/if}}">
+        {{this}}
+    </a>
+    {{/each}}
+    
+    <a href="?page={{nextPage}}" class="page-link" aria-label="Next">Next &rsaquo;</a>
+    <a href="?page={{totalPages}}" class="page-link">Last &raquo;</a>
+</div>
+
+
 </body>
 <script>
 function openOptionsMenu(event) {

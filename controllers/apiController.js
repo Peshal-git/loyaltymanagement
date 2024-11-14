@@ -291,14 +291,14 @@ const registerAndUpdateConsent = async (req, res) => {
         } = req.body;
 
         const name = firstname + ' ' + lastname;
-        const userExists = await User.findOne({ email });
+        // const userExists = await User.findOne({ email });
 
-        if (userExists) {
-            return res.status(400).json({
-                success: false,
-                msg: "Email already exists!"
-            });
-        }
+        // if (userExists) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         msg: "Email already exists!"
+        //     });
+        // }
 
         
         const uniqueMemberId = await MemId.generateMemberId();
@@ -378,6 +378,13 @@ const registerAndUpdateConsent = async (req, res) => {
         });
 
     } catch (error) {
+        if (error.code && error.code === 11000) {
+            const duplicateField = Object.keys(error.keyValue)[0];
+            return res.status(409).json({
+                success: false,
+                msg: `${duplicateField} already exists.`
+            });
+        }
         return res.status(500).json({
             success: false,
             msg: error.message,

@@ -153,7 +153,7 @@ cursor: pointer;
 }
 
 
-.options-icon {
+/* .options-icon {
 width: 20px;
 cursor: pointer;
 opacity: 0.7;
@@ -199,4 +199,68 @@ margin-right: 8px;
 
 .add-icon{
     color: #333;
+} */
+
+
+a {
+    text-decoration: none;
+    margin: 0 5px; 
+}
+
+.add-icon {
+    color: #333; 
+    font-size: 20px; 
+    font-weight: bold;
+}
+
+.minus-icon {
+    color: #333; 
+    font-size: 20px; 
+    font-weight: bold;
+}
+
+a:hover .add-icon {
+    color: #667391;
+}
+
+a:hover .minus-icon {
+    color: #667391; 
+}
+
+.add-icon, .minus-icon {
+    transition: color 0.3s ease;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.page-link {
+    color: #667391;
+    padding: 8px 12px;
+    margin: 0 5px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.page-link:hover {
+    background-color: #f0f0f0;
+    border-color: #667391;
+}
+
+.page-link.active {
+    color: #fff;
+    background-color: #667391;
+    border-color: #667391;
+    cursor: default;
+}
+
+.page-link[aria-disabled="true"] {
+    color: #aaa;
+    pointer-events: none;
+    cursor: not-allowed;
 }

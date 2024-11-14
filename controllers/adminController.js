@@ -12,29 +12,66 @@ const API_BASE_URL = process.env.NODE_ENV === 'production'
 
 const adminDashboard = async (req, res) => {
     try {
-        let userData = await User.find()
-        const query = req.query.search
+        let page = Number(req.query.page) || 1;
+        let limit = 5;
+        let usersToSkip = (page - 1) * limit;
+        let query = req.query.search;
+        
+        let searchCriteria = {};
         if (query) {
-            userData = await User.find({
+            searchCriteria = {
                 $or: [
                     { name: { $regex: query, $options: 'i' } },
                     { email: { $regex: query, $options: 'i' } },
                 ],
-            })
+            };
         }
+
+        const totalUsers = await User.countDocuments(searchCriteria);
+        const totalPages = Math.ceil(totalUsers / limit);
+
+        if (page > totalPages) page = totalPages;
+        if (page < 1) page = 1;
+
+        const prevPage = page > 1 ? page - 1 : null;
+        const nextPage = page < totalPages ? page + 1 : null;
+        const currentPage = page;
+
+        const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+        let usersToShow = await User.find(searchCriteria).skip(usersToSkip).limit(limit);
+
+        
         if (req?.session?.reservationMessage) {
-            message = req.session.reservationMessage
-            req.session.reservationMessage = null
-            return res.render('admin-dashboard', { user: userData, message })
+            let message = req.session.reservationMessage;
+            req.session.reservationMessage = null;
+            return res.render('admin-dashboard', { 
+                user: usersToShow, 
+                message, 
+                currentPage,
+                totalPages,
+                prevPage,
+                nextPage,
+                pages 
+            });
         }
-        return res.render('admin-dashboard', { user: userData })
+
+        return res.render('admin-dashboard', {
+             user: usersToShow,
+             currentPage,
+             totalPages,
+             prevPage,
+             nextPage,
+             pages 
+            });
     } catch (error) {
         return res.status(400).json({
             success: false,
-            msg: error.message
-        })
+            msg: error.message,
+        });
     }
-}
+};
+    
 
 const addTransactionPage = async (req, res) => {
     try {
