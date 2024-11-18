@@ -93,7 +93,7 @@ input[type="email"]:focus,
 input[type="tel"]:focus,
 input[type="date"]:focus,
 input[type="password"]:focus{
-    border-color: #667391; /* Optional: Change border color on focus */
+    border-color: #667391;
     background-color: #c9cfda;
     outline: none;
 }
@@ -140,5 +140,5 @@ input[type="password"]:focus{
 }
 
 input[type="checkbox"] {
-    margin-right: 8px; /* Adjust the value as needed */
+    margin-right: 8px;
 }

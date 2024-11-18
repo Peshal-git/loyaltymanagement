@@ -190,14 +190,28 @@ const addTransaction = async (req, res) => {
         
         const existingProfile = await User.findOne({ memberId })
 
-        if (existingProfile) {
-            existingProfile.transaction.push({
-                spendingType,
-                amount,
-                pointsGained,
-                tranCode
+        if (!existingProfile) {
+            return res.status(400).json({
+                success: false,
+                msg: "User not found"
             })
         }
+
+        existingProfile.transaction.push({
+            spendingType,
+            amount,
+            pointsGained,
+            tranCode
+        })
+
+        existingProfile.membershipInfo.pointsForRedemptions += pointsGained
+
+        const totalPoints = existingProfile.transaction.reduce(
+            (total, transaction) => total + (transaction.pointsGained || 0),
+            0
+        );
+        existingProfile.membershipInfo.pointsAvailable = totalPoints;
+
         const updatedProfile = await existingProfile.save()
 
         return res.status(200).json({
@@ -236,21 +250,43 @@ const updateTransaction = async (req, res) => {
 
         const existingProfile = await User.findOne({ memberId })
 
-        if (existingProfile) {
-            if (reservationIndex >= 0 && reservationIndex < existingProfile.transaction.length) {
-                await User.findOneAndUpdate(
-                    { memberId }, 
-                    {
-                        $set: {
-                            [`transaction.${reservationIndex}.spendingType`]: spendingType,
-                            [`transaction.${reservationIndex}.amount`]: amount,
-                            [`transaction.${reservationIndex}.pointsGained`]: pointsGained
-                        }
-                    })
-                }        
+        if (!existingProfile) {
+            return res.status(400).json({
+                success: false,
+                msg: "User not found"
+            })
         }
 
+        
+        if (reservationIndex >= 0 && reservationIndex < existingProfile.transaction.length) {
+            const originalPointsGained = existingProfile.transaction[reservationIndex].pointsGained || 0
+            existingProfile.membershipInfo.pointsForRedemptions -= originalPointsGained;
+            await existingProfile.save()
+
+            await User.findOneAndUpdate(
+                { memberId }, 
+                {
+                    $set: {
+                        [`transaction.${reservationIndex}.spendingType`]: spendingType,
+                        [`transaction.${reservationIndex}.amount`]: amount,
+                        [`transaction.${reservationIndex}.pointsGained`]: pointsGained
+                    }
+                }
+            )
+
+            existingProfile.membershipInfo.pointsForRedemptions += pointsGained;
+            await existingProfile.save();
+        }
+        
+        const totalPoints = existingProfile.transaction.reduce(
+            (total, transaction) => total + (transaction.pointsGained || 0),
+            0
+        );
+        existingProfile.membershipInfo.pointsAvailable = totalPoints;
+        await existingProfile.save()
+
         const updatedProfile = await User.findOne({ memberId })
+
 
         return res.status(200).json({
             success: true,
@@ -291,15 +327,6 @@ const registerAndUpdateConsent = async (req, res) => {
         } = req.body;
 
         const name = firstname + ' ' + lastname;
-        // const userExists = await User.findOne({ email });
-
-        // if (userExists) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         msg: "Email already exists!"
-        //     });
-        // }
-
         
         const uniqueMemberId = await MemId.generateMemberId();
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -339,7 +366,8 @@ const registerAndUpdateConsent = async (req, res) => {
                 createdAt: new Date(),
             },
             membershipInfo: {
-                pointsAvailable: 0.00
+                pointsAvailable: 0,
+                pointsForRedemptions: 0
             }
         })
 

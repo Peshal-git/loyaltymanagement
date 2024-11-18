@@ -5,7 +5,7 @@ const initPricingScheme = async () => {
     const count = await Pricing.countDocuments();
     
     if (count > 0) {
-        console.log("Table already initialized")
+        console.log("Discount and multiplier table already initialized")
         return
     }
 

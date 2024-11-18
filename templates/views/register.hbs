@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
 </head>
 <body>
 
@@ -19,7 +22,7 @@
     </header>
 
     <div class="whole-form">
-        <form action="/register" method="post" class="registration-form" autocomplete="off">
+        <form action="/register" method="post" id="registrationForm" class="registration-form">
             <div class="left-column">
                 <div class="form-group">
                     <label for="first-name">Name</label>
@@ -36,7 +39,7 @@
     
                 <div class="form-group">
                     <label for="mobile">Mobile</label>
-                    <input type="tel" name="mobile" placeholder="Please enter a valid number" required value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}">
+                    <input type="tel" id="phone" name="mobile" placeholder="Please enter a valid number" required value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}" />
                 </div>
     
                 <div class="form-group checkboxes">
@@ -53,14 +56,14 @@
     
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" placeholder="Enter a strong password" required value="{{#if enteredFields.password}}{{enteredFields.password}}{{/if}}">
+                    <input type="password" name="password" placeholder="Enter a strong password" required value="{{#if enteredFields.password}}{{enteredFields.password}}{{/if}}" autocomplete="new-password">
                 </div>
     
                 <div class="form-group">
                     <label for="language">Preferred Language</label>
-                    <select name="language" required value="{{#if enteredFields.language}}{{enteredFields.language}}{{/if}}">
-                        <option value="English">English</option>
-                        <option value="Thai">Thai</option>
+                    <select name="language" required>
+                        <option value="English" {{#if enteredFields.language}}{{#ifEquals enteredFields.language "English"}}selected{{/ifEquals}}{{/if}}>English</option>
+                        <option value="Thai" {{#if enteredFields.language}}{{#ifEquals enteredFields.language "Thai"}}selected{{/ifEquals}}{{/if}}>Thai</option>
                     </select>
                 </div>
     
@@ -75,8 +78,26 @@
     </div>
 
 </body>
-<script>
-    var today = new Date().toISOString().split('T')[0];
-    document.getElementById("date-input").setAttribute("max",today);
+<script> 
+var today = new Date().toISOString().split('T')[0];
+document.getElementById("date-input").setAttribute("max", today);
+
+const phoneInput = document.querySelector("#phone");
+    const iti = window.intlTelInput(phoneInput, {
+        initialCountry: "auto",
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js", 
+    });
+
+document.querySelector("#registrationForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (iti.isValidNumber()) {
+        phoneInput.value = iti.getNumber()
+        e.target.submit()
+    } else {
+        alert("Please enter a valid phone number.");
+    }
+})
+
 </script>
 </html>

@@ -562,3 +562,42 @@ a{
   margin: 0; 
   text-align: center; 
 }
+
+.redemption-table {
+width: 100%;
+border-collapse: separate;
+border-spacing: 0 10px; 
+background-color: #f8f9fc;
+}
+
+.redemption-table th,
+.redemption-table td {
+padding: 12px;
+text-align: left;
+border-bottom: 1px solid #ddd;
+font-size: 14px;
+}
+
+.redemption-table th {
+font-weight: 600;
+color: #555;
+}
+
+.redemption-table td {
+color: #333;
+}
+
+.redemption-table input[type="checkbox"] {
+cursor: pointer;
+}
+
+.redemption-table tbody tr {
+background-color: white; 
+cursor: pointer;
+}
+
+.redemption-table tbody tr:hover {
+background-color: #E1E4F0;
+cursor: pointer;
+}
+  

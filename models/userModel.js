@@ -42,6 +42,9 @@ const MemberInfoSchema = new mongoose.Schema({
     pointsAvailable: {
         type: Number
     },
+    pointsForRedemptions: {
+        type: Number
+    },
     lastVisit: {
         type: Date
     },
@@ -92,7 +95,7 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     mobile: {
-        type: Number,
+        type: String,
         unique: true
     },
     password: {

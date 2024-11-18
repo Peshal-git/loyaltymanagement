@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const Pricing = require('../models/pricingModel')
+const Reward = require('../models/rewardsModel')
 const getValues = require('../helpers/getValues')
 const moment = require('moment')
 const CsvParser = require('json2csv').Parser
@@ -165,6 +166,9 @@ const deleteTransaction = async (req, res) => {
         const requestedUser = await User.findById(id)
 
         if (reservationIndex < 0 || reservationIndex >= requestedUser.transaction.length) {
+            const originalPointsGained = requestedUser.transaction[reservationIndex].pointsGained || 0
+            requestedUser.membershipInfo.pointsForRedemptions -= originalPointsGained;
+            
             return res.status(400).json({
                 success: false,
                 msg: 'Invalid reservation index'
@@ -203,7 +207,21 @@ const redemption = async (req, res) => {
     try {
         const id = req.query.id
         const userToShow = await User.findOne({ _id: id })
-        return res.render('redemption', { user: userToShow, activePage: 'redemption' })
+        
+        const yogaRewards = await getValues.getYogaRewardPoints()
+        const fnbRewards = await getValues.getFnBRewardPoints()
+        const vitaSpaRewards = await getValues.getVitaSpaRewardPoints()
+        const retreatRewards = await getValues.getRetreatsRewardPoints()
+
+        return res.render('redemption', { 
+            user: userToShow, 
+            activePage: 'redemption', 
+            yogaRewards,
+            fnbRewards,
+            vitaSpaRewards,
+            retreatRewards 
+        })
+
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -230,12 +248,12 @@ const membershipInformation = async (req, res) => {
         const id = req.query.id
         const userToShow = await User.findOne({ _id: id })
 
-        const totalPoints = userToShow.transaction.reduce((total, transaction) => {
-            return total + (transaction.pointsGained || 0)
-          }, 0)
+        // const totalPoints = userToShow.transaction.reduce((total, transaction) => {
+        //     return total + (transaction.pointsGained || 0)
+        //   }, 0)
         
-        userToShow.membershipInfo.pointsAvailable = totalPoints;
-        await userToShow.save();
+        // userToShow.membershipInfo.pointsAvailable = totalPoints;
+        // await userToShow.save();
         
         return res.render('membership-info', { user: userToShow, activePage: 'membership' })
     } catch (error) {

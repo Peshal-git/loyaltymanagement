@@ -3,10 +3,12 @@ const mongoose = require('mongoose')
 const path = require('path')
 require('./helpers/hbsHelpers')
 const initPricingScheme = require('./helpers/initPricingScheme')
+const initRewardScheme = require('./helpers/initRewardScheme')
 
 mongoose.connect(`${process.env.MONGODB_URI}/${process.env.DB_NAME}`).then(async () => {
     console.log("Connected to database")
     await initPricingScheme();
+    await initRewardScheme();
 })
 
 const express = require('express')

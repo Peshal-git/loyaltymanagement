@@ -1,10 +1,17 @@
 {{>navbar}}
 <div class="dmtable-container">
 <div class="table-card">
+    <p>Your redeem points balance: {{user.membershipInfo.pointsForRedemptions}} </p>
+    {{#if error}}
+    <h4 style="color: #CD5C5C;">{{error}}</h4>
+    {{/if}}
+    {{#if message}}
+    <h4 style="color: #667391;">{{message}}.</h4>
+    {{/if}}
     <div class="category-name">
         <p>Yoga Category</p>
     </div>
-        <table class="dm-table">
+        <table class="redemption-table">
             <thead>
                 <tr>
                     <th>Rewards</th>
@@ -13,28 +20,64 @@
             </thead>
             <tbody>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>1 Group Class Drop-in</td>
-                    <td>2,500</td>
+                    <td>{{yogaRewards.yrewardOneValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="1 Group Class Drop-in">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>1-week unlimited Class Tickets</td>
-                    <td>10,000</td>
+                    <td>{{yogaRewards.yrewardTwoValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="1-week unlimited Class Tickets">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>1 Month Unlimited</td>
-                    <td>15,000</td>
+                    <td>{{yogaRewards.yrewardThreeValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="1 Month Unlimited">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Healthy Day</td>
-                    <td>12,500</td>
+                    <td>{{yogaRewards.yrewardFourValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Healthy Day">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Healthy Morning/ Afternoon</td>
-                    <td>5,000</td>
+                    <td>{{yogaRewards.yrewardFiveValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Healthy Morning/ Afternoon">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Private Class 1-on-1</td>
-                    <td>12,500</td>
+                    <td>{{yogaRewards.yrewardSixValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Private Class 1-on-1">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
             </tbody>
         </table>
@@ -43,7 +86,7 @@
     <div class="category-name">
         <p>F&B Category</p>
     </div>
-        <table class="dm-table">
+        <table class="redemption-table">
             <thead>
                 <tr>
                     <th>Rewards</th>
@@ -52,20 +95,44 @@
             </thead>
             <tbody>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Free Breakfast or Dinner Set</td>
-                    <td>2,500</td>
+                    <td>{{fnbRewards.frewardOneValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Free Breakfast or Dinner Set">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Free Signature Juices or Smoothies</td>
-                    <td>1,000</td>
+                    <td>{{fnbRewards.frewardTwoValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Free Signature Juices or Smoothies">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Free Coffee or Tea</td>
-                    <td>700</td>
+                    <td>{{fnbRewards.frewardThreeValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Free Coffee or Tea">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Free Raw Cheesecake</td>
-                    <td>1,000</td>
+                    <td>{{fnbRewards.frewardFourValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Free Raw Cheesecake">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
             </tbody>
         </table>
@@ -74,7 +141,7 @@
     <div class="category-name">
         <p>Vita Spa Category</p>
     </div>
-        <table class="dm-table">
+        <table class="redemption-table">
             <thead>
                 <tr>
                     <th>Rewards</th>
@@ -83,16 +150,34 @@
             </thead>
             <tbody>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Any massages/Treatments 60mn</td>
-                    <td>10,000</td>
+                    <td>{{vitaSpaRewards.vrewardOneValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Any massages/Treatments 60mn">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Any massages/Treatments 90mn</td>
-                    <td>12,500</td>
+                    <td>{{vitaSpaRewards.vrewardTwoValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Any massages/Treatments 90mn">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Free upgrade 30 min massage</td>
-                    <td>2,500</td>
+                    <td>{{vitaSpaRewards.vrewardThreeValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Free upgrade 30 min massage">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
             </tbody>
         </table>
@@ -101,7 +186,7 @@
     <div class="category-name">
         <p>Retreats and YTT packages</p>
     </div>
-        <table class="dm-table">
+        <table class="redemption-table">
             <thead>
                 <tr>
                     <th>Rewards</th>
@@ -110,12 +195,24 @@
             </thead>
             <tbody>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Room upgrade</td>
-                    <td>10,000</td>
+                    <td>{{retreatRewards.rrewardOneValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Room upgrade">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
                 <tr>
+                    <form action="/redeem?id={{user.id}}" method="POST">
                     <td>Free room night</td>
-                    <td>15,000</td>
+                    <td>{{retreatRewards.rrewardTwoValue}}</td>
+                    <td>
+                        <input type="hidden" name="reward" value="Free room night">
+                        <button type="submit" class="redeem-button">Redeem</button>
+                    </td>
+                    </form>
                 </tr>
             </tbody>
         </table>

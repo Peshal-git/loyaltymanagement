@@ -4,6 +4,10 @@ hbs.registerHelper('startFromOne', function (value) {
     return parseInt(value) + 1
 })
 
+hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
+    return arg1 === arg2 ? options.fn(this) : options.inverse(this);
+});
+
 hbs.registerHelper('makeDate', function (value) {
     if (value) {
         const formattedDate = value.toISOString().split('T')[0]
