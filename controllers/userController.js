@@ -44,6 +44,60 @@ const profilePage = async (req, res) => {
     }
 }
 
+const activitiesPage = async (req, res) => {
+    try {
+        let userData
+
+        if (req?.user?.user) {
+            userData = req.user.user
+        }
+        else {
+            userData = req.user
+        }
+
+        
+        const yogaRewards = await getValues.getYogaRewardPoints()
+        const fnbRewards = await getValues.getFnBRewardPoints()
+        const vitaSpaRewards = await getValues.getVitaSpaRewardPoints()
+        const retreatRewards = await getValues.getRetreatsRewardPoints()
+
+        return res.render('activities', { 
+            user: userData, 
+            activePage: 'redemption', 
+            yogaRewards,
+            fnbRewards,
+            vitaSpaRewards,
+            retreatRewards 
+        })
+
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+const aboutUsPage = async (req, res) => {
+    try {
+        let userData
+
+        if (req?.user?.user) {
+            userData = req.user.user
+        }
+        else {
+            userData = req.user
+        }
+
+        res.render('about-us', { user: userData })
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
 const addInfoPage = async (req, res) => {
     try {
         const id = req.query.id
@@ -93,7 +147,10 @@ const updateAdditionalInfoAndConsent = async (req, res) => {
             "marketing.hasGivenMarketingConsent": hasGivenMarketingConsent,
             "privacy.createdAt": privacyCreated,
             "marketing.createdAt": marketingCreated,
-            "membershipInfo.pointsAvailable": 0.00
+            "membershipInfo.pointsAvailable": 0.00,
+            "membershipInfo.pointsForRedemptions": 0.00,
+            isAdmin: false,
+            isSuperAdmin: false
         }
 
         const updatedUser = await User.findByIdAndUpdate(id, { $set: data }, { new: true });
@@ -173,6 +230,8 @@ const reedemPoints = async(req,res) => {
 
 module.exports = {
     profilePage,
+    aboutUsPage,
+    activitiesPage,
     addInfoPage,
     dashboardRedirect,
     updateAdditionalInfoAndConsent,

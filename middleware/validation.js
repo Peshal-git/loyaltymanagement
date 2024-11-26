@@ -72,10 +72,7 @@ exports.updateSocialAuthValidator = [
     check('dob', 'Date must be in correct format mm-dd-yyyy')
         .custom(validateDate)
         .isLength({ min: 10, max: 10 }),
-    check('mobile', 'Mobile number should contain 10 digits').isLength({
-        min: 10,
-        max: 10
-    }),
+    check('mobile', 'Please enter a valid phone number.').isMobilePhone()
 ]
 
 exports.adminUpdateValidator = [

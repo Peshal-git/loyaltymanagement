@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vikasa Header</title>
+    <title>Vikasa</title>
     <link rel="stylesheet" href="/css/add-info.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
 
     <header class="header">
         <div class="logo">
-            <img src="/images/vikasa-logo.png" alt="Vikasa Logo">
+           <a href="/"> <img src="/images/vikasa-logo.png" alt="Vikasa Logo"> </a>
         </div>
         <h1 class="welcome-text">Welcome to Vikasa</h1>
     </header>
@@ -25,8 +25,7 @@
             <div class="left-column">
                 <div class="form-group">
                     <label for="mobileInput">Enter your mobile number:</label>
-                    <input type="tel" name="mobile" id="phone" value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}" placeholder="Please enter a valid number">
-                    <input type="hidden" id="formattedPhoneNumber" name="formattedPhoneNumber" />
+                    <input type="tel" id="phone" name="mobile" placeholder="Please enter a valid number" required value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}" />
                 </div>
     
                 <div class="form-group checkboxes">
@@ -52,24 +51,20 @@
 
 </body>
 <script>
-    var today = new Date().toISOString().split('T')[0];
-    document.getElementById("date-input").setAttribute("max",today);
-
     const phoneInput = document.querySelector("#phone");
-    const formattedPhoneNumberInput = document.querySelector("#formattedPhoneNumber");
     const iti = window.intlTelInput(phoneInput, {
-    initialCountry: "auto",
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    })
+        initialCountry: "auto",
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js", 
+    });
 
     document.querySelector("#registrationForm").addEventListener("submit", function (e) {
         e.preventDefault();
 
         if (iti.isValidNumber()) {
-            formattedPhoneNumberInput.value = iti.getNumber()
-            e.target.submit();
+            phoneInput.value = iti.getNumber()
+            e.target.submit()
         } else {
-            alert("Please enter a valid phone number.")
+            alert("Please enter a valid phone number.");
         }
     })
 
