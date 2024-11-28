@@ -16,7 +16,7 @@
 
     <header class="header">
         <div class="logo">
-            <img src="/images/vikasa-logo.png" alt="Vikasa Logo">
+            <a href="/"> <img src="/images/vikasa-logo.png" alt="Vikasa Logo"> </a>
         </div>
         <h1 class="welcome-text">Welcome to Vikasa</h1>
     </header>
@@ -40,6 +40,11 @@
                 <div class="form-group">
                     <label for="mobile">Mobile</label>
                     <input type="tel" id="phone" name="mobile" placeholder="Please enter a valid number" required value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="referredBy">Referrer</label>
+                    <input type="text" name="referredBy" placeholder="Referrer's email or member ID (Optional)" value="{{#if enteredFields.referredBy}}{{enteredFields.referredBy}}{{/if}}" />
                 </div>
     
                 <div class="form-group checkboxes">

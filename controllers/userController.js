@@ -120,7 +120,7 @@ const updateAdditionalInfoAndConsent = async (req, res) => {
             return res.render('add-info', { userToUpdate: { id }, enteredFields, error: errors.errors[0].msg });
         }
 
-        const { dob, mobile, hasAcceptedPrivacyPolicy } = req.body;
+        const { dob, mobile, referredBy, hasAcceptedPrivacyPolicy } = req.body;
         let hasGivenMarketingConsent = req.body.hasGivenMarketingConsent
         const id = req.query.id;
 
@@ -139,10 +139,31 @@ const updateAdditionalInfoAndConsent = async (req, res) => {
             marketingCreated = userExits.marketing.createdAt
         }
 
+        let referrerId
+        if(referredBy){
+            const userExists = await User.findOne({
+                $or: [
+                    { email: referredBy },
+                    { memberId: referredBy }
+                ]
+            })
+
+            if(!userExists){
+                return res.render('add-info', {userToUpdate: user, error: `${referredBy} can not be found.`});
+            }
+            else{
+                if (!userExists.referredTo.includes(user.memberId)) {
+                    userExists.referredTo.push(user.memberId);
+                    await userExists.save();
+                }
+                referrerId = userExists.memberId
+            }
+        }
 
         const data = {
             dob,
             mobile,
+            referredBy: referrerId,
             "privacy.hasAcceptedPrivacyPolicy": hasAcceptedPrivacyPolicy,
             "marketing.hasGivenMarketingConsent": hasGivenMarketingConsent,
             "privacy.createdAt": privacyCreated,
@@ -158,6 +179,13 @@ const updateAdditionalInfoAndConsent = async (req, res) => {
         res.redirect('/dashboard')
 
     } catch (error) {
+        const id = req.query.id;
+        const user = await User.findById(id);
+
+        if (error.code && error.code === 11000) {
+            const duplicateField = Object.keys(error.keyValue)[0];
+            return res.render('add-info', {userToUpdate: user, error: `${duplicateField} already exists.`});
+        }
         return res.status(500).json({ success: false, msg: error.message });
     }
 };

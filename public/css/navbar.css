@@ -600,4 +600,13 @@ cursor: pointer;
 background-color: #E1E4F0;
 cursor: pointer;
 }
-  
+
+.likeEditable{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #F5F5F5;
+  font-size: 1rem;
+}

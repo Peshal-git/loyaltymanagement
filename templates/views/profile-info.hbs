@@ -30,9 +30,23 @@
           <span class="edit-icon">&#9998;</span>
           </div>
         </div>
+
+        <div class="form-group">
+          <label for="updatedDate">Updated Date:</label>
+          <input type="text" name="updatedAt" value="{{makeDate user.updatedAt}}" readonly>
+        </div>
+
       </div>
 
       <div class="right-column">
+
+        <div class="form-group">
+          <label for="referredBy">Referred By:</label>
+          <div class="input-wrapper">
+            <a href="/profile-info?id={{refUser.id}}"> <span class="likeEditable">{{refUser.memberId}}</span> </a>
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="language">Preferred Language:</label>
           <div class="input-wrapper">
@@ -54,10 +68,7 @@
           <input type="text" name="createdAt" value="{{makeDate user.createdAt}}" readonly>
         </div>
 
-        <div class="form-group">
-          <label for="updatedDate">Updated Date:</label>
-          <input type="text" name="updatedAt" value="{{makeDate user.updatedAt}}" readonly>
-        </div>
+        
 
         <div class="lastbuttons">
         <input class="update-button" type="submit" value="&#x1F4DD; Update"> 

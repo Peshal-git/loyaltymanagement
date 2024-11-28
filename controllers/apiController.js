@@ -321,6 +321,7 @@ const registerAndUpdateConsent = async (req, res) => {
             password,
             dob,
             mobile,
+            referredBy,
             language,
             hasAcceptedPrivacyPolicy,
             hasGivenMarketingConsent
@@ -335,6 +336,7 @@ const registerAndUpdateConsent = async (req, res) => {
         let admin = false;
         let superAdmin = false;
         let verified = false;
+        let referrerId
         if (email.endsWith('@dosink.com')) {
             admin = true;
             verified = true;
@@ -342,6 +344,29 @@ const registerAndUpdateConsent = async (req, res) => {
 
         if(email == "peshal@dosink.com"){
             superAdmin = true
+        }
+
+        if(referredBy){
+            const userExists = await User.findOne({
+                $or: [
+                    { email: referredBy },
+                    { memberId: referredBy }
+                ]
+            })
+
+            if(!userExists){
+                return res.json({
+                    success: false,
+                    msg: `${referredBy} can not be found.`
+                });
+            }
+            else{
+                if (!userExists.referredTo.includes(uniqueMemberId)) {
+                    userExists.referredTo.push(uniqueMemberId);
+                    await userExists.save();
+                }
+                referrerId = userExists.memberId
+            }
         }
 
         const user = new User({
@@ -352,6 +377,7 @@ const registerAndUpdateConsent = async (req, res) => {
             },
             dob,
             mobile,
+            referredBy: referrerId,
             language,
             memberId: uniqueMemberId,
             isVerified: verified,
@@ -368,7 +394,7 @@ const registerAndUpdateConsent = async (req, res) => {
             membershipInfo: {
                 pointsAvailable: 0,
                 pointsForRedemptions: 0
-            }
+            },
         })
 
         // Save user data

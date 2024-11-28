@@ -109,6 +109,7 @@ input[type="password"]:focus{
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
+    margin-top: 44px;
 }
 
 .register-button:hover {

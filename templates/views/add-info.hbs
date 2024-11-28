@@ -27,6 +27,11 @@
                     <label for="mobileInput">Enter your mobile number:</label>
                     <input type="tel" id="phone" name="mobile" placeholder="Please enter a valid number" required value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}" />
                 </div>
+
+                <div class="form-group">
+                    <label for="referredBy">Referrer</label>
+                    <input type="text" name="referredBy" placeholder="Referrer's email or member ID (Optional)" value="{{#if enteredFields.referredBy}}{{enteredFields.referredBy}}{{/if}}" />
+                </div>
     
                 <div class="form-group checkboxes">
                     <label><input type="checkbox" name="hasAcceptedPrivacyPolicy" value="true" required {{#if enteredFields.hasAcceptedPrivacyPolicy}}checked{{/if}}> I agree to the Privacy Policy</label>

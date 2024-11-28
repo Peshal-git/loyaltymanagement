@@ -157,6 +157,13 @@ const userSchema = new mongoose.Schema({
         default: "Balance",
         enum: ["Balance", "Vitality", "Harmony", "Serenity"]
     },
+    referredBy: {
+        type: String
+    },
+    referredTo: {
+        type: [String], 
+        default: []
+    }
 },
     {
         timestamps: true

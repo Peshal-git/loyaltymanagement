@@ -12,6 +12,7 @@ const registerUser = async (req, res, next) => {
             password,
             dob,
             mobile,
+            referredBy,
             language,
             hasAcceptedPrivacyPolicy,
             hasGivenMarketingConsent } = req.body
@@ -27,6 +28,7 @@ const registerUser = async (req, res, next) => {
                 password,
                 dob,
                 mobile,
+                referredBy,
                 language,
                 hasAcceptedPrivacyPolicy,
                 hasGivenMarketingConsent

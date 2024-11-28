@@ -194,7 +194,8 @@ const profileInformation = async (req, res) => {
         const formattedDate = userToShow.dob.toISOString().split('T')[0]
         const parts = formattedDate.split('-');
         const mmddyyyy = `${parts[1]}-${parts[2]}-${parts[0]}`;
-        return res.render('profile-info', { user: userToShow, mmddyyyy, activePage: 'profile'})
+        const refUser = await User.findOne({memberId: userToShow.referredBy})
+        return res.render('profile-info', { user: userToShow, refUser, mmddyyyy, activePage: 'profile'})
     } catch (error) {
         return res.status(400).json({
             success: false,
