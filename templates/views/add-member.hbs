@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Member</title>
+  <link rel="stylesheet" href="/css/add-member.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+</head>
+<body>
+    <nav class="top-nav">
+    <a href="/" class="dashboard-link">
+      <img src="/images/vikasa-name.png" alt="Vikasa">
+    </a>
+    <div class="nav-links">
+        <a href="/logout" class="logout-link"> Logout </a>
+    </div>
+  </nav>
+
+    <div class="whole-form">
+        <form action="/add-member" method="post" id="registrationForm" class="registration-form">
+            <div class="left-column">
+                <div class="form-group">
+                    <label for="first-name">Name</label>
+                    <div class="name-fields">
+                        <input type="text" name="firstname" placeholder="First Name" required value="{{#if enteredFields.firstname}}{{enteredFields.firstname}}{{/if}}">
+                        <input type="text" name="lastname" placeholder="Last Name" required value="{{#if enteredFields.lastname}}{{enteredFields.lastname}}{{/if}}">
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" placeholder="example@example.com" required value="{{#if enteredFields.email}}{{enteredFields.email}}{{/if}}">
+                </div>
+
+                    <div class="form-group">
+                    <label for="mobile">Mobile</label>
+                    <input type="tel" id="phone" name="mobile" placeholder="Enter a valid number" required value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}" />
+                    </div>
+
+            </div>
+    
+            <div class="right-column">
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="date-input" max="" name="dob" required value="{{#if enteredFields.dob}}{{enteredFields.dob}}{{/if}}">
+                </div>
+    
+                <div class="form-group">
+                    <label for="language">Preferred Language</label>
+                    <select name="language" required>
+                        <option value="English" {{#if enteredFields.language}}{{#ifEquals enteredFields.language "English"}}selected{{/ifEquals}}{{/if}}>English</option>
+                        <option value="Thai" {{#if enteredFields.language}}{{#ifEquals enteredFields.language "Thai"}}selected{{/ifEquals}}{{/if}}>Thai</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkboxes">
+                    <label><input type="checkbox" name="hasAcceptedPrivacyPolicy" value="true" required> I agree to the Privacy Policy</label>
+                    <label><input type="checkbox" name="hasGivenMarketingConsent" value="true"> I agree to receive marketing communications</label>
+                </div>
+
+            </div>
+        
+    </div>
+    <div class="button-div">
+    <button type="submit" class="button">Add Member</button>
+    </div>
+    
+    </form>
+    
+    {{#if error}}
+    <h3 style="color: #CD5C5C;">{{error}}</h3>
+    {{/if}}
+    {{#if message}}
+    <h3 style="color: #667391;">{{message}}</h3>
+    {{/if}}
+
+</body>
+<script> 
+var today = new Date().toISOString().split('T')[0];
+document.getElementById("date-input").setAttribute("max", today);
+
+const phoneInput = document.querySelector("#phone");
+    
+const iti = window.intlTelInput(phoneInput, {
+    initialCountry: "th",
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js", 
+})
+
+document.querySelector("#registrationForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (iti.isValidNumber()) {
+        phoneInput.value = iti.getNumber()
+        e.target.submit()
+    } else {
+        alert("Please enter a valid phone number.");
+    }
+})
+
+</script>
+</html>

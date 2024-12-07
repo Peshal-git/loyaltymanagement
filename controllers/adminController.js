@@ -4,6 +4,15 @@ const Reward = require('../models/rewardsModel')
 const getValues = require('../helpers/getValues')
 const moment = require('moment')
 const CsvParser = require('json2csv').Parser
+const MemId = require('../helpers/memberIdGen')
+const bcrypt = require('bcryptjs')
+const randomstring = require('randomstring')
+const mailer = require('../helpers/mailer')
+const PasswordReset = require('../models/passwordReset')
+const tokenGen = require('../helpers/tokenGen')
+const displayUsers = require('../helpers/getPaginatedUsers')
+const csv = require('csvtojson')
+
 
 const { validationResult } = require('express-validator')
 
@@ -13,42 +22,21 @@ const API_BASE_URL = process.env.NODE_ENV === 'production'
 
 const adminDashboard = async (req, res) => {
     try {
-        let page = Number(req.query.page) || 1;
-        let limit = 5;
-        let usersToSkip = (page - 1) * limit;
-        let query = req.query.search;
+        const query = req.query.search || ''
+        const page = Number(req.query.page) || 1
+        const limit = 5
         
-        let searchCriteria = {};
-        if (query) {
-            searchCriteria = {
-                $or: [
-                    { name: { $regex: query, $options: 'i' } },
-                    { email: { $regex: query, $options: 'i' } },
-                ],
-            };
-        }
-
-        const totalUsers = await User.countDocuments(searchCriteria);
-        const totalPages = Math.ceil(totalUsers / limit);
-
-        if (page > totalPages) page = totalPages;
-        if (page < 1) page = 1;
-
-        const prevPage = page > 1 ? page - 1 : null;
-        const nextPage = page < totalPages ? page + 1 : null;
-        const currentPage = page;
-
-        const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-
-        let usersToShow = await User.find(searchCriteria).skip(usersToSkip).limit(limit);
-
+        const { user, totalPages, prevPage, nextPage, currentPage, pages } = await displayUsers.getPaginatedUsers(query, page, limit)
         
-        if (req?.session?.reservationMessage) {
-            let message = req.session.reservationMessage;
-            req.session.reservationMessage = null;
+        if (req?.session?.reservationMessage || req?.session?.reservationError) {
+            let message = req.session.reservationMessage
+            let error = req.session.reservationError
+            req.session.reservationMessage = null
+            req.session.reservationError = null
             return res.render('admin-dashboard', { 
-                user: usersToShow, 
-                message, 
+                user, 
+                message,
+                error, 
                 currentPage,
                 totalPages,
                 prevPage,
@@ -58,13 +46,14 @@ const adminDashboard = async (req, res) => {
         }
 
         return res.render('admin-dashboard', {
-             user: usersToShow,
+             user,
              currentPage,
              totalPages,
              prevPage,
              nextPage,
              pages 
-            });
+            })
+
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -143,17 +132,8 @@ const deleteUser = async (req, res) => {
             res.redirect('/dashboard')
         }
         else {
-            let userData = await User.find()
-            const query = req.query.search
-            if (query) {
-                userData = await User.find({
-                    $or: [
-                        { name: { $regex: query, $options: 'i' } },
-                        { email: { $regex: query, $options: 'i' } },
-                    ],
-                })
-            }
-            res.render('admin-dashboard', {user: userData, error: "Cannot delete admin"})
+            req.session.reservationError = "Cannot delete admin"
+            res.redirect('/dashboard')
         }
     } catch (error) {
         res.render('admin-dashboard', {error: error.message})
@@ -528,8 +508,6 @@ const updateDiscounts = async(req,res) => {
         const { id } = req.query
         const userToShow = await User.findById(id)
 
-        console.log("Error")
-
         const discounts = await getValues.getDiscountValues()
         const multipliers = await getValues.getMultiplierValues()
 
@@ -582,6 +560,233 @@ const updateMultipliers = async(req,res) => {
     }
 }
 
+const addMemberPage = async (req, res) => {
+    try {
+        res.render('add-member')
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+const addMember = async (req, res) => {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const validationError = errors.errors[0].msg
+            return res.render('add-member', { validationError })
+        }
+
+        const {
+            firstname,
+            lastname,
+            email,
+            dob,
+            mobile,
+            referredBy,
+            language,
+            hasAcceptedPrivacyPolicy,
+            hasGivenMarketingConsent
+        } = req.body;
+
+        const password = `${firstname}123`
+
+        const name = firstname + ' ' + lastname;
+        
+        const uniqueMemberId = await MemId.generateMemberId();
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        
+        let admin = false;
+        let superAdmin = false;
+        let verified = false;
+        let referrerId
+
+        if(referredBy){
+            const userExists = await User.findOne({
+                $or: [
+                    { email: referredBy },
+                    { memberId: referredBy }
+                ]
+            })
+
+            if(!userExists){
+                return res.json({
+                    success: false,
+                    msg: `${referredBy} can not be found.`
+                });
+            }
+            else{
+                if (!userExists.referredTo.includes(uniqueMemberId)) {
+                    userExists.referredTo.push(uniqueMemberId);
+                    await userExists.save();
+                }
+                referrerId = userExists.memberId
+            }
+        }
+
+        const user = new User({
+            name,
+            email,
+            systemData: {
+                password: hashedPassword,
+            },
+            dob,
+            mobile,
+            referredBy: referrerId,
+            language,
+            memberId: uniqueMemberId,
+            isVerified: verified,
+            isAdmin: admin,
+            isSuperAdmin: superAdmin,
+            privacy: {
+                hasAcceptedPrivacyPolicy: hasAcceptedPrivacyPolicy,
+                createdAt: new Date(),
+            },
+            marketing: {
+                hasGivenMarketingConsent: hasGivenMarketingConsent,
+                createdAt: new Date(),
+            },
+            membershipInfo: {
+                pointsAvailable: 0,
+                pointsForRedemptions: 0
+            },
+        })
+
+        // Save user data
+        const userData = await user.save();
+
+        const randomString = randomstring.generate()
+        const msg = '<p>Hello, ' + userData.name + `, Please click <a href = "${API_BASE_URL}/reset-password?token=` + randomString + '">here</a> to set your password. </p>'
+
+        await PasswordReset.deleteMany({ user_id: userData._id })
+
+        const passwordReset = new PasswordReset({
+            user_id: userData._id,
+            token: randomString
+        })
+        await passwordReset.save()
+
+        mailer.sendMail(userData.email, 'Reset Password', msg)
+
+        const accessToken = await tokenGen.generateAccessToken({ user: userData })
+
+        await User.findByIdAndUpdate(userData._id, {
+            $set: {
+                "systemData.authentication": accessToken
+            }
+        })
+
+        return res.render('add-member', { message: `Member added.` })
+
+    } catch (error) {
+        const enteredFields = req.body
+        if (error.code && error.code === 11000) {
+            const duplicateField = Object.keys(error.keyValue)[0]
+            return res.render('add-member', { enteredFields, error: `${duplicateField} already exists.` })
+        }
+        return res.render('add-member', { enteredFields, error: error.message })
+    }
+}
+
+const importAdmins = async (req,res) => {
+    try {
+        const usersData = []
+        const response = await csv().fromFile(req.file.path)
+
+        for (var x = 0; x < response.length; x++) {
+            let password = `${response[x].firstname}123`
+            let name = response[x].firstname + " " + response[x].lastname
+            let uniqueMemberId = await MemId.generateMemberId()
+            let hashedPassword = await bcrypt.hash(password, 10)
+
+            let mobile = response[x].mobile.replace(/[^\d]/g, '')
+            if (mobile && mobile[0] !== '+') {
+                mobile = '+' + mobile
+            }
+            
+            let admin = true
+            let superAdmin = false
+            let verified = true
+
+            usersData.push({
+                name,
+                email: response[x].email,
+                systemData: {
+                    password: hashedPassword,
+                },
+                dob: response[x].dob,
+                mobile,
+                memberId: uniqueMemberId,
+                isVerified: verified,
+                isAdmin: admin,
+                isSuperAdmin: superAdmin,
+                privacy: {
+                    hasAcceptedPrivacyPolicy: true,
+                    createdAt: new Date(),
+                },
+                marketing: {
+                    hasGivenMarketingConsent: true,
+                    createdAt: new Date(),
+                },
+                membershipInfo: {
+                    pointsAvailable: 0,
+                    pointsForRedemptions: 0
+                }
+            })
+        }
+
+        let users
+
+        try {
+            users = await User.insertMany(usersData)
+        } catch (error) {
+            if (error.code && error.code === 11000) {
+
+                reservationError = error.writeErrors.map((writeError) => {
+                    return writeError.err.op.name
+                })
+
+                req.session.reservationError = "Duplicate error for the record: " + reservationError
+                return res.redirect('/dashboard')
+            }
+
+            req.session.reservationError = error.message
+            return res.redirect('/dashboard')
+        }
+
+
+        for (const user of users){
+            let randomString = randomstring.generate()
+            let msg = '<p>Hello, ' + user.name + `, Please click <a href = "${API_BASE_URL}/reset-password?token=` + randomString + '">here</a> to set your password. </p>'
+           
+            await PasswordReset.deleteMany({ user_id: user.id })
+            const passwordReset = new PasswordReset({
+                user_id: user.id,
+                token: randomString
+            })
+            await passwordReset.save()
+            mailer.sendMail(user.email, 'Reset Password', msg)
+
+            let accessToken = await tokenGen.generateAccessToken({user})
+            await User.findByIdAndUpdate(user.id, {
+                $set: {
+                    "systemData.authentication": accessToken
+                }
+            })   
+        }
+        
+        req.session.reservationMessage = "Admins added successfully"
+        return res.redirect('/dashboard')
+                
+    } catch (error) {
+        req.session.reservationError = error.message
+        return res.redirect('/dashboard')
+    }
+}
+
 module.exports = {
     adminDashboard,
     addTransactionPage,
@@ -604,5 +809,8 @@ module.exports = {
     getDiscount,
     getMultiplier,
     updateDiscounts,
-    updateMultipliers
+    updateMultipliers,
+    addMemberPage,
+    addMember,
+    importAdmins
 }

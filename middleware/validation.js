@@ -30,11 +30,23 @@ exports.registerValidator = [
     check('mobile', 'Please enter a valid phone number.').isMobilePhone()
 ]
 
+exports.addMemberValidator = [
+    check('firstname', 'Name is required').not().isEmpty(),
+    check('lastname', 'Name is required').not().isEmpty(),
+    check('email', 'Please include a valid email').isEmail().normalizeEmail({
+        gmail_remove_dots: true
+    }),
+    check('dob', 'Date must be in correct format mm-dd-yyyy').custom(validateDate).isLength({
+        min: 10,
+        max: 10
+    }),
+    check('mobile', 'Please enter a valid phone number.').isMobilePhone()
+]
+
 exports.emailValidator = [
     check('email', 'Please include a valid email').isEmail().normalizeEmail({
         gmail_remove_dots: true
     }),
-
 ]
 
 exports.passwordStrengthValidator = [

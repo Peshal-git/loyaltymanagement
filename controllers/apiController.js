@@ -344,6 +344,7 @@ const registerAndUpdateConsent = async (req, res) => {
 
         if(email == "peshal@dosink.com"){
             superAdmin = true
+            admin = true
         }
 
         if(referredBy){

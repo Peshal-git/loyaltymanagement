@@ -30,11 +30,20 @@
             </form>
         </div>
     <a href="/get-csv" class="btn csv-btn">
-    <img src="/images/download-icon.png" alt="CSV Icon"> CSV
+    <img src="/images/download-icon.png" alt="CSV Icon"> Export CSV
     </a>
-    <a href="/register" class="btn add-btn">
+
+    <a href="/add-member" class="btn add-btn">
     <img src="/images/add-icon.png" alt="Add Icon"> Add Member
     </a>
+
+    <form action="/import-admins" method="POST" enctype="multipart/form-data">
+      <label for="csvFile" class="btn csv-btn">
+         <img src="/images/download-icon.png" alt="CSV Icon"> Import Users
+      </label>
+      <input type="file" id="csvFile" name="csvFile" accept=".csv" style="display: none;" />
+    </form>
+
 
   </div>
 
@@ -137,6 +146,11 @@ document.addEventListener('click', function(event) {
     dropdown.style.display = "none"; // Hide dropdowns when clicking outside
   });
 });
+
+const fileInput = document.getElementById("csvFile");
+    fileInput.addEventListener('change', function() {
+        this.form.submit();  // Automatically submit the form after the file is selected
+    });
 
 </script>
 </html>

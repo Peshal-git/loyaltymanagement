@@ -109,13 +109,24 @@ const updatePassword = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        await User.findByIdAndUpdate({ _id: user_id }, {
+        const userr = await User.findByIdAndUpdate({ _id: user_id }, {
             $set: {
                 "systemData.password": hashedPassword
             }
         })
 
         await PasswordReset.deleteMany({ user_id })
+
+
+        if (userr) {
+            if (!userr.isVerified) {
+                await User.findByIdAndUpdate({ _id: userr.id }, {
+                    $set: {
+                        isVerified: true
+                    }
+                })
+            }
+        }
 
         const message = "Password Updated Successfully."
         return res.render('main-login', { message })
