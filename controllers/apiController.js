@@ -4,9 +4,11 @@ const tokenGen = require('../helpers/tokenGen')
 const { validationResult } = require('express-validator')
 const mailer = require('../helpers/mailer')
 const MemId = require('../helpers/memberIdGen')
+const pointsHistoryCalc = require('../helpers/pointsHistoryCalc')
 const randomstring = require('randomstring')
 const PasswordReset = require('../models/passwordReset')
 const uniqueTranCode = require('../helpers/uniqueTranCode')
+
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
     ? process.env.API_BASE_URL_PROD
@@ -204,13 +206,18 @@ const addTransaction = async (req, res) => {
             tranCode
         })
 
+        const userId = existingProfile.id
+        const totalPointsBefore = existingProfile.membershipInfo.pointsForRedemptions
+
+        await pointsHistoryCalc.addPoints(userId, pointsGained, totalPointsBefore, spendingType, tranCode)
+
         existingProfile.membershipInfo.pointsForRedemptions += pointsGained
 
         const totalPoints = existingProfile.transaction.reduce(
             (total, transaction) => total + (transaction.pointsGained || 0),
             0
-        );
-        existingProfile.membershipInfo.pointsAvailable = totalPoints;
+        )
+        existingProfile.membershipInfo.pointsAvailable = totalPoints
 
         const updatedProfile = await existingProfile.save()
 
@@ -274,8 +281,10 @@ const updateTransaction = async (req, res) => {
                 }
             )
 
-            existingProfile.membershipInfo.pointsForRedemptions += pointsGained;
-            await existingProfile.save();
+           await pointsHistoryCalc.editPointsRecord(existingProfile.transaction[reservationIndex].tranCode, pointsGained)
+
+            existingProfile.membershipInfo.pointsForRedemptions += pointsGained
+            await existingProfile.save()
         }
         
         const totalPoints = existingProfile.transaction.reduce(

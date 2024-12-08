@@ -2,6 +2,8 @@ const Reward = require('../models/rewardsModel')
 const User = require('../models/userModel')
 const { validationResult } = require('express-validator')
 const getValues = require('../helpers/getValues')
+const PointsHistory = require('../models/pointsHistoryModel')
+const getPaginations = require('../helpers/getPaginations')
 
 
 const dashboardRedirect = async (req, res) => {
@@ -55,19 +57,22 @@ const activitiesPage = async (req, res) => {
             userData = req.user
         }
 
-        
-        const yogaRewards = await getValues.getYogaRewardPoints()
-        const fnbRewards = await getValues.getFnBRewardPoints()
-        const vitaSpaRewards = await getValues.getVitaSpaRewardPoints()
-        const retreatRewards = await getValues.getRetreatsRewardPoints()
+        const userId = userData.id
 
-        return res.render('activities', { 
-            user: userData, 
-            activePage: 'redemption', 
-            yogaRewards,
-            fnbRewards,
-            vitaSpaRewards,
-            retreatRewards 
+        const history = await PointsHistory.find({ userId }).sort({ transactionDate: -1 })
+
+        const page = Number(req.query.page) || 1
+        const limit = 5
+        
+        const { historiesToShow, totalPages, prevPage, nextPage, currentPage, pages } = await getPaginations.getPaginatedHistory(history, page, limit)
+
+        return res.render('activities', {
+            historiesToShow,
+            totalPages,
+            prevPage,
+            nextPage,
+            currentPage,
+            pages
         })
 
     } catch (error) {
@@ -190,70 +195,6 @@ const updateAdditionalInfoAndConsent = async (req, res) => {
     }
 };
 
-const reedemPoints = async(req,res) => {
-    try {
-        const id = req.query.id
-        const reward = req.body.reward
-        const userToShow = await User.findById(id)
-        let pointsToDeduct = 0
-
-        const rewardYoga = await Reward.findOne({ "yogaRewards.yRewards": reward })
-        const rewardFb = await Reward.findOne({ "fnbRewards.fbRewards": reward })
-        const rewardVita = await Reward.findOne({ "vitaSpaRewards.vsRewards": reward })
-        const rewardRetreat = await Reward.findOne({ "retreatRewards.rRewards": reward })
-
-        if(rewardYoga){
-            pointsToDeduct = rewardYoga.yogaRewards.yPointRequired
-        }
-        else if(rewardFb){
-            pointsToDeduct = rewardFb.fnbRewards.fbPointRequired
-        }
-        else if(rewardVita){
-            pointsToDeduct = rewardVita.vitaSpaRewards.vsPointRequired
-        }
-        else if(rewardRetreat){
-            pointsToDeduct = rewardRetreat.retreatRewards.rPointRequired
-        }
-
-        const yogaRewards = await getValues.getYogaRewardPoints()
-        const fnbRewards = await getValues.getFnBRewardPoints()
-        const vitaSpaRewards = await getValues.getVitaSpaRewardPoints()
-        const retreatRewards = await getValues.getRetreatsRewardPoints()
-
-        if(userToShow.membershipInfo.pointsForRedemptions < pointsToDeduct){
-            const error = "You don't have enough points to redeem this reward."
-
-            return res.render('redemption', { 
-                user: userToShow, 
-                activePage: 'redemption', 
-                yogaRewards,
-                fnbRewards,
-                vitaSpaRewards,
-                retreatRewards,
-                error
-            })
-        }
-
-        userToShow.membershipInfo.pointsForRedemptions -= pointsToDeduct;
-        await userToShow.save()
-        
-        
-        const message = `You have successfully redeemed ${reward}`
-
-        return res.render('redemption', { 
-            user: userToShow, 
-            activePage: 'redemption', 
-            yogaRewards,
-            fnbRewards,
-            vitaSpaRewards,
-            retreatRewards,
-            message
-        })
-
-    } catch (error) {
-        return res.status(500).json({ success: false, msg: error.message });
-    }
-}
 
 
 module.exports = {
@@ -262,6 +203,5 @@ module.exports = {
     activitiesPage,
     addInfoPage,
     dashboardRedirect,
-    updateAdditionalInfoAndConsent,
-    reedemPoints
+    updateAdditionalInfoAndConsent
 }

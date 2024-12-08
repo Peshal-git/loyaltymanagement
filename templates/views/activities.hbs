@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Activities</title>
-  <link rel="stylesheet" href="/css/user-profile.css" />
+  <link rel="stylesheet" href="/css/activities.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
-  <!-- Top Navigation Bar -->
+
   <nav class="top-nav">
     <a href="/" class="dashboard-link">
       <img src="/images/vikasa-name.png" alt="Vikasa">
@@ -23,226 +23,62 @@
         <a href="/logout" class="logout-link">Logout</a>
     </div>
   </nav>
-</body>
-</html>
 
-<div class="dmtable-container">
-<div class="table-card">
-    <p>Your redeem points balance: {{user.membershipInfo.pointsForRedemptions}} </p>
+<div class="main-container">
+<div class="container">
+  <table class="member-table">
+    <thead>
+        <tr>
+            <td> Points History</td>
+        </tr>
+    </thead>
+    <tbody>
+
+        {{#each historiesToShow}}
+        
+        <tr>
+            <td>{{makeType this.transactionType}}</td>
+            <td>{{this.service}}</td>
+            <td>{{makeDate this.transactionDate}}</td>
+            <td>Points Before: {{this.totalPointsBefore}} </td>
+            <td>Points After: {{this.totalPointsAfter}} </td>
+            <td>Points Used: {{this.points}} </td>
+        </tr>
+
+        {{/each}}
+
+
+    </tbody>
+  </table>
+    <a href="/download-pointsHistory" class="btn csv-btn">
+    <img src="/images/download-icon.png" alt="CSV Icon"> Download
+    </a>
+
+
     {{#if error}}
     <h4 style="color: #CD5C5C;">{{error}}</h4>
     {{/if}}
     {{#if message}}
-    <h4 style="color: #667391;">{{message}}.</h4>
+        <h3 style="color: #667391;">{{message}}</h3>
     {{/if}}
-    <div class="category-name">
-        <p>Yoga Category</p>
-    </div>
-        <table class="redemption-table">
-            <thead>
-                <tr>
-                    <th>Rewards</th>
-                    <th>Points Required</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>1 Group Class Drop-in</td>
-                    <td>{{yogaRewards.yrewardOneValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="1 Group Class Drop-in">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>1-week unlimited Class Tickets</td>
-                    <td>{{yogaRewards.yrewardTwoValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="1-week unlimited Class Tickets">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>1 Month Unlimited</td>
-                    <td>{{yogaRewards.yrewardThreeValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="1 Month Unlimited">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Healthy Day</td>
-                    <td>{{yogaRewards.yrewardFourValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Healthy Day">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Healthy Morning/ Afternoon</td>
-                    <td>{{yogaRewards.yrewardFiveValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Healthy Morning/ Afternoon">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Private Class 1-on-1</td>
-                    <td>{{yogaRewards.yrewardSixValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Private Class 1-on-1">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-            </tbody>
-        </table>
 </div>
-<div class="table-card">
-    <div class="category-name">
-        <p>F&B Category</p>
-    </div>
-        <table class="redemption-table">
-            <thead>
-                <tr>
-                    <th>Rewards</th>
-                    <th>Points Required</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Free Breakfast or Dinner Set</td>
-                    <td>{{fnbRewards.frewardOneValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Free Breakfast or Dinner Set">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Free Signature Juices or Smoothies</td>
-                    <td>{{fnbRewards.frewardTwoValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Free Signature Juices or Smoothies">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Free Coffee or Tea</td>
-                    <td>{{fnbRewards.frewardThreeValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Free Coffee or Tea">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Free Raw Cheesecake</td>
-                    <td>{{fnbRewards.frewardFourValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Free Raw Cheesecake">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-            </tbody>
-        </table>
-</div>
-<div class="table-card">
-    <div class="category-name">
-        <p>Vita Spa Category</p>
-    </div>
-        <table class="redemption-table">
-            <thead>
-                <tr>
-                    <th>Rewards</th>
-                    <th>Points Required</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Any massages/Treatments 60mn</td>
-                    <td>{{vitaSpaRewards.vrewardOneValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Any massages/Treatments 60mn">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Any massages/Treatments 90mn</td>
-                    <td>{{vitaSpaRewards.vrewardTwoValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Any massages/Treatments 90mn">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Free upgrade 30 min massage</td>
-                    <td>{{vitaSpaRewards.vrewardThreeValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Free upgrade 30 min massage">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-            </tbody>
-        </table>
-</div>
-<div class="table-card">
-    <div class="category-name">
-        <p>Retreats and YTT packages</p>
-    </div>
-        <table class="redemption-table">
-            <thead>
-                <tr>
-                    <th>Rewards</th>
-                    <th>Points Required</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Room upgrade</td>
-                    <td>{{retreatRewards.rrewardOneValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Room upgrade">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-                <tr>
-                    <form action="/redeem?id={{user.id}}" method="POST">
-                    <td>Free room night</td>
-                    <td>{{retreatRewards.rrewardTwoValue}}</td>
-                    <td>
-                        <input type="hidden" name="reward" value="Free room night">
-                        <button type="submit" class="redeem-button">Redeem</button>
-                    </td>
-                    </form>
-                </tr>
-            </tbody>
-        </table>
 </div>
 
+
+
+<div class="pagination">
+    <a href="?page={{prevPage}}" class="page-link" aria-label="Previous">&lsaquo; Prev</a>
+    
+    {{#each pages}}
+    <a href="?page={{this}}" class="page-link {{#if (eq this ../currentPage)}}active{{/if}}">
+        {{this}}
+    </a>
+    {{/each}}
+    
+    <a href="?page={{nextPage}}" class="page-link" aria-label="Next">Next &rsaquo;</a>
+    <a href="?page={{totalPages}}" class="page-link">Last &raquo;</a>
 </div>
+
+
+</body>
+</html>

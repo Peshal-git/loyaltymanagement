@@ -59,4 +59,15 @@ hbs.registerHelper('lowercase', function(str) {
 
 hbs.registerHelper("eq", function (a, b) {
     return a === b;
-  });
+});
+
+hbs.registerHelper("makeType", function (value) {
+    if(value=="add"){
+        return 'Transaction'
+    }
+    if(value="subtract"){
+        return 'Redeem'
+    }
+    return 'Error'
+    
+});

@@ -75,6 +75,7 @@ router.get('/add-member', auth, adminCheck, adminController.addMemberPage)
 router.post('/add-member', auth, adminCheck, addMemberValidator, adminController.addMember)
 
 router.post('/import-admins', upload.single('csvFile'), adminController.importAdmins)
+router.post('/redeem', auth, adminCheck, adminController.redeemPoints)
 
 
 module.exports = router

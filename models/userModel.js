@@ -85,6 +85,20 @@ const TransactionalSchema = new mongoose.Schema({
     timestamps: true
 })
 
+const RedeemSchema = new mongoose.Schema({
+    reward: {
+        type: String,
+        required: true,
+    },
+    pointsLost: {
+        type: Number
+    },
+    tranCode: {
+        type: String
+    }
+    }, {
+    timestamps: true
+})
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -151,6 +165,7 @@ const userSchema = new mongoose.Schema({
     marketing: MarketingSchema,
     membershipInfo: MemberInfoSchema,
     transaction: [TransactionalSchema],
+    redeem: [RedeemSchema],
     tier: {
         type: String,
         required: true,

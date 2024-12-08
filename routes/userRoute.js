@@ -26,6 +26,5 @@ router.get('/activities', auth, userCheck, userController.activitiesPage)
 router.get('/about-us', auth, userCheck, userController.aboutUsPage)
 router.get('/provide-addinfo', auth, userCheck, userController.addInfoPage)
 router.post('/update-dob-mobile', auth, userCheck, updateSocialAuthValidator, userController.updateAdditionalInfoAndConsent)
-router.post('/redeem', auth, userCheck, userController.reedemPoints)
 
 module.exports = router

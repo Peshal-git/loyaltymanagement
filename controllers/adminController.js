@@ -10,11 +10,13 @@ const randomstring = require('randomstring')
 const mailer = require('../helpers/mailer')
 const PasswordReset = require('../models/passwordReset')
 const tokenGen = require('../helpers/tokenGen')
-const displayUsers = require('../helpers/getPaginatedUsers')
+const getPaginations = require('../helpers/getPaginations')
 const csv = require('csvtojson')
+const uniqueTranCode = require('../helpers/uniqueTranCode')
 
 
 const { validationResult } = require('express-validator')
+const pointsHistoryCalc = require('../helpers/pointsHistoryCalc')
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
     ? process.env.API_BASE_URL_PROD
@@ -26,7 +28,7 @@ const adminDashboard = async (req, res) => {
         const page = Number(req.query.page) || 1
         const limit = 5
         
-        const { user, totalPages, prevPage, nextPage, currentPage, pages } = await displayUsers.getPaginatedUsers(query, page, limit)
+        const { user, totalPages, prevPage, nextPage, currentPage, pages } = await getPaginations.getPaginatedUsers(query, page, limit)
         
         if (req?.session?.reservationMessage || req?.session?.reservationError) {
             let message = req.session.reservationMessage
@@ -146,17 +148,22 @@ const deleteTransaction = async (req, res) => {
         const requestedUser = await User.findById(id)
 
         if (reservationIndex < 0 || reservationIndex >= requestedUser.transaction.length) {
-            const originalPointsGained = requestedUser.transaction[reservationIndex].pointsGained || 0
-            requestedUser.membershipInfo.pointsForRedemptions -= originalPointsGained;
-            
+
             return res.status(400).json({
                 success: false,
                 msg: 'Invalid reservation index'
-            });
-        }
+            })
 
-        requestedUser.transaction.splice(reservationIndex, 1);
-        await requestedUser.save();
+        }
+        
+        const originalPointsGained = requestedUser.transaction[reservationIndex].pointsGained || 0
+        requestedUser.membershipInfo.pointsForRedemptions -= originalPointsGained
+
+        await pointsHistoryCalc.deletePointsRecord(requestedUser.transaction[reservationIndex].tranCode)
+
+        requestedUser.transaction.splice(reservationIndex, 1)
+        await requestedUser.save()
+
         res.redirect(`/points-wallet?id=${id}`)
 
     } catch (error) {
@@ -787,6 +794,83 @@ const importAdmins = async (req,res) => {
     }
 }
 
+const redeemPoints = async(req,res) => {
+    try {
+        const id = req.query.id
+        const reward = req.body.reward
+        const userToShow = await User.findById(id)
+        let pointsToDeduct = 0
+
+        const rewardYoga = await Reward.findOne({ "yogaRewards.yRewards": reward })
+        const rewardFb = await Reward.findOne({ "fnbRewards.fbRewards": reward })
+        const rewardVita = await Reward.findOne({ "vitaSpaRewards.vsRewards": reward })
+        const rewardRetreat = await Reward.findOne({ "retreatRewards.rRewards": reward })
+
+        if(rewardYoga){
+            pointsToDeduct = rewardYoga.yogaRewards.yPointRequired
+        }
+        else if(rewardFb){
+            pointsToDeduct = rewardFb.fnbRewards.fbPointRequired
+        }
+        else if(rewardVita){
+            pointsToDeduct = rewardVita.vitaSpaRewards.vsPointRequired
+        }
+        else if(rewardRetreat){
+            pointsToDeduct = rewardRetreat.retreatRewards.rPointRequired
+        }
+
+        const yogaRewards = await getValues.getYogaRewardPoints()
+        const fnbRewards = await getValues.getFnBRewardPoints()
+        const vitaSpaRewards = await getValues.getVitaSpaRewardPoints()
+        const retreatRewards = await getValues.getRetreatsRewardPoints()
+
+        if(userToShow.membershipInfo.pointsForRedemptions < pointsToDeduct){
+            const error = "You don't have enough points to redeem this reward."
+
+            return res.render('redemption', { 
+                user: userToShow, 
+                activePage: 'redemption', 
+                yogaRewards,
+                fnbRewards,
+                vitaSpaRewards,
+                retreatRewards,
+                error
+            })
+        }
+
+        const tranCode = await uniqueTranCode.generateUniqueCode()
+        userToShow.redeem.push({
+            reward,
+            pointsLost: pointsToDeduct,
+            tranCode
+        })
+
+        const userId = userToShow.id
+        const totalPointsBefore = userToShow.membershipInfo.pointsForRedemptions
+
+        await pointsHistoryCalc.subtractPoints(userId, pointsToDeduct, totalPointsBefore, reward, tranCode)
+
+        userToShow.membershipInfo.pointsForRedemptions -= pointsToDeduct
+        await userToShow.save()
+        
+        const message = `You have successfully redeemed ${reward}`
+
+        return res.render('redemption', { 
+            user: userToShow, 
+            activePage: 'redemption', 
+            yogaRewards,
+            fnbRewards,
+            vitaSpaRewards,
+            retreatRewards,
+            message
+        })
+
+    } catch (error) {
+        return res.status(500).json({ success: false, msg: error.message });
+    }
+}
+
+
 module.exports = {
     adminDashboard,
     addTransactionPage,
@@ -812,5 +896,6 @@ module.exports = {
     updateMultipliers,
     addMemberPage,
     addMember,
-    importAdmins
+    importAdmins,
+    redeemPoints
 }

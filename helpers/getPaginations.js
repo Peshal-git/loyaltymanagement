@@ -1,4 +1,6 @@
 const User = require('../models/userModel')
+const PointsHistory = require('../models/pointsHistoryModel')
+
 const getPaginatedUsers = async (query, page = 1, limit = 5) => {
     let usersToSkip = (page - 1) * limit;
 
@@ -40,6 +42,33 @@ const getPaginatedUsers = async (query, page = 1, limit = 5) => {
     }
 }
 
+const getPaginatedHistory = async (history, page = 1, limit = 5) => {
+    let historiesToSkip = (page - 1) * limit;
+
+    const totalHistories = history.length
+    const totalPages = Math.ceil(totalHistories / limit);
+
+    if (page > totalPages) page = totalPages;
+    if (page < 1) page = 1;
+
+    const prevPage = page > 1 ? page - 1 : null;
+    const nextPage = page < totalPages ? page + 1 : null;
+    const currentPage = page;
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    const historiesToShow = history.slice(historiesToSkip, historiesToSkip + limit)
+
+    return {
+        historiesToShow,
+        totalPages,
+        prevPage,
+        nextPage,
+        currentPage,
+        pages
+    }
+}
+
 module.exports = {
-    getPaginatedUsers
+    getPaginatedUsers,
+    getPaginatedHistory
 }
