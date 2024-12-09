@@ -62,7 +62,6 @@ router.get('/discounts', auth, adminCheck, adminController.discounts)
 router.post('/discount-control', auth, superAdminCheck, discountsUpdateValidator, adminController.updateDiscounts)
 router.post('/multiplier-control', auth, superAdminCheck, multipliersUpdateValidator, adminController.updateMultipliers)
 
-
 router.post('/update-profileinfo', auth, adminCheck, adminUpdateValidator, adminController.updateProfile)
 router.post('/update-privacy-and-pref', auth, adminCheck, adminController.updatePrivacyAndPreference)
 router.post('/update-membership-info', auth, adminCheck, updateMembershipInfo, adminController.updateMembershipInfo)
