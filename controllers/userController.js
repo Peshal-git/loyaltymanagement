@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator')
 const getValues = require('../helpers/getValues')
 const PointsHistory = require('../models/pointsHistoryModel')
 const getPaginations = require('../helpers/getPaginations')
+const CsvParser = require('json2csv').Parser
 
 
 const dashboardRedirect = async (req, res) => {
@@ -203,22 +204,63 @@ const updateAdditionalInfoAndConsent = async (req, res) => {
 };
 
 const downloadPointsHistory = async (req,res) => {
-    let user
+    try {
+        let user
 
-    if (req?.user?.user) {
-        user = req.user.user
-    }
-    else {
-        user = req.user
-    }
-
+        if (req?.user?.user) {
+            user = req.user.user
+        }
+        else {
+            user = req.user
+        }
     
-    
+        let userPointsHistory = []
 
-    const message = ""
-    req.session.activitiesMessage = message
-    return res.redirect('/activities')
+        const userId = user.id
+        const histories = await PointsHistory.find({ userId }).sort({ transactionDate: -1 })
 
+        histories.forEach((history) => {
+
+            const {
+                transactionType,
+                points,
+                totalPointsBefore,
+                totalPointsAfter,
+                service,
+                tranCode,
+                transactionDate
+             } = history
+
+            const type = transactionType === 'add' ? "Transaction" : "Redemption";
+
+            const myDate = transactionDate.toISOString().split('T')[0]
+
+            userPointsHistory.push({
+                'Transaction Code': tranCode,
+                'Date': myDate,
+                'Type': type,
+                'Service/Reward': service,
+                'Points': points,
+                'Points Before': totalPointsBefore,
+                'Points After': totalPointsAfter,
+            })
+        })
+
+        const csvFields = ['Transaction Code', 'Date', 'Type', 'Service/Reward', 'Points', 'Points Before', 'Points After']
+
+        const csvParser = new CsvParser({ fields: csvFields })
+        const csvData = csvParser.parse(userPointsHistory)
+
+        res.setHeader("Content-Type", "text/csv; charset=utf-8")
+        res.setHeader("Content-Disposition", "attachment; filename=userPointsHistory.csv")
+        res.status(200).send('\uFEFF' + csvData)
+
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
 }
 
 module.exports = {
