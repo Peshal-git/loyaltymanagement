@@ -66,13 +66,20 @@ const activitiesPage = async (req, res) => {
         
         const { historiesToShow, totalPages, prevPage, nextPage, currentPage, pages } = await getPaginations.getPaginatedHistory(history, page, limit)
 
+        let message
+        if (req?.session?.activitiesMessage) {
+            message = req.session.activitiesMessage
+            req.session.activitiesMessage = null
+        }
+
         return res.render('activities', {
             historiesToShow,
             totalPages,
             prevPage,
             nextPage,
             currentPage,
-            pages
+            pages,
+            message
         })
 
     } catch (error) {
@@ -195,7 +202,24 @@ const updateAdditionalInfoAndConsent = async (req, res) => {
     }
 };
 
+const downloadPointsHistory = async (req,res) => {
+    let user
 
+    if (req?.user?.user) {
+        user = req.user.user
+    }
+    else {
+        user = req.user
+    }
+
+    
+    
+
+    const message = ""
+    req.session.activitiesMessage = message
+    return res.redirect('/activities')
+
+}
 
 module.exports = {
     profilePage,
@@ -203,5 +227,6 @@ module.exports = {
     activitiesPage,
     addInfoPage,
     dashboardRedirect,
-    updateAdditionalInfoAndConsent
+    updateAdditionalInfoAndConsent,
+    downloadPointsHistory
 }

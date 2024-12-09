@@ -42,7 +42,7 @@
             <td>{{makeDate this.transactionDate}}</td>
             <td>Points Before: {{this.totalPointsBefore}} </td>
             <td>Points After: {{this.totalPointsAfter}} </td>
-            <td>Points Used: {{this.points}} </td>
+            <td> Points <span> {{getUsedOrGained transactionType}} </span> <span class="{{getColor transactionType}}"> {{this.points}} </span> </td>
         </tr>
 
         {{/each}}

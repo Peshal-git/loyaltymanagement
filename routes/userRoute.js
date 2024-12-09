@@ -27,4 +27,6 @@ router.get('/about-us', auth, userCheck, userController.aboutUsPage)
 router.get('/provide-addinfo', auth, userCheck, userController.addInfoPage)
 router.post('/update-dob-mobile', auth, userCheck, updateSocialAuthValidator, userController.updateAdditionalInfoAndConsent)
 
+router.get('/download-pointsHistory', auth, userCheck, userController.downloadPointsHistory)
+
 module.exports = router

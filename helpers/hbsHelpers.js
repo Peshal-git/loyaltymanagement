@@ -66,8 +66,30 @@ hbs.registerHelper("makeType", function (value) {
         return 'Transaction'
     }
     if(value="subtract"){
-        return 'Redeem'
+        return 'Redemption'
     }
     return 'Error'
     
+});
+
+hbs.registerHelper('getColor', function (value) {
+    if(value=='add'){
+        return 'colorGreen'
+    }
+    if(value="subtract"){
+        return 'colorRed'
+    }
+    return 'Error'
+
+});
+
+hbs.registerHelper('getUsedOrGained', function (value) {
+    if(value=='add'){
+        return 'Gained: '
+    }
+    if(value="subtract"){
+        return 'Used: '
+    }
+    return 'Error'
+
 });

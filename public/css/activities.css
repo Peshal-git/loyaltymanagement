@@ -222,3 +222,11 @@ a:hover .minus-icon {
     pointer-events: none;
     cursor: not-allowed;
 }
+
+.colorRed{
+    color: #E63946;
+}
+
+.colorGreen{
+    color: #4CAF50;
+}
