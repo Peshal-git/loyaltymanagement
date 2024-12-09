@@ -182,7 +182,10 @@ const profileInformation = async (req, res) => {
         const parts = formattedDate.split('-');
         const mmddyyyy = `${parts[1]}-${parts[2]}-${parts[0]}`;
         const refUser = await User.findOne({memberId: userToShow.referredBy})
-        return res.render('profile-info', { user: userToShow, refUser, mmddyyyy, activePage: 'profile'})
+
+        const user = req?.user?.user || req.user
+        const superadmin = user.isSuperAdmin
+        return res.render('profile-info', { user: userToShow, refUser, mmddyyyy, superadmin, activePage: 'profile'})
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -222,6 +225,7 @@ const privacyAndPreferences = async (req, res) => {
     try {
         const id = req.query.id
         const userToShow = await User.findOne({ _id: id })
+
         return res.render('privacy-preference', { user: userToShow, activePage: 'privacy' })
     } catch (error) {
         return res.status(400).json({
@@ -242,7 +246,7 @@ const membershipInformation = async (req, res) => {
         
         // userToShow.membershipInfo.pointsAvailable = totalPoints;
         // await userToShow.save();
-        
+
         return res.render('membership-info', { user: userToShow, activePage: 'membership' })
     } catch (error) {
         return res.status(400).json({
@@ -273,7 +277,9 @@ const transactionDetails = async (req, res) => {
         const userToShow = await User.findById(id)
         const transactionObj = userToShow.transaction[reservationIndex]
 
-        return res.render('transaction-details', { user: userToShow, transactionObj, reservationIndex, activePage: 'pointsWallet' })
+        const user = req?.user?.user || req.user
+        const superadmin = user.isSuperAdmin
+        return res.render('transaction-details', { user: userToShow, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
     } catch (error) {
         return res.status(400).json({
             success: false,

@@ -49,8 +49,8 @@ router.post('/dashboard', createToken, passport.authenticate('local', {
 router.get('/add-transaction', auth, adminCheck, adminController.addTransactionPage)
 router.post('/add-transaction', auth, adminCheck, adminController.makeTransaction)
 
-router.get('/delete-user', auth, adminCheck, adminController.deleteUser)
-router.get('/delete-transaction', auth, adminCheck, adminController.deleteTransaction)
+router.get('/delete-user', auth, superAdminCheck, adminController.deleteUser)
+router.get('/delete-transaction', auth, superAdminCheck, adminController.deleteTransaction)
 router.get('/profile-info', auth, adminCheck, adminController.profileInformation)
 router.get('/redemption', auth, adminCheck, adminController.redemption)
 router.get('/privacy-pref', auth, adminCheck, adminController.privacyAndPreferences)
