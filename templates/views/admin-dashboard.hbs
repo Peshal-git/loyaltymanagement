@@ -50,7 +50,7 @@
   <table class="member-table">
     <thead>
       <tr>
-        <th><input type="checkbox"></th>
+        <th>Member Id</th>
         <th>Member Name</th>
         <th>Email</th>
         <th>Contact</th>
@@ -60,7 +60,7 @@
     <tbody>
         {{#each user}}
         <tr onclick="window.location.href='/profile-info?id={{this.id}}'">
-        <td><input type="checkbox" onclick="event.stopPropagation(); openOptionsMenu(event);"></td>
+        <td>{{this.memberId}}</td>
         <td>{{this.name}}</td>
         <td>{{this.email}}</td>
         <td>{{this.mobile}}</td>

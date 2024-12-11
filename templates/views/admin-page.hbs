@@ -1,0 +1,64 @@
+{{> navbar}}
+
+<section id="profile-info">
+<h3 id="profile-info">Profile</h3>
+{{> profileInfo}}
+</section>
+
+<section id="membership-info">
+<h3>Membership Info</h3>
+{{> membershipInfo }}
+</section>
+
+<section id="points-wallet">
+<h3>Points Wallet</h3>
+{{> pointsWallet}}
+</section>
+
+<section id="discounts">
+<h3>Discounts</h3>
+{{> discounts}}
+</section>
+
+<section id="privacy-pref">
+<h3>Privacy and Preference</h3>
+{{> privacyPreference}}
+</section>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('section'); // Adjust selector based on your markup
+  const navLinks = document.querySelectorAll('.sidebar-links a');
+
+  // Function to update active link
+  window.addEventListener('scroll', () => {
+    let currentSection = '';
+
+    // Determine which section is in the viewport
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      if (window.scrollY >= sectionTop - 250) { // Offset for navbar height
+        currentSection = section.getAttribute('id');
+      }
+    });
+
+    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
+    if (nearBottom) {
+      const lastSection = sections[sections.length - 1];
+      currentSection = lastSection.getAttribute('id');
+    }
+
+    // Update active class on nav links
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${currentSection}`) {
+        console.log('Adding active class to:', link);
+        link.classList.add('active');
+      }
+    });
+  });
+});
+
+</script>

@@ -1,5 +1,5 @@
-{{>navbar}}
-
+{{#if superadmin}}
+<div class="single-column">
 <div class="dmtable-container">
 
     <form action="/discount-control?id={{user.id}}" method="POST">
@@ -79,14 +79,74 @@
         <h4 style="color: #667391;">{{multiplierMessage}}</h4>
         {{/if}}
 
+        {{#if superadmin}}
         <div class="lastbuttons">
             <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
         </div>
-
-
+        {{/if}}
     </form>
 </div>
 </div>
-<br>
-</body>
-</html>
+
+{{else}}
+
+<div class="single-column">
+<div class="dmtable-container">
+
+    <table class="dm-table discount-table">
+        <thead>
+            <tr>
+                <th>Tier</th>
+                <th>Discount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Balance</td>
+                <td>{{discounts.balanceDiscount}}%</td>
+            </tr>
+            <tr>
+                <td>Vitality</td>
+                <td>{{discounts.vitalityDiscount}}%</td>
+            </tr>
+            <tr>
+                <td>Harmony</td>
+                <td>{{discounts.harmonyDiscount}}%</td>
+            </tr>
+            <tr>
+                <td>Serenity</td>
+                <td>{{discounts.serenityDiscount}}%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Multiplier Table -->
+    <table class="dm-table multiplier-table">
+        <thead>
+            <tr>
+                <th>Service Type</th>
+                <th>Multiplier</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Life Café</td>
+                <td>{{multipliers.lifeCafeMultiplier}}</td>
+            </tr>
+            <tr>
+                <td>Yoga Class</td>
+                <td>{{multipliers.yogaClassMultiplier}}</td>
+            </tr>
+            <tr>
+                <td>Vita Spa</td>
+                <td>{{multipliers.vitaSpaMultiplier}}</td>
+            </tr>
+            <tr>
+                <td>Retreats and YTT Packages</td>
+                <td>{{multipliers.retreatsMultiplier}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+{{/if}}

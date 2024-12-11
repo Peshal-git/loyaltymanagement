@@ -1,3 +1,4 @@
+const getMultipliersDiscounts = require('../helpers/getMultipliersDiscounts');
 const User = require('../models/userModel')
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
@@ -170,9 +171,11 @@ const updateTransactionInfo = async (req, res, next) => {
 
         const {
             spendingType,
-            amount,
-            pointsGained
+            amount
         } = req.body
+        
+        const multiplier = await getMultipliersDiscounts.getMultiplier(spendingType)
+        const pointsGained = amount * multiplier
 
         const response = await fetch(`${API_BASE_URL}/api/update-transaction`, {
             method: 'POST',

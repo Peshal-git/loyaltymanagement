@@ -13,7 +13,7 @@
                     </select>
                 </div>
 
-                <div class="form-group" style="display: none;">
+                {{!-- <div class="form-group" style="display: none;">
                     <label for="multiplier">Multiplier</label>
                     <input type="number" name="multiplier" id="multiplier" value="" readonly>
                 </div>
@@ -26,7 +26,7 @@
                  <div class="form-group">
                         <label for="netAmount">Net Amount</label>
                         <input type="number" name="netAmount" id="netAmount" class="form-input" value="" readonly>
-                </div>
+                </div> --}}
 
             </div>
 
@@ -42,12 +42,12 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                {{!-- <div class="form-group">
                     <label for="n">Points Gained:</label>
                     <input type="text" name="pointsGained" id="pointsGained"
                         value="{{transactionObj.pointsGained}}"
                         readonly>
-                </div>
+                </div> --}}
 
 
                 {{#if error}}
@@ -71,90 +71,4 @@
 
         
     </body>
-
-<script>
-  document.querySelectorAll('.form-group').forEach(group => {
-    const inputField = group.querySelector('.editable');
-    const editIcon = group.querySelector('.edit-icon');
-
-    if (inputField && editIcon) {
-        editIcon.addEventListener('click', function() {
-            inputField.removeAttribute('readonly'); // Make the input editable
-            inputField.focus(); // Set focus to the input field
-
-            const end = inputField.value.length;
-            inputField.setSelectionRange(end, end);
-        });
-
-        inputField.addEventListener('focus', function() {
-            editIcon.style.visibility = 'hidden'; // Hide the icon when input is focused
-        });
-
-        inputField.addEventListener('blur', function() {
-            editIcon.style.visibility = 'visible'; // Show the icon when input loses focus
-        });
-    }
-  })
-
-   async function getMultiplier() {
-        const spendingType = document.getElementById("spendingType").value
-
-        const response = await fetch(`/get-multiplier?spendingType=${encodeURIComponent(spendingType)}`)
-        const data = await response.json()
-
-        if (data && data.multiplier) {
-            document.getElementById("multiplier").value = data.multiplier
-        }
-
-        calculatePointsGained()
-    }
-
-    async function calculateDiscount() {
-        const amount = parseFloat(document.getElementById("amount").value)
-
-        if (isNaN(amount) || amount <= 0) {
-            document.getElementById("netAmount").value = ""
-            document.getElementById("pointsGained").value = ""
-            return;
-        }
-
-        const id = document.querySelector("form").getAttribute("action").split('=')[1]
-        console.log(id)
-        const response = await fetch(`/get-discount?id=${id}`)
-        const discountData = await response.json()
-
-        if (discountData && discountData.discount) {
-            const discountPercentage = discountData.discount
-            const discountAmount = (discountPercentage / 100) * amount
-            const netAmount = amount - discountAmount
-            
-            document.getElementById("netAmount").value = `${netAmount.toFixed(2)}`
-            
-        }
-
-        calculatePointsGained()
-    }
-
-    function calculatePointsGained() {
-        const amount = parseFloat(document.getElementById("amount").value);
-        const multiplier = parseFloat(document.getElementById("multiplier").value);
-
-        if (!isNaN(amount) && amount > 0 && !isNaN(multiplier)) {
-            const points = amount * multiplier;
-            document.getElementById("pointsGained").value = points.toFixed(0);
-        } else {
-            document.getElementById("pointsGained").value = "";
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", async () => {
-        await getMultiplier();
-        await calculateDiscount();
-    })
-
-
-    document.getElementById("amount").addEventListener("input", calculateDiscount)
-    document.getElementById("spendingType").addEventListener("change", getMultiplier)
-
-</script>
 </html>

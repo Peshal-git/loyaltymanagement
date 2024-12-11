@@ -67,8 +67,6 @@ router.post('/update-privacy-and-pref', auth, adminCheck, adminController.update
 router.post('/update-membership-info', auth, adminCheck, updateMembershipInfo, adminController.updateMembershipInfo)
 router.post('/update-transaction-details', auth, adminCheck, updateTransactionInfo, adminController.updateTransactionInfo)
 router.get('/get-csv', auth, adminCheck, adminController.getCSV)
-router.get('/get-discount', auth, adminCheck, adminController.getDiscount)
-router.get('/get-multiplier', auth, adminCheck, adminController.getMultiplier)
 
 router.get('/add-member', auth, adminCheck, adminController.addMemberPage)
 router.post('/add-member', auth, adminCheck, addMemberValidator, adminController.addMember)

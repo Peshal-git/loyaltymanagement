@@ -148,10 +148,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    multiplier: {
-        type: Number,
-        default: 0.1
-    },
     googleId: String,
     facebookId: String,
     method: {

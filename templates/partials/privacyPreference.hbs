@@ -1,0 +1,105 @@
+
+<div class="whole-form">
+    <form action="/update-privacy-and-pref?id={{user.id}}" method="POST">
+        <div class="privacy-form">
+        <div class="left-column">
+            {{!-- <div class="form-group">
+            <label for="a">Member Id:</label>
+            <input type="text" name="memberId" value="{{user.memberId}}"
+                readonly="readonly">
+            </div> --}}
+
+            <div class="form-group">
+            <label for="b">Privacy Policy:</label>
+            <div class="input-wrapper">
+            <input class="editable" type="text" name="hasAcceptedPrivacyPolicy"
+                value="{{user.privacy.hasAcceptedPrivacyPolicy}}"
+                readonly>
+                <span class="edit-icon">&#9998;</span>
+            </div>
+            </div>
+
+            <div class="form-group">
+            <label for="b">Marketing Consent:</label>
+            <div class="input-wrapper">
+            <input class="editable" type="text" name="hasGivenMarketingConsent"
+                value="{{user.marketing.hasGivenMarketingConsent}}"
+                readonly>
+                <span class="edit-icon">&#9998;</span>
+            </div>
+            </div>
+
+        </div>
+
+        <div class="middle-column">
+
+            <div class="form-group">
+            <label for="g">Privacy Policy Stamp:</label>
+            <input type="text" name="createdAt" value="{{makeDate user.privacy.createdAt}}"
+                readonly>
+            </div>
+
+                        <div class="form-group">
+            <label for="g">Marketing Consent Stamp:</label>
+            <input type="text" name="createdAt" value="{{makeDate user.marketing.createdAt}}"
+            readonly>
+            </div>
+
+        </div>
+
+
+        <div class="right-column">
+
+            {{!-- <div class="form-group spacer">
+            </div> --}}
+
+            <div class="form-group">
+            <label for="h">Privacy Policy Updated:</label>
+            <input type="text" name="updatedAt" value="{{makeDate user.privacy.updatedAt}}"
+                readonly>
+            </div>
+
+
+            <div class="form-group">
+            <label for="h">Marketing Consent Updated:</label>
+            <input type="text" name="updatedAt" value="{{makeDate user.marketing.updatedAt}}"
+            readonly>
+            </div>
+        </div>
+        </div>
+
+            <div class="lastbuttons">
+            <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
+            </div>
+    </form>
+    </div>
+</div>
+</body>
+
+<script>
+  document.querySelectorAll('.form-group').forEach(group => {
+    const inputField = group.querySelector('.editable');
+    const editIcon = group.querySelector('.edit-icon');
+
+    if (inputField && editIcon) {
+        editIcon.addEventListener('click', function() {
+            inputField.removeAttribute('readonly'); // Make the input editable
+            inputField.focus(); // Set focus to the input field
+
+            const end = inputField.value.length;
+            inputField.setSelectionRange(end, end);
+        });
+
+        inputField.addEventListener('focus', function() {
+            editIcon.style.visibility = 'hidden'; // Hide the icon when input is focused
+        });
+
+        inputField.addEventListener('blur', function() {
+            editIcon.style.visibility = 'visible'; // Show the icon when input loses focus
+        });
+    }
+  });
+
+</script>
+
+</html>

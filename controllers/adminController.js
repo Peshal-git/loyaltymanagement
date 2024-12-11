@@ -13,6 +13,7 @@ const tokenGen = require('../helpers/tokenGen')
 const getPaginations = require('../helpers/getPaginations')
 const csv = require('csvtojson')
 const uniqueTranCode = require('../helpers/uniqueTranCode')
+const getMultipliersDiscounts = require('../helpers/getMultipliersDiscounts')
 
 
 const { validationResult } = require('express-validator')
@@ -85,9 +86,11 @@ const makeTransaction = async (req, res) => {
         const user = await User.findById(id)
         const { 
             spendingType,
-            amount,
-            pointsGained
-         } = req.body
+            amount
+        } = req.body
+
+        const multiplier = await getMultipliersDiscounts.getMultiplier(spendingType)
+        const pointsGained = amount * multiplier
 
         const response = await fetch(`${API_BASE_URL}/api/add-transaction`, {
             method: 'POST',
@@ -115,7 +118,7 @@ const makeTransaction = async (req, res) => {
 
         const message = "Transaction Done"
         req.session.reservationMessage = message
-        return res.redirect(`/points-wallet?id=${id}`)
+        return res.redirect(`/profile-info?id=${id}`)
 
     } catch (error) {
         return res.status(400).json({
@@ -164,7 +167,7 @@ const deleteTransaction = async (req, res) => {
         requestedUser.transaction.splice(reservationIndex, 1)
         await requestedUser.save()
 
-        res.redirect(`/points-wallet?id=${id}`)
+        res.redirect(`/profile-info?id=${id}`)
 
     } catch (error) {
         return res.status(400).json({
@@ -183,9 +186,36 @@ const profileInformation = async (req, res) => {
         const mmddyyyy = `${parts[1]}-${parts[2]}-${parts[0]}`;
         const refUser = await User.findOne({memberId: userToShow.referredBy})
 
+
+        let rewardMessage
+        let rewardError
+
+        if (req?.session?.rewardError || req?.session?.rewardMessage) {
+            rewardMessage = req.session.rewardMessage
+            rewardError = req.session.rewardError
+            req.session.rewardMessage = null
+            req.session.rewardError = null
+        }
+        
+
         const user = req?.user?.user || req.user
         const superadmin = user.isSuperAdmin
-        return res.render('profile-info', { user: userToShow, refUser, mmddyyyy, superadmin, activePage: 'profile'})
+
+
+        const discounts = await getValues.getDiscountValues()
+        const multipliers = await getValues.getMultiplierValues()
+
+        return res.render('admin-page', { 
+            user: userToShow, 
+            refUser, 
+            mmddyyyy, 
+            superadmin, 
+            activePage: 'profile', 
+            discounts, 
+            multipliers,
+            rewardMessage,
+            rewardError
+        })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -226,7 +256,7 @@ const privacyAndPreferences = async (req, res) => {
         const id = req.query.id
         const userToShow = await User.findOne({ _id: id })
 
-        return res.render('privacy-preference', { user: userToShow, activePage: 'privacy' })
+        return res.render('admin-page', { user: userToShow, activePage: 'privacy' })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -247,7 +277,7 @@ const membershipInformation = async (req, res) => {
         // userToShow.membershipInfo.pointsAvailable = totalPoints;
         // await userToShow.save();
 
-        return res.render('membership-info', { user: userToShow, activePage: 'membership' })
+        return res.render('admin-page', { user: userToShow, activePage: 'membership' })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -261,7 +291,7 @@ const pointsWallet = async (req, res) => {
         const id = req.query.id
         const requestedUser = await User.findOne({ _id: id })
 
-        return res.render('points-wallet', { user: requestedUser, activePage: 'pointsWallet' })
+        return res.render('admin-page', { user: requestedUser, activePage: 'pointsWallet' })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -279,6 +309,9 @@ const transactionDetails = async (req, res) => {
 
         const user = req?.user?.user || req.user
         const superadmin = user.isSuperAdmin
+
+        const discount = await getMultipliersDiscounts.getDiscount(id)
+        // const netAmount = netAmount - (discount * netAmount)/100
         return res.render('transaction-details', { user: userToShow, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
     } catch (error) {
         return res.status(400).json({
@@ -297,11 +330,11 @@ const discounts = async (req, res) => {
         const discounts = await getValues.getDiscountValues()
         const multipliers = await getValues.getMultiplierValues()
 
-        if (req.user?.isSuperAdmin || req.user?.user?.isSuperAdmin) {
-            return res.render('super-admin', { user: userToShow, activePage: 'discounts', discounts, multipliers })
-        } else {
-            return res.render('discounts', { user: userToShow, activePage: 'discounts', discounts, multipliers })
-        }
+        const user = req?.user?.user || req.user
+        const superadmin = user.isSuperAdmin
+
+        return res.render('admin-page', { user: userToShow, activePage: 'discounts', discounts, multipliers, superadmin })
+
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -341,7 +374,7 @@ const updateProfile = async (req, res) => {
             $set: data
         }, { new: true })
 
-        res.redirect(`/profile-info?id=${id}`);
+        res.redirect(`/admin-page?id=${id}`);
 
     } catch (error) {
         return res.status(400).json({
@@ -363,7 +396,7 @@ const updatePrivacyAndPreference = async (req, res) => {
             }
         }, { new: true })
 
-        res.redirect(`/privacy-pref?id=${id}`);
+        res.redirect(`/profile-info?id=${id}`);
 
     } catch (error) {
         return res.status(400).json({
@@ -375,7 +408,7 @@ const updatePrivacyAndPreference = async (req, res) => {
 
 const updateMembershipInfo = async (req, res) => {
     try {
-        res.redirect(`/membership-info`)
+        res.redirect(`/profile-info`)
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -387,7 +420,7 @@ const updateMembershipInfo = async (req, res) => {
 const updateTransactionInfo = async (req, res) => {
     try {
         const id = req.query.id
-        res.redirect(`/points-wallet?id=${id}`)
+        res.redirect(`/profile-info?id=${id}`)
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -451,39 +484,12 @@ const getCSV = async (req, res) => {
     }
 }
 
-const getDiscount = async(req,res) => {
-    try {
-        const id = req.query.id
-        const user = await User.findOne({ _id: id })
-        const discountPercent = await Pricing.findOne({ "tierDiscount.tier": user.tier })
-        if (discountPercent.tierDiscount) {
-            res.json({ discount: discountPercent.tierDiscount.discount });
-        } else {
-            res.status(404).send('Discount not found');
-        }
-    } catch (err) {
-        res.status(500).send('Server error');
-    }
-}
-
-const getMultiplier = async(req,res) => {
-    try {
-        const typeSelected = req.query.spendingType
-        const multiplierForSpending = await Pricing.findOne({ "spendingMultiplier.spendingType": typeSelected })
-        if (multiplierForSpending.spendingMultiplier) {
-            res.json({ multiplier: multiplierForSpending.spendingMultiplier.multiplier })
-        } else {
-            res.status(404).send('Multiplier not found')
-        }
-    } catch (err) {
-        res.status(500).send('Server error');
-    }
-}
-
 const updateDiscounts = async(req,res) => {
     try {
         const { id } = req.query
         const userToShow = await User.findById(id)
+        const user = req?.user?.user || req.user
+        const superadmin = user.isSuperAdmin
 
         var discounts = await getValues.getDiscountValues()
         var multipliers = await getValues.getMultiplierValues()
@@ -491,7 +497,7 @@ const updateDiscounts = async(req,res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             const discountError = errors.errors[0].msg
-            return res.render('super-admin', { discountError, user: userToShow, discounts, multipliers })
+            return res.render('admin-page', { discountError, user: userToShow, discounts, multipliers })
         }
 
         const {
@@ -515,7 +521,8 @@ const updateDiscounts = async(req,res) => {
         multipliers = await getValues.getMultiplierValues()
 
         const discountMessage = "Discounts Updated"
-        return res.render('super-admin', { discountMessage, user: userToShow , activePage: 'discounts', discounts, multipliers})
+
+        return res.render('admin-page', { discountMessage, user: userToShow , activePage: 'discounts', discounts, multipliers, superadmin})
 
     } catch (error) {
         const { id } = req.query
@@ -524,7 +531,9 @@ const updateDiscounts = async(req,res) => {
         const discounts = await getValues.getDiscountValues()
         const multipliers = await getValues.getMultiplierValues()
 
-        return res.render('super-admin', { discountError: "An error occured", user: userToShow, activePage: 'discounts', discounts, multipliers  })
+        const user = req?.user?.user || req.user
+        const superadmin = user.isSuperAdmin
+        return res.render('admin-page', { discountError: "An error occured", user: userToShow, activePage: 'discounts',superadmin, discounts, multipliers  })
     }
 }
 
@@ -532,6 +541,8 @@ const updateMultipliers = async(req,res) => {
     try {
         const { id } = req.query
         const userToShow = await User.findById(id)
+        const user = req?.user?.user || req.user
+        const superadmin = user.isSuperAdmin
 
         var discounts = await getValues.getDiscountValues()
         var multipliers = await getValues.getMultiplierValues()
@@ -539,7 +550,7 @@ const updateMultipliers = async(req,res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             const multiplierError = errors.errors[0].msg
-            return res.render('super-admin', { multiplierError, user: userToShow, discounts, multipliers })
+            return res.render('admin-page', { multiplierError, user: userToShow, discounts, multipliers, superadmin })
         }
 
         const {
@@ -558,7 +569,7 @@ const updateMultipliers = async(req,res) => {
         multipliers = await getValues.getMultiplierValues()
 
         const multiplierMessage = "Multipliers Updated"
-        return res.render('super-admin', { multiplierMessage, user: userToShow , activePage: 'discounts', discounts, multipliers})
+        return res.render('admin-page', { multiplierMessage, user: userToShow , activePage: 'discounts', discounts, multipliers, superadmin})
 
     } catch (error) {
         const { id } = req.query
@@ -569,7 +580,9 @@ const updateMultipliers = async(req,res) => {
         const discounts = await getValues.getDiscountValues()
         const multipliers = await getValues.getMultiplierValues()
 
-        return res.render('super-admin', { multiplierError: "An error occured", user: userToShow, activePage: 'discounts', discounts, multipliers  })
+        const user = req?.user?.user || req.user
+        const superadmin = user.isSuperAdmin
+        return res.render('admin-page', { multiplierError: "An error occured", user: userToShow, activePage: 'discounts', discounts, multipliers, superadmin })
     }
 }
 
@@ -804,6 +817,9 @@ const redeemPoints = async(req,res) => {
     try {
         const id = req.query.id
         const reward = req.body.reward
+        const discounts = await getValues.getDiscountValues()
+        const multipliers = await getValues.getMultiplierValues()
+
         const userToShow = await User.findById(id)
         let pointsToDeduct = 0
 
@@ -832,16 +848,8 @@ const redeemPoints = async(req,res) => {
 
         if(userToShow.membershipInfo.pointsForRedemptions < pointsToDeduct){
             const error = "You don't have enough points to redeem this reward."
-
-            return res.render('redemption', { 
-                user: userToShow, 
-                activePage: 'redemption', 
-                yogaRewards,
-                fnbRewards,
-                vitaSpaRewards,
-                retreatRewards,
-                error
-            })
+            req.session.rewardError = error
+            return res.redirect(`/profile-info?id=${id}`)
         }
 
         const tranCode = await uniqueTranCode.generateUniqueCode()
@@ -860,16 +868,18 @@ const redeemPoints = async(req,res) => {
         await userToShow.save()
         
         const message = `You have successfully redeemed ${reward}`
+        req.session.rewardMessage = message
+        return res.redirect(`/profile-info?id=${id}`)
 
-        return res.render('redemption', { 
-            user: userToShow, 
-            activePage: 'redemption', 
-            yogaRewards,
-            fnbRewards,
-            vitaSpaRewards,
-            retreatRewards,
-            message
-        })
+        // return res.render('redemption', { 
+        //     user: userToShow, 
+        //     activePage: 'redemption', 
+        //     yogaRewards,
+        //     fnbRewards,
+        //     vitaSpaRewards,
+        //     retreatRewards,
+        //     message
+        // })
 
     } catch (error) {
         return res.status(500).json({ success: false, msg: error.message });
@@ -896,8 +906,6 @@ module.exports = {
     updateMembershipInfo,
     updateTransactionInfo,
     getCSV,
-    getDiscount,
-    getMultiplier,
     updateDiscounts,
     updateMultipliers,
     addMemberPage,

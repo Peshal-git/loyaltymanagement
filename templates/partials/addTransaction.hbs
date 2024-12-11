@@ -1,0 +1,24 @@
+<form action="/add-transaction?id={{user.id}}" method="post" class="reservation-form" autocomplete="off">
+    
+
+        <div class="form-group">
+            <label for="spendingType">Spending Type</label>
+            <select name="spendingType" id="spendingType" required value="{{#if enteredFields.spendingType}}{{enteredFields.spendingType}}{{/if}}">
+                <option value="Life Café">Life Café</option>
+                <option value="Yoga Class">Yoga Class</option>
+                <option value="Vita Spa">Vita Spa</option>
+                <option value="Retreats and YTT Packages">Retreats and YTT Packages</option>
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="number" name="amount" id="amount" class="form-input" value="{{getValue transactionObj.amount enteredFields.amount}}" placeholder="Enter amount" required>
+        </div>
+
+        <button type="submit" class="confirm-button">Confirm Transaction</button>
+    {{#if error}}
+                    <h3 style="color: #CD5C5C;">{{error}}</h3>
+    {{/if}}
+</form>

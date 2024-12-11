@@ -5,6 +5,10 @@
   font-family: "Inknut Antiqua", serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   min-height: 100vh;
   background: #fff;
@@ -156,19 +160,26 @@ body {
 }
 
 .whole-form {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: flex-start;
   background-color: #ffffff;
   flex-shrink: 0;
+  width: 90%; */
+
+  display: flex;
+  width: 90%;
+  margin: 0 auto; /* Center the table on the page */
+  flex-direction: column;
+
 }
 
 .profile-form, .systemdata-form, .privacy-form, .membership-form, .rdetails-form {
   display: flex;
   gap: 50px;
-  width: 1000px;
+  width: 100%;
   background-color: #ffffff;
-  padding: 20px;
+  margin-top: 10px;
 }
 
 .systemdata-form{
@@ -176,9 +187,12 @@ body {
   gap: 0px;
 }
 
-.left-column,
-.right-column {
-  width: 50%;
+.left-column, .right-column{
+  width: 33%;
+}
+
+.middle-column {
+  width: 34%;
 }
 
 .form-group {
@@ -300,10 +314,10 @@ select:focus{
   align-items: center;
   justify-content: center;
   gap: 50px; /* Adjust space between icon and text */
-  padding: 10px 15px; /* Adjust padding for better button appearance */
+  padding: 5px 10px; /* Adjust padding for better button appearance */
   margin-bottom: 20px;
   font-size: 18px;
-  width: 200px;
+  width: 150px;
   border: none;
   cursor: pointer;
   text-decoration: none;
@@ -327,15 +341,14 @@ select:focus{
 }
 
 .addreservation-button {
-  margin-top: 10px; 
-  /* width: 100%; */
-  /* border-collapse: collapse; */
+  margin: 5px; 
   float: right;
 }
 
 .single-column{
   width: 90%;
   margin: 0 auto; /* Center the table on the page */
+  margin-bottom: 60px;
 }
 
 .addreservation-button .add-button {
@@ -349,13 +362,35 @@ select:focus{
   cursor: pointer;
   text-decoration: none;
   border-radius: 5px; /* Rounded corners */
-  background-color: green; /* Background color for add button */
+  background-color: rgb(56, 193, 56); /* Background color for add button */
   color: white; /* Text color */
   transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin-bottom: 20px;
+}
+
+.addreservation-button .redeem-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px; /* Adjust space between icon and text */
+  padding: 0px 15px; /* Adjust padding for better button appearance */
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 5px; /* Rounded corners */
+  background-color: #c33d3d; /* Background color for add button */
+  color: white; /* Text color */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin-bottom: 20px;
 }
 
 .addreservation-button .add-button:hover {
   background-color: #005700; /* Darker shade on hover for add button */
+}
+
+.addreservation-button .redeem-button:hover {
+  background-color: #570d00; /* Darker shade on hover for add button */
 }
 
 .sidebar-links a.active {
@@ -387,9 +422,10 @@ a{
 
 /* Centering the tables container */
 .dmtable-container {
-  width: 80%;
+  width: 100%;
   margin: 0 auto; /* Centers the tables horizontally */
   text-align: center; /* Ensures text inside the table is also centered */
+  margin-top: 10px;
 }
 
 /* Styling for both discount and multiplier tables */
@@ -462,6 +498,7 @@ a{
   border-collapse: separate;
   border-spacing: 0 10px; 
   background-color: #f8f9fc;
+  margin-top: 10px;
   }
   
   .points-table th,
@@ -609,4 +646,63 @@ cursor: pointer;
   border-radius: 5px;
   background-color: #F5F5F5;
   font-size: 1rem;
+}
+
+h3 {
+  margin-left: 60px;
+  text-decoration: underline;
+  color: #2C2F3A;
+}
+
+section{
+  scroll-margin-top: 90px;
+}
+
+td input[type="text"] {
+  background-color: transparent; /* Makes the background transparent */
+  border: none; /* Removes the border */
+  color: inherit; /* Ensures text is visible and inherits the color */
+  outline: none; /* Removes the focus outline */
+}
+
+td input[type="text"]:focus{
+  background-color: transparent;
+}
+
+/* Style the dialog/modal */
+dialog[data-modal] {
+  border: none;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 300px;
+  max-width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  position: fixed; /* Fix the dialog to the viewport */
+  top: 50%;        /* Center vertically */
+  left: 50%;       /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for the element's own width/height */
+}
+
+/* Center the dialog on the screen */
+dialog[data-modal]::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+}
+
+.confirm-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #555; /* Placeholder color for sign-in button */
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  color: #fff;
+  cursor: pointer;
+}
+
+.confirm-button:hover{
+  background: linear-gradient(to bottom, #D5DCE4 0%, #8899ad 100%);
 }
