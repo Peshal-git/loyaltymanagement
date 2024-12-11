@@ -1,74 +1,79 @@
-        {{>navbar}}
-        <div class="whole-form">
-            <form class="rdetails-form" action="/update-transaction-details?id={{user.id}}&reservationIndex={{reservationIndex}}" method="POST">
-            <div class="left-column">
+{{>navbar}}
+{{#if add}}
+<div class="whole-form">
+    <form class="rdetails-form" action="/update-transaction-details?id={{user.id}}&reservationIndex={{reservationIndex}}" method="POST">
+    <div class="left-column">
 
-                <div class="form-group">
-                    <label for="spendingType">Spending Type:</label>
-                    <select name="spendingType" id="spendingType" required value="{{transactionObj.spendingType}}">
-                        <option value="Life Café" {{#if (eq transactionObj.spendingType "Life Café")}}selected{{/if}}>Life Café</option>
-                        <option value="Yoga Class" {{#if (eq transactionObj.spendingType "Yoga Class")}}selected{{/if}}>Yoga Class</option>
-                        <option value="Vita Spa" {{#if (eq transactionObj.spendingType "Vita Spa")}}selected{{/if}}>Vita Spa</option>
-                        <option value="Retreats and YTT Packages" {{#if (eq transactionObj.spendingType "Retreats and YTT Packages")}}selected{{/if}}>Retreats and YTT Packages</option>
-                    </select>
-                </div>
+        <div class="form-group">
+            <label for="spendingType">Spending Type:</label>
+            <select name="spendingType" id="spendingType" required value="{{transactionObj.spendingType}}">
+                <option value="Life Café" {{#if (eq transactionObj.spendingType "Life Café")}}selected{{/if}}>Life Café</option>
+                <option value="Yoga Class" {{#if (eq transactionObj.spendingType "Yoga Class")}}selected{{/if}}>Yoga Class</option>
+                <option value="Vita Spa" {{#if (eq transactionObj.spendingType "Vita Spa")}}selected{{/if}}>Vita Spa</option>
+                <option value="Retreats and YTT Packages" {{#if (eq transactionObj.spendingType "Retreats and YTT Packages")}}selected{{/if}}>Retreats and YTT Packages</option>
+            </select>
+        </div>
+    </div>
 
-                {{!-- <div class="form-group" style="display: none;">
-                    <label for="multiplier">Multiplier</label>
-                    <input type="number" name="multiplier" id="multiplier" value="" readonly>
-                </div>
+    <div class="right-column">
 
-                <div class="form-group" style="display: none;">
-                        <label for="tier">Tier</label>
-                        <input type="text" name="tier" class="form-input" value="{{user.tier}}" readonly>
-                </div>
-
-                 <div class="form-group">
-                        <label for="netAmount">Net Amount</label>
-                        <input type="number" name="netAmount" id="netAmount" class="form-input" value="" readonly>
-                </div> --}}
-
+        <div class="form-group">
+            <label for="n">Amount:</label>
+            <div class="input-wrapper">
+            <input class="editable" type="text" name="amount" id="amount"
+                value="{{getValue transactionObj.amount enteredFields.amount}}" required>
             </div>
-
-            <div class="right-column">
-
-                <div class="form-group">
-                    <label for="n">Amount:</label>
-                    <div class="input-wrapper">
-                    <input class="editable" type="text" name="amount" id="amount"
-                        value="{{getValue transactionObj.amount enteredFields.amount}}"
-                        readonly required>
-                    <span class="edit-icon">&#9998;</span>
-                    </div>
-                </div>
-
-                {{!-- <div class="form-group">
-                    <label for="n">Points Gained:</label>
-                    <input type="text" name="pointsGained" id="pointsGained"
-                        value="{{transactionObj.pointsGained}}"
-                        readonly>
-                </div> --}}
-
-
-                {{#if error}}
-                <h4 style="color: #CD5C5C;">{{error}}</h4>
-                {{/if}}
-
-                
-                <div class="lastbuttons">
-                <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
-
-                {{#if superadmin}}
-                <a href="/delete-transaction/?id={{user.id}}" class="delete-button">&#x1F5D1; Delete</a>
-                {{/if}}
-
-                </div>
-
-            </div>   
-
-            </form>
         </div>
 
+        {{#if error}}
+        <h4 style="color: #CD5C5C;">{{error}}</h4>
+        {{/if}}
+
         
-    </body>
+        <div class="lastbuttons">
+        <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
+
+        {{#if superadmin}}
+        <a href="/delete-transaction?id={{user.id}}&reservationIndex={{reservationIndex}}" class="delete-button">&#x1F5D1; Delete</a>
+        {{/if}}
+
+        </div>
+
+    </div>   
+
+    </form>
+</div>
+{{/if}}
+
+{{#if subtract}}
+<div class="whole-form">
+<form class="rdetails-form">
+
+    <div class="left-column">
+    <div class="form-group">
+        <label for="Category">Reward:</label>
+        <div class="input-wrapper">
+        <input class="editable" type="text" name="category"
+            value="{{transactionObj.reward}}" required readonly>
+        </div>
+    </div>
+    </div>
+
+    <div class="right-column">
+
+    <div class="form-group">
+        <label for="Category">Points Used:</label>
+        <div class="input-wrapper">
+        <input class="editable" type="text" name="category"
+            value="{{transactionObj.pointsLost}}" required readonly>
+        </div>
+    </div>
+
+    </div>
+</form>
+</div>
+
+{{/if}}
+
+</body>
 </html>

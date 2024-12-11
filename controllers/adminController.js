@@ -18,6 +18,7 @@ const getMultipliersDiscounts = require('../helpers/getMultipliersDiscounts')
 
 const { validationResult } = require('express-validator')
 const pointsHistoryCalc = require('../helpers/pointsHistoryCalc')
+const PointsHistory = require('../models/pointsHistoryModel')
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
     ? process.env.API_BASE_URL_PROD
@@ -31,11 +32,13 @@ const adminDashboard = async (req, res) => {
         
         const { user, totalPages, prevPage, nextPage, currentPage, pages } = await getPaginations.getPaginatedUsers(query, page, limit)
         
-        if (req?.session?.reservationMessage || req?.session?.reservationError) {
-            let message = req.session.reservationMessage
-            let error = req.session.reservationError
+        if (req?.session?.reservationMessage || req?.session?.reservationError || req?.session?.rewardMessage || req?.session?.rewardError) {
+            let message = req.session.reservationMessage || req.session.rewardMessage
+            let error = req.session.reservationError || req.session.rewardError
             req.session.reservationMessage = null
             req.session.reservationError = null
+            req.session.rewardMessage = null
+            req.session.rewardError = null
             return res.render('admin-dashboard', { 
                 user, 
                 message,
@@ -118,6 +121,14 @@ const makeTransaction = async (req, res) => {
 
         const message = "Transaction Done"
         req.session.reservationMessage = message
+
+        const referer = req.get('Referer')
+        const redirectPath = referer ? new URL(referer).pathname : null;
+
+        if(redirectPath=='/dashboard'){
+            return res.redirect(redirectPath)
+        }
+
         return res.redirect(`/profile-info?id=${id}`)
 
     } catch (error) {
@@ -147,18 +158,11 @@ const deleteUser = async (req, res) => {
 
 const deleteTransaction = async (req, res) => {
     try {
-        const { id, reservationIndex } = req.query
+        const { id, tranCode } = req.query
         const requestedUser = await User.findById(id)
 
-        if (reservationIndex < 0 || reservationIndex >= requestedUser.transaction.length) {
+        const reservationIndex = requestedUser.transaction.findIndex(obj => obj.tranCode === tranCode);
 
-            return res.status(400).json({
-                success: false,
-                msg: 'Invalid reservation index'
-            })
-
-        }
-        
         const originalPointsGained = requestedUser.transaction[reservationIndex].pointsGained || 0
         requestedUser.membershipInfo.pointsForRedemptions -= originalPointsGained
 
@@ -187,8 +191,7 @@ const profileInformation = async (req, res) => {
         const refUser = await User.findOne({memberId: userToShow.referredBy})
 
 
-        let rewardMessage
-        let rewardError
+        let rewardMessage, rewardError, updateMemberError, updateMemberMessage
 
         if (req?.session?.rewardError || req?.session?.rewardMessage) {
             rewardMessage = req.session.rewardMessage
@@ -196,7 +199,20 @@ const profileInformation = async (req, res) => {
             req.session.rewardMessage = null
             req.session.rewardError = null
         }
+
+        if (req?.session?.updateMemberError || req?.session?.updateMemberMessage) {
+            updateMemberMessage = req.session.updateMemberMessage
+            updateMemberError = req.session.updateMemberError
+            req.session.updateMemberMessage = null
+            req.session.updateMemberError = null
+        }
         
+        const history = await PointsHistory.find({ userId: id }).sort({ transactionDate: -1 })
+    
+        const page = Number(req.query.page) || 1
+        const limit = 5
+        
+        const { historiesToShow } = await getPaginations.getPaginatedHistory(history, page, limit)
 
         const user = req?.user?.user || req.user
         const superadmin = user.isSuperAdmin
@@ -214,7 +230,10 @@ const profileInformation = async (req, res) => {
             discounts, 
             multipliers,
             rewardMessage,
-            rewardError
+            rewardError,
+            historiesToShow,
+            updateMemberError, 
+            updateMemberMessage
         })
     } catch (error) {
         return res.status(400).json({
@@ -303,16 +322,29 @@ const pointsWallet = async (req, res) => {
 const transactionDetails = async (req, res) => {
     try {
 
-        const { id, reservationIndex } = req.query
+        const { id, tranCode } = req.query
         const userToShow = await User.findById(id)
-        const transactionObj = userToShow.transaction[reservationIndex]
 
         const user = req?.user?.user || req.user
         const superadmin = user.isSuperAdmin
 
-        const discount = await getMultipliersDiscounts.getDiscount(id)
-        // const netAmount = netAmount - (discount * netAmount)/100
-        return res.render('transaction-details', { user: userToShow, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
+        const pointsHistoryObj = await PointsHistory.findOne({tranCode})
+        const type = pointsHistoryObj.transactionType
+
+        if(type == 'add'){
+            const add = 1
+            const reservationIndex = userToShow.transaction.findIndex(obj => obj.tranCode === tranCode)
+            const transactionObj = userToShow.transaction[reservationIndex]
+            return res.render('transaction-details', { user: userToShow, add, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
+        }
+
+        const subtract = 1
+        const reservationIndex = userToShow.redeem.findIndex(obj => obj.tranCode === tranCode)
+        const transactionObj = userToShow.redeem[reservationIndex]
+        return res.render('transaction-details', { user: userToShow, subtract, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
+
+
+
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -847,8 +879,14 @@ const redeemPoints = async(req,res) => {
         const retreatRewards = await getValues.getRetreatsRewardPoints()
 
         if(userToShow.membershipInfo.pointsForRedemptions < pointsToDeduct){
-            const error = "You don't have enough points to redeem this reward."
+            const error = "Member doesn't have enough points to redeem this reward."
             req.session.rewardError = error
+            const referer = req.get('Referer')
+            const redirectPath = referer ? new URL(referer).pathname : null;
+    
+            if(redirectPath=='/dashboard'){
+                return res.redirect(redirectPath)
+            }    
             return res.redirect(`/profile-info?id=${id}`)
         }
 
@@ -867,8 +905,18 @@ const redeemPoints = async(req,res) => {
         userToShow.membershipInfo.pointsForRedemptions -= pointsToDeduct
         await userToShow.save()
         
+
+
         const message = `You have successfully redeemed ${reward}`
         req.session.rewardMessage = message
+
+        const referer = req.get('Referer')
+        const redirectPath = referer ? new URL(referer).pathname : null;
+
+        if(redirectPath=='/dashboard'){
+            return res.redirect(redirectPath)
+        }
+
         return res.redirect(`/profile-info?id=${id}`)
 
         // return res.render('redemption', { 

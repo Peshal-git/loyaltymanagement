@@ -1,34 +1,39 @@
 <div class="whole-form">
-<form class="membership-form" action="/update-membership-info?id={{user.id}}" method="POST">
+<form  action="/update-membership-info?id={{user.id}}" method="POST">
+    <div class="membership-form">
     <div class="left-column">
-        {{!-- <div class="form-group">
-        <label for="a">Member Id:</label>
-        <input type="text" name="memberId" value="{{user.memberId}}"
-            readonly="readonly">
-        </div> --}}
 
+        <div class="form-group">
+            <label for="status">Membership Status:</label>
+            <select name="spendingType" id="spendingType" required value="{{user.membershipInfo.status}}">
+                <option value="Active" {{#if (eq user.membershipInfo.status "Active")}}selected{{/if}}>Active</option>
+                <option value="Pending" {{#if (eq user.membershipInfo.status "Pending")}}selected{{/if}}>Pending</option>
+                <option value="Inactive" {{#if (eq user.membershipInfo.status "Inactive")}}selected{{/if}}>Inactive</option>
+                <option value="Upgrade" {{#if (eq user.membershipInfo.status "Upgrade")}}selected{{/if}}>Upgrade</option>
+                <option value="Downgrade" {{#if (eq user.membershipInfo.status "Downgrade")}}selected{{/if}}>Downgrade</option>
+            </select>
+        </div>
+
+    </div>
+
+
+    <div class="middle-column">
         <div class="form-group">
             <label for="c">Total lifetime Points:</label>
                 <div class="input-wrapper">
             <input class="editable" type="text" name="pointsAvailable" value="{{user.membershipInfo.pointsAvailable}}"
                 readonly>
-            {{!-- <span class="edit-icon">&#9998;</span> --}}
             </div>
         </div>
 
     </div>
 
+
         <div class="right-column">
 
         {{!-- <div class="form-group spacer">
         </div> --}}
-        {{!-- <div class="form-group">
-            <label for="b">Member Since:</label>
-            <input type="text" name="name"
-                value="{{makeDate user.createdAt}}"
-                readonly>
-        </div>  --}}
-
+        
         <div class="form-group">
             <label for="c">Points Balance:</label>
                 <div class="input-wrapper">
@@ -37,12 +42,19 @@
             </div>
         </div>
 
-        {{!-- <div class="lastbuttons">
-        <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
-        </div> --}}
+        </div>
+</div>
 
+        <div class="lastbuttons">
+        <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
         </div>
 
+    {{#if error}}
+    <h4 style="color: #CD5C5C;">{{error}}</h4>
+    {{/if}}
+    {{#if message}}
+        <h4 style="color: #667391;">{{message}}</h4>
+    {{/if}}
             </form>
         </div>
     </div>

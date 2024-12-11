@@ -468,7 +468,8 @@ const updateMemInfo = async (req, res) => {
             lastMarketingCommunication,
             expiringPoints,
             lastUsagePoints,
-            totalLifetimePoints
+            totalLifetimePoints,
+            status
 
         } = req.body
 
@@ -490,7 +491,8 @@ const updateMemInfo = async (req, res) => {
                     "membershipInfo.lastMarketingCommunication": lastMarketingCommunication,
                     "membershipInfo.expiringPoints": expiringPoints,
                     "membershipInfo.lastUsagePoints": lastUsagePoints,
-                    "membershipInfo.totalLifetimePoints": totalLifetimePoints
+                    "membershipInfo.totalLifetimePoints": totalLifetimePoints,
+                    "membershipInfo.status": status
                 }
             }, { new: true })
 

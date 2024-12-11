@@ -264,3 +264,75 @@ a:hover .minus-icon {
     pointer-events: none;
     cursor: not-allowed;
 }
+
+dialog[data-modal] {
+border: none;
+border-radius: 8px;
+padding: 2rem;
+width: 300px;
+max-width: 90%;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+background-color: white;
+font-family: Arial, sans-serif;
+text-align: center;
+position: fixed; /* Fix the dialog to the viewport */
+top: 50%;        /* Center vertically */
+left: 50%;       /* Center horizontally */
+transform: translate(-50%, -50%); /* Adjust for the element's own width/height */
+}
+
+/* Center the dialog on the screen */
+dialog[data-modal]::backdrop {
+background: rgba(0, 0, 0, 0.5);
+position: fixed;
+}
+
+.confirm-button {
+width: 100%;
+padding: 10px;
+background-color: #555; /* Placeholder color for sign-in button */
+border: none;
+border-radius: 5px;
+font-size: 1em;
+color: #fff;
+cursor: pointer;
+}
+
+.confirm-button:hover{
+background: linear-gradient(to bottom, #D5DCE4 0%, #8899ad 100%);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+  
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+dialog input[type="text"],
+dialog input[type="number"],
+dialog input[type="email"],
+dialog input[type="tel"],
+dialog input[type="date"],
+dialog select{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #F5F5F5;
+  font-size: 1rem;
+}
+  
+dialog input[type="text"]:focus,
+dialog input[type="number"]:focus,
+dialog input[type="email"]:focus,
+dialog input[type="tel"]:focus,
+dialog input[type="date"]:focus,
+dialog select:focus{
+  border-color: #667391; /* Optional: Change border color on focus */
+  background-color: #c9cfda;
+  outline: none;
+}

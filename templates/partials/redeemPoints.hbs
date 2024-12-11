@@ -1,4 +1,9 @@
+{{#if user.id}}
 <form action="/redeem?id={{user.id}}" method="post" class="reservation-form" autocomplete="off">
+{{else}}
+<form action="/redeem?id={{this.id}}" method="post" class="reservation-form" autocomplete="off">
+{{/if}}
+
   <div class="form-group">
     <label for="category">Category</label>
     <select name="category" id="category" required>

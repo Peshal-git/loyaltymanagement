@@ -62,6 +62,11 @@ const MemberInfoSchema = new mongoose.Schema({
     },
     totalLifetimePoints: {
         type: Number
+    },
+    status: {
+        type: String,
+        enum: ["Active", "Pending", "Inactive", "Upgrade", "Downgrade"],
+        default: 'Pending'
     }
 })
 

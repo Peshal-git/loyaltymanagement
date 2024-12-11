@@ -30,7 +30,7 @@ const subtractPoints = async (userId, points, totalPointsBefore, service, tranCo
 }
 
 const editPointsRecord = async (tranCode, newPoints) => {
-    const record = await PointsHistory.find(tranCode)
+    const record = await PointsHistory.findOne({tranCode})
     const recordId = record.id
 
     if (!record) throw new Error('Record not found');
@@ -58,12 +58,12 @@ const editPointsRecord = async (tranCode, newPoints) => {
 }
 
 const deletePointsRecord = async (tranCode) => {
-    const record = await PointsHistory.find(tranCode)
+    const record = await PointsHistory.findOne({tranCode})
     const recordId = record.id
 
     if (!record) throw new Error('Record not found');
 
-    const pointDifference = - record.points;
+    const pointDifference = -record.points || 0;
 
     const deletedRecord = await PointsHistory.findByIdAndDelete(recordId)
 

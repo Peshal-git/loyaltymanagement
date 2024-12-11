@@ -124,7 +124,8 @@ const updateMembershipInfo = async (req, res, next) => {
             lastMarketingCommunication,
             expiringPoints,
             lastUsagePoints,
-            totalLifetimePoints
+            totalLifetimePoints,
+            status
 
         } = req.body
 
@@ -141,7 +142,8 @@ const updateMembershipInfo = async (req, res, next) => {
                 lastMarketingCommunication,
                 expiringPoints,
                 lastUsagePoints,
-                totalLifetimePoints
+                totalLifetimePoints,
+                status
             })
         })
 
@@ -149,9 +151,13 @@ const updateMembershipInfo = async (req, res, next) => {
 
         if (!data?.success) {
             if (data?.errors) {
-                return res.render('membership-info', { error: data.errors[0].msg })
+                const error = data.errors[0].msg
+                req.session.updateMemberError = error
+                return res.redirect('/profile-info')
             }
-            return res.render('membership-info', { error: data.msg })
+            const message = data.msg
+            req.session.updateMemberMessage = message
+            return res.redirect('/profile-info')
         }
 
         next()

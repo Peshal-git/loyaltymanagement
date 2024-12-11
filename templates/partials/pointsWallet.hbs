@@ -1,34 +1,32 @@
 <div class="single-column">
-    {{#if user.transaction.length}}
+    {{#if historiesToShow.length}}
 
 <table class="points-table">
     <thead>
       <tr>
-        {{!-- <th><input type="checkbox"></th> --}}
-        <th>Spending Type</th>
-        <th>Amount</th>
-        <th>Points Gained</th>
+        <th>Type</th>
+        <th>Service/Reward</th>
+        <th>Points</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-        {{#each user.transaction}}
-        <tr onclick="window.location.href='/transaction-details/?id={{../user.id}}&reservationIndex={{@index}}'">
-        {{!-- <td><input type="checkbox" onclick="event.stopPropagation(); openOptionsMenu(event);"></td> --}}
-        <td>{{this.spendingType}}</td>
-        <td>{{this.amount}}</td>
-        <td>{{this.pointsGained}}</td>
+        {{#each historiesToShow}}
+        <tr onclick="window.location.href='/transaction-details/?id={{../user.id}}&tranCode={{this.tranCode}}'">
+        <td>{{makeType this.transactionType}}</td>
+        <td>{{this.service}}</td>
+        <td><span> {{getUsedOrGained transactionType}} </span> <span class="{{getColor transactionType}}"> {{this.points}} </span></td>
         <td>
             <div class="options-container">
                 <img src="/images/three-dots.png" alt="Options" class="options-icon" onclick="event.stopPropagation(); toggleDropdown(event);">
                 <div class="options-dropdown">
-                    <a href="/transaction-details/?id={{../user.id}}&reservationIndex={{@index}}">
+                    <a href="/transaction-details/?id={{../user.id}}&tranCode={{this.tranCode}}">
                         <span class="edit-icon-drop">&#9998;</span> Edit
                     </a>
 
 
-                    {{#if superadmin}}
-                    <a href="/delete-transaction/?id={{../user.id}}" onclick="return confirm('Are you sure you want to delete this transaction?');">
+                    {{#if ../superadmin}}
+                    <a href="/delete-transaction?id={{../user.id}}&tranCode={{this.tranCode}}" onclick="return confirm('Are you sure you want to delete this transaction?');">
                         <span class="delete-icon-drop">&#x1F5D1;</span> Delete
                     </a>
                     {{/if}}

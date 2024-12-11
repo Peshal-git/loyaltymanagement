@@ -1,6 +1,8 @@
+{{#if user.id}}
 <form action="/add-transaction?id={{user.id}}" method="post" class="reservation-form" autocomplete="off">
-    
-
+{{else}}
+<form action="/add-transaction?id={{this.id}}" method="post" class="reservation-form" autocomplete="off">
+{{/if}}
         <div class="form-group">
             <label for="spendingType">Spending Type</label>
             <select name="spendingType" id="spendingType" required value="{{#if enteredFields.spendingType}}{{enteredFields.spendingType}}{{/if}}">
@@ -8,6 +10,10 @@
                 <option value="Yoga Class">Yoga Class</option>
                 <option value="Vita Spa">Vita Spa</option>
                 <option value="Retreats and YTT Packages">Retreats and YTT Packages</option>
+                <option value="Bonus 1">Bonus 1</option>
+                <option value="Bonus 2">Bonus 2</option>
+                <option value="Bonus 3">Bonus 3</option>
+                <option value="Bonus 4">Bonus 4</option>
             </select>
         </div>
 
@@ -19,6 +25,6 @@
 
         <button type="submit" class="confirm-button">Confirm Transaction</button>
     {{#if error}}
-                    <h3 style="color: #CD5C5C;">{{error}}</h3>
+        <h4 style="color: #CD5C5C;">{{error}}</h4>
     {{/if}}
 </form>

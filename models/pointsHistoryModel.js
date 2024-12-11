@@ -32,7 +32,8 @@ const pointsHistorySchema = new mongoose.Schema({
     },
     transactionDate: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        index: true
     }
 })
 

@@ -64,7 +64,7 @@
         <td>{{this.name}}</td>
         <td>{{this.email}}</td>
         <td>{{this.mobile}}</td>
-        <td>
+        <td onclick="event.stopPropagation();">
             {{!-- <div class="options-container">
                 <img src="/images/three-dots.png" alt="Options" class="options-icon" onclick="event.stopPropagation(); toggleDropdown(event);">
                 <div class="options-dropdown">
@@ -79,12 +79,32 @@
                     </a>
                 </div>
             </div> --}}
-            <a href="/add-transaction?id={{this.id}}">
+
+            <a data-open-modal="modal1"> 
+            <span class="add-icon">&#43;</span>
+            </a>
+
+            <a data-open-modal="modal2"> 
+            <span class="minus-icon">&minus;</span>
+            </a>
+
+            <div id="rewardMessage" data-message="{{rewardMessage}}"></div>
+            <div id="rewardError" data-error="{{rewardError}}"></div>
+           
+            <dialog data-modal="modal1">
+                {{> addTransaction}}
+            </dialog>
+
+            <dialog data-modal="modal2">
+                {{> redeemPoints}}
+            </dialog>
+
+            {{!-- <a href="/add-transaction?id={{this.id}}">
                 <span class="add-icon">&#43;</span>
             </a>
             <a href="/redemption?id={{this.id}}">
                 <span class="minus-icon">&minus;</span>
-            </a>
+            </a> --}}
 
         </td>
         </tr>
@@ -97,7 +117,7 @@
     <h4 style="color: #CD5C5C;">{{error}}</h4>
     {{/if}}
     {{#if message}}
-        <h3 style="color: #667391;">{{message}}</h3>
+        <h4 style="color: #667391;">{{message}}</h4>
     {{/if}}
 </div>
 </div>
@@ -148,9 +168,53 @@ document.addEventListener('click', function(event) {
 });
 
 const fileInput = document.getElementById("csvFile");
-    fileInput.addEventListener('change', function() {
-        this.form.submit();  // Automatically submit the form after the file is selected
+fileInput.addEventListener('change', function() {
+    this.form.submit();  // Automatically submit the form after the file is selected
+});
+
+
+const rewardMessage = document.getElementById('rewardMessage').dataset.message;
+const rewardError = document.getElementById('rewardError').dataset.error;
+
+if (rewardMessage || rewardError) {
+
+    const modal = document.querySelector('[data-modal="modal2"]');
+    if (modal) {
+        modal.showModal(); // Trigger modal2
+    }
+}
+
+
+const openElements = document.querySelectorAll("[data-open-modal]");
+const modals = document.querySelectorAll("[data-modal]");
+
+// Add event listener to trigger modal opening
+openElements.forEach(element => {
+    element.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+        const modalId = element.getAttribute("data-open-modal");
+        const modal = document.querySelector(`[data-modal="${modalId}"]`);
+        if (modal) {
+            modal.showModal();
+        }
     });
+});
+
+// Add event listeners to close the modal when clicking outside of it
+modals.forEach(modal => {
+    modal.addEventListener("click", e => {
+        const dialogDimensions = modal.getBoundingClientRect();
+        if (
+            e.clientX < dialogDimensions.left ||
+            e.clientX > dialogDimensions.right ||
+            e.clientY < dialogDimensions.top ||
+            e.clientY > dialogDimensions.bottom
+        ) {
+            modal.close();
+        }
+    });
+});
 
 </script>
 </html>
