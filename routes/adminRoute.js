@@ -51,6 +51,8 @@ router.post('/add-transaction', auth, adminCheck, adminController.makeTransactio
 
 router.get('/delete-user', auth, superAdminCheck, adminController.deleteUser)
 router.get('/delete-transaction', auth, superAdminCheck, adminController.deleteTransaction)
+router.get('/delete-redemption', auth, superAdminCheck, adminController.deleteRedemption)
+
 router.get('/profile-info', auth, adminCheck, adminController.profileInformation)
 router.get('/redemption', auth, adminCheck, adminController.redemption)
 router.get('/privacy-pref', auth, adminCheck, adminController.privacyAndPreferences)

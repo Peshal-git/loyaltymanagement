@@ -26,9 +26,23 @@
 
 
                     {{#if ../superadmin}}
+
+
+                    {{#if (eq transactionType "add")}}
+
                     <a href="/delete-transaction?id={{../user.id}}&tranCode={{this.tranCode}}" onclick="return confirm('Are you sure you want to delete this transaction?');">
                         <span class="delete-icon-drop">&#x1F5D1;</span> Delete
                     </a>
+
+                    {{else}}
+
+                    <a href="/delete-redemption?id={{../user.id}}&tranCode={{this.tranCode}}" onclick="return confirm('Are you sure you want to delete this transaction?');">
+                        <span class="delete-icon-drop">&#x1F5D1;</span> Delete
+                    </a>
+
+                    {{/if}}
+
+
                     {{/if}}
 
 
@@ -43,6 +57,13 @@
 
 {{else}}
     <p>No transaction yet.</p>
+{{/if}}
+
+{{#if error}}
+<h4 style="color: #CD5C5C;">{{error}}</h4>
+{{/if}}
+{{#if message}}
+<h4 style="color: #709166;">{{message}}</h4>
 {{/if}}
 
 <div data-open-modal="modal2" class="addreservation-button"> 

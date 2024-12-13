@@ -153,11 +153,11 @@ const updateMembershipInfo = async (req, res, next) => {
             if (data?.errors) {
                 const error = data.errors[0].msg
                 req.session.updateMemberError = error
-                return res.redirect('/profile-info')
+                return res.redirect(`/profile-info?id=${id}#membership-info`)
             }
             const message = data.msg
             req.session.updateMemberMessage = message
-            return res.redirect('/profile-info')
+            return res.redirect(`/profile-info?id=${id}#membership-info`)
         }
 
         next()

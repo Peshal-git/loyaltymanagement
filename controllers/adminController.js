@@ -87,6 +87,8 @@ const makeTransaction = async (req, res) => {
     try {
         const { id } = req.query
         const user = await User.findById(id)
+        const referer = req.get('Referer')
+        const redirectPath = referer ? new URL(referer).pathname : null;
         const { 
             spendingType,
             amount
@@ -116,26 +118,33 @@ const makeTransaction = async (req, res) => {
 
         if (responseData?.errors) {
             const error = responseData?.errors[0]?.msg
-            return res.render('add-transaction', { error, id })
+            req.session.reservationError = error
+            if(redirectPath=='/dashboard'){
+                return res.redirect(redirectPath)
+            }
+    
+            return res.redirect(`/profile-info?id=${id}#points-wallet`)
         }
 
         const message = "Transaction Done"
         req.session.reservationMessage = message
 
-        const referer = req.get('Referer')
-        const redirectPath = referer ? new URL(referer).pathname : null;
 
         if(redirectPath=='/dashboard'){
             return res.redirect(redirectPath)
         }
 
-        return res.redirect(`/profile-info?id=${id}`)
+        return res.redirect(`/profile-info?id=${id}#points-wallet`)
 
     } catch (error) {
-        return res.status(400).json({
-            success: false,
-            msg: error.message
-        })
+        const referer = req.get('Referer')
+        const redirectPath = referer ? new URL(referer).pathname : null;
+        req.session.reservationError = error
+        if(redirectPath=='/dashboard'){
+            return res.redirect(redirectPath)
+        }
+    
+        return res.redirect(`/profile-info?id=${id}#points-wallet`)
     }
 }
 
@@ -165,13 +174,39 @@ const deleteTransaction = async (req, res) => {
 
         const originalPointsGained = requestedUser.transaction[reservationIndex].pointsGained || 0
         requestedUser.membershipInfo.pointsForRedemptions -= originalPointsGained
+        requestedUser.membershipInfo.pointsAvailable -= originalPointsGained
 
         await pointsHistoryCalc.deletePointsRecord(requestedUser.transaction[reservationIndex].tranCode)
 
         requestedUser.transaction.splice(reservationIndex, 1)
         await requestedUser.save()
 
-        res.redirect(`/profile-info?id=${id}`)
+        return res.redirect(`/profile-info?id=${id}#points-wallet`)
+
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
+const deleteRedemption = async (req, res) => {
+    try {
+        const { id, tranCode } = req.query
+        const requestedUser = await User.findById(id)
+
+        const reservationIndex = requestedUser.redeem.findIndex(obj => obj.tranCode === tranCode);
+
+        const originalPointsUsed = requestedUser.redeem[reservationIndex].pointsLost || 0
+        requestedUser.membershipInfo.pointsForRedemptions += originalPointsUsed
+
+        await pointsHistoryCalc.deletePointsRecord(requestedUser.redeem[reservationIndex].tranCode)
+
+        requestedUser.redeem.splice(reservationIndex, 1)
+        await requestedUser.save()
+
+        return res.redirect(`/profile-info?id=${id}#points-wallet`)
 
     } catch (error) {
         return res.status(400).json({
@@ -440,7 +475,8 @@ const updatePrivacyAndPreference = async (req, res) => {
 
 const updateMembershipInfo = async (req, res) => {
     try {
-        res.redirect(`/profile-info`)
+        const id = req.query.id
+        return res.redirect(`/profile-info?id=${id}#membership-info`)
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -452,7 +488,7 @@ const updateMembershipInfo = async (req, res) => {
 const updateTransactionInfo = async (req, res) => {
     try {
         const id = req.query.id
-        res.redirect(`/profile-info?id=${id}`)
+        return res.redirect(`/profile-info?id=${id}`)
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -941,6 +977,7 @@ module.exports = {
     makeTransaction,
     deleteUser,
     deleteTransaction,
+    deleteRedemption,
     profileInformation,
     updateProfile,
     mainlogin,

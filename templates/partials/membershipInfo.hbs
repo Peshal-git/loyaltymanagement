@@ -5,7 +5,7 @@
 
         <div class="form-group">
             <label for="status">Membership Status:</label>
-            <select name="spendingType" id="spendingType" required value="{{user.membershipInfo.status}}">
+            <select name="status" id="status" required value="{{user.membershipInfo.status}}">
                 <option value="Active" {{#if (eq user.membershipInfo.status "Active")}}selected{{/if}}>Active</option>
                 <option value="Pending" {{#if (eq user.membershipInfo.status "Pending")}}selected{{/if}}>Pending</option>
                 <option value="Inactive" {{#if (eq user.membershipInfo.status "Inactive")}}selected{{/if}}>Inactive</option>
@@ -15,7 +15,6 @@
         </div>
 
     </div>
-
 
     <div class="middle-column">
         <div class="form-group">
@@ -37,7 +36,7 @@
         <div class="form-group">
             <label for="c">Points Balance:</label>
                 <div class="input-wrapper">
-            <input class="editable" type="text" name="pointsAvailable" value="{{user.membershipInfo.pointsForRedemptions}}"
+            <input class="editable" type="text" name="pointsForRedemptions" value="{{user.membershipInfo.pointsForRedemptions}}"
                 readonly>
             </div>
         </div>

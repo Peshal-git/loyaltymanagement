@@ -206,6 +206,14 @@ const addTransaction = async (req, res) => {
             tranCode
         })
 
+        if(existingProfile.membershipInfo.status == 'Pending'){
+            const updatedProfile = await User.findByIdAndUpdate(
+                existingProfile.id,
+                { $set: { "membershipInfo.status": "Active" } },
+                { new: true }
+            )
+        }
+
         const userId = existingProfile.id
         const totalPointsBefore = existingProfile.membershipInfo.pointsForRedemptions
 
@@ -495,6 +503,72 @@ const updateMemInfo = async (req, res) => {
                     "membershipInfo.status": status
                 }
             }, { new: true })
+
+            if(status == "Upgrade"){    
+                let newTier            
+                switch (updatedUserData.tier) {
+                    case "Balance":
+                        newTier = "Vitality";
+                        break;
+
+                    case "Vitality":
+                        newTier = "Harmony";
+                        break;
+
+                    case "Harmony":
+                        newTier = "Serenity";
+                        break;
+
+                    case "Serenity":
+                        newTier = "Serenity";
+                        break;
+
+                    default:
+                        newTier = null;
+                        break;
+                }
+                
+                if (newTier) {
+                    await User.findByIdAndUpdate(
+                        updatedUserData.id,
+                        { $set: { "tier": newTier } },
+                        { new: true }
+                    )
+                }
+            }
+
+            if(status == "Downgrade"){    
+                let newTier            
+                switch (updatedUserData.tier) {
+                    case "Serenity":
+                        newTier = "Harmony";
+                        break;
+
+                    case "Harmony":
+                        newTier = "Vitality";
+                        break;
+
+                    case "Vitality":
+                        newTier = "Balance";
+                        break;
+
+                    case "Balance":
+                        newTier = "Balance";
+                        break;
+
+                    default:
+                        newTier = null;
+                        break;
+                }
+
+                if (newTier) {
+                    await User.findByIdAndUpdate(
+                        updatedUserData.id,
+                        { $set: { "tier": newTier } },
+                        { new: true }
+                    )
+                }
+            }
 
             return res.status(200).json({
                 success: true,
