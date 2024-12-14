@@ -18,10 +18,13 @@
     <div class="right-column">
 
         <div class="form-group">
-            <label for="n">Amount:</label>
-            <div class="input-wrapper">
-            <input class="editable" type="text" name="amount" id="amount"
-                value="{{getValue transactionObj.amount enteredFields.amount}}" required>
+            <label for="amount">Amount</label>
+            <div class="currency-input">
+                <span class="currency-symbol">THB | </span>
+                <div class="input-wrapper">
+                <input class="editable" type="number" name="amount" id="amount" 
+                    value="{{getValue transactionObj.amount enteredFields.amount}}" required>
+                </div>
             </div>
         </div>
 
@@ -43,9 +46,8 @@
 
     </form>
 </div>
-{{/if}}
 
-{{#if subtract}}
+{{else}}
 <div class="whole-form">
 <form class="rdetails-form">
 

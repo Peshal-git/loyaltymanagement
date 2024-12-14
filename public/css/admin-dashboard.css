@@ -336,3 +336,22 @@ dialog select:focus{
   background-color: #c9cfda;
   outline: none;
 }
+
+.currency-input {
+    position: relative;
+}
+  
+.currency-input .currency-symbol {
+position: absolute;
+top: 50%;
+left: 10px; 
+transform: translateY(-50%);
+font-size: 14px; 
+color: #353535; 
+pointer-events: none;
+}
+
+.currency-input .form-input {
+padding-left: 70px;
+}
+  

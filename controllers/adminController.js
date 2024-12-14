@@ -366,17 +366,18 @@ const transactionDetails = async (req, res) => {
         const pointsHistoryObj = await PointsHistory.findOne({tranCode})
         const type = pointsHistoryObj.transactionType
 
+        let add
         if(type == 'add'){
-            const add = 1
+            add = true
             const reservationIndex = userToShow.transaction.findIndex(obj => obj.tranCode === tranCode)
             const transactionObj = userToShow.transaction[reservationIndex]
             return res.render('transaction-details', { user: userToShow, add, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
         }
 
-        const subtract = 1
+        add = false
         const reservationIndex = userToShow.redeem.findIndex(obj => obj.tranCode === tranCode)
         const transactionObj = userToShow.redeem[reservationIndex]
-        return res.render('transaction-details', { user: userToShow, subtract, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
+        return res.render('transaction-details', { user: userToShow, add, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
 
 
 

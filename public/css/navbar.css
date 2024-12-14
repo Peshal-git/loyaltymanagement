@@ -707,3 +707,26 @@ dialog[data-modal]::backdrop {
 .confirm-button:hover{
   background: linear-gradient(to bottom, #D5DCE4 0%, #8899ad 100%);
 }
+
+.currency-input {
+  position: relative;
+}
+
+.currency-input .currency-symbol {
+  position: absolute;
+  top: 50%;
+  left: 10px; 
+  transform: translateY(-50%);
+  font-size: 14px; 
+  color: black; 
+  pointer-events: none;
+  z-index: 1;
+}
+
+.currency-input .form-input {
+  padding-left: 70px;
+}
+
+.currency-input .editable{
+  padding-left: 70px;
+}

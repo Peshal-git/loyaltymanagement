@@ -20,8 +20,15 @@
 
         <div class="form-group">
             <label for="amount">Amount</label>
-            <input type="number" name="amount" id="amount" class="form-input" value="{{getValue transactionObj.amount enteredFields.amount}}" placeholder="Enter amount" required>
+            <div class="currency-input">
+                <span class="currency-symbol">THB | </span>
+                <input type="number" name="amount" id="amount" 
+                    class="form-input" 
+                    value="{{getValue transactionObj.amount enteredFields.amount}}" 
+                    placeholder="Enter amount" required>
+            </div>
         </div>
+
 
         <button type="submit" class="confirm-button">Confirm Transaction</button>
     {{#if error}}
