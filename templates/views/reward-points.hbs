@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rewards</title>
+  <link rel="stylesheet" href="/css/reward-points.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <nav class="top-nav">
+    <a href="/" class="dashboard-link">
+      <img src="/images/vikasa-name.png" alt="Vikasa">
+    </a>
+    </nav>
+
+    <nav class="bottom-nav">
+        <p>{{user.name}}</p>
+
+        <div class="nav-links">
+            <p> Points Balance: {{user.membershipInfo.pointsForRedemptions}} </p>
+        </div>
+    </nav>
+
+
+<div class="dmtable-container">
+<div class="table-card">
+    <div class="category-name">
+        <p>Yoga Category</p>
+    </div>
+        <table class="redemption-table">
+            <thead>
+                <tr>
+                    <th>Rewards</th>
+                    <th>Points Required</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {{#each filteredRewards.yogaRewards}}
+                    <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
+                    <td>{{name}}</td>
+                    <td>{{points}}</td>
+                    </tr>
+                {{/each}}
+                
+            </tbody>
+        </table>
+</div>
+
+<div class="table-card">
+    <div class="category-name">
+        <p>F&B Category</p>
+    </div>
+        <table class="redemption-table">
+            <thead>
+                <tr>
+                    <th>Rewards</th>
+                    <th>Points Required</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {{#each filteredRewards.fnbRewards}}
+                    <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
+                    <td>{{name}}</td>
+                    <td>{{points}}</td>
+                    </tr>
+                {{/each}}
+                
+            </tbody>
+        </table>
+</div>
+<div class="table-card">
+    <div class="category-name">
+        <p>Vita Spa Category</p>
+    </div>
+        <table class="redemption-table">
+            <thead>
+                <tr>
+                    <th>Rewards</th>
+                    <th>Points Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each filteredRewards.vitaSpaRewards}}
+                    <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
+                    <td>{{name}}</td>
+                    <td>{{points}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+</div>
+<div class="table-card">
+    <div class="category-name">
+        <p>Retreats and YTT packages</p>
+    </div>
+        <table class="redemption-table">
+            <thead>
+                <tr>
+                    <th>Rewards</th>
+                    <th>Points Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each filteredRewards.retreatRewards}}
+                    <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
+                    <td>{{name}}</td>
+                    <td>{{points}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+</div>
+
+</div>
+
+</body>
+</html>

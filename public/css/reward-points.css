@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #667391;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.top-nav a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.top-nav .dashboard-link img {
+    background-color: transparent;
+}
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2C2F3A;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 1.2rem;
+}
+  
+.bottom-nav p {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+  
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+  
+
+.dmtable-container {
+    width: 90%;
+    margin: 0 auto; /* Centers the tables horizontally */
+    text-align: center; /* Ensures text inside the table is also centered */
+    margin-top: 10px; 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.table-card {
+    background-color: #ffffff; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.1); 
+    padding: 20px; 
+    width: 100%; 
+}
+  
+.category-name {
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    margin-bottom: 20px; 
+}
+  
+.redemption-table {
+    width: 100%;
+    background-color: #f8f9fc;
+}
+    
+.redemption-table th, .redemption-table td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    width: 50%;
+}
+
+.redemption-table th {
+font-weight: 600;
+color: #555;
+}
+
+.redemption-table td {
+color: #333;
+}
+
+.redemption-table tbody tr.non-filtered td {
+    color: #33333342;
+}
+
+.redemption-table tbody tr {
+background-color: white; 
+cursor: pointer;
+}
+
+.redemption-table tbody tr.filtered:hover {
+    background-color: #E1E4F0;
+    cursor: pointer;
+}
+
+.redemption-table tbody tr.non-filtered:hover {
+    background-color: white;
+    cursor: pointer;
+}
+
+@media(width<998px){
+    .dmtable-container{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 16px;
+    }
+}

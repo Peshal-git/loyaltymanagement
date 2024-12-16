@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const YogaCategory = new mongoose.Schema({
-    yRewards: {
+    reward: {
         type: String,
         enum: [
             "1 Group Class Drop-in", 
@@ -12,13 +12,13 @@ const YogaCategory = new mongoose.Schema({
             "Private Class 1-on-1"
         ]
     },
-    yPointRequired: {
+    pointRequired: {
         type: Number
     }
 })
 
 const FnBCategory = new mongoose.Schema({
-    fbRewards: {
+    reward: {
         type: String,
         enum: [
             "Free Breakfast or Dinner Set", 
@@ -27,13 +27,13 @@ const FnBCategory = new mongoose.Schema({
             "Free Raw Cheesecake"
         ]
     },
-    fbPointRequired: {
+    pointRequired: {
         type: Number
     }
 }) 
 
 const VitaSpaCategory = new mongoose.Schema({
-    vsRewards: {
+    reward: {
         type: String,
         enum: [
             "Any massages/Treatments 60mn", 
@@ -41,20 +41,20 @@ const VitaSpaCategory = new mongoose.Schema({
             "Free upgrade 30 min massage",
         ]
     },
-    vsPointRequired: {
+    pointRequired: {
         type: Number
     }
 })
 
 const RetreatsCategory = new mongoose.Schema({
-    rRewards: {
+    reward: {
         type: String,
         enum: [
             "Room upgrade", 
             "Free room night",
         ]
     },
-    rPointRequired: {
+    pointRequired: {
         type: Number
     }
 })

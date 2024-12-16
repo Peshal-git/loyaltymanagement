@@ -19,6 +19,7 @@ const getMultipliersDiscounts = require('../helpers/getMultipliersDiscounts')
 const { validationResult } = require('express-validator')
 const pointsHistoryCalc = require('../helpers/pointsHistoryCalc')
 const PointsHistory = require('../models/pointsHistoryModel')
+const { trusted } = require('mongoose')
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
     ? process.env.API_BASE_URL_PROD
@@ -270,33 +271,6 @@ const profileInformation = async (req, res) => {
             updateMemberError, 
             updateMemberMessage
         })
-    } catch (error) {
-        return res.status(400).json({
-            success: false,
-            msg: error.message
-        })
-    }
-}
-
-const redemption = async (req, res) => {
-    try {
-        const id = req.query.id
-        const userToShow = await User.findOne({ _id: id })
-        
-        const yogaRewards = await getValues.getYogaRewardPoints()
-        const fnbRewards = await getValues.getFnBRewardPoints()
-        const vitaSpaRewards = await getValues.getVitaSpaRewardPoints()
-        const retreatRewards = await getValues.getRetreatsRewardPoints()
-
-        return res.render('redemption', { 
-            user: userToShow, 
-            activePage: 'redemption', 
-            yogaRewards,
-            fnbRewards,
-            vitaSpaRewards,
-            retreatRewards 
-        })
-
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -886,34 +860,28 @@ const redeemPoints = async(req,res) => {
     try {
         const id = req.query.id
         const reward = req.body.reward
-        const discounts = await getValues.getDiscountValues()
-        const multipliers = await getValues.getMultiplierValues()
 
         const userToShow = await User.findById(id)
         let pointsToDeduct = 0
 
-        const rewardYoga = await Reward.findOne({ "yogaRewards.yRewards": reward })
-        const rewardFb = await Reward.findOne({ "fnbRewards.fbRewards": reward })
-        const rewardVita = await Reward.findOne({ "vitaSpaRewards.vsRewards": reward })
-        const rewardRetreat = await Reward.findOne({ "retreatRewards.rRewards": reward })
+        const rewardYoga = await Reward.findOne({ "yogaRewards.reward": reward })
+        const rewardFb = await Reward.findOne({ "fnbRewards.reward": reward })
+        const rewardVita = await Reward.findOne({ "vitaSpaRewards.reward": reward })
+        const rewardRetreat = await Reward.findOne({ "retreatRewards.reward": reward })
 
         if(rewardYoga){
-            pointsToDeduct = rewardYoga.yogaRewards.yPointRequired
+            pointsToDeduct = rewardYoga.yogaRewards.pointRequired
         }
         else if(rewardFb){
-            pointsToDeduct = rewardFb.fnbRewards.fbPointRequired
+            pointsToDeduct = rewardFb.fnbRewards.pointRequired
         }
         else if(rewardVita){
-            pointsToDeduct = rewardVita.vitaSpaRewards.vsPointRequired
+            pointsToDeduct = rewardVita.vitaSpaRewards.pointRequired
         }
         else if(rewardRetreat){
-            pointsToDeduct = rewardRetreat.retreatRewards.rPointRequired
+            pointsToDeduct = rewardRetreat.retreatRewards.pointRequired
         }
 
-        const yogaRewards = await getValues.getYogaRewardPoints()
-        const fnbRewards = await getValues.getFnBRewardPoints()
-        const vitaSpaRewards = await getValues.getVitaSpaRewardPoints()
-        const retreatRewards = await getValues.getRetreatsRewardPoints()
 
         if(userToShow.membershipInfo.pointsForRedemptions < pointsToDeduct){
             const error = "Member doesn't have enough points to redeem this reward."
@@ -971,6 +939,41 @@ const redeemPoints = async(req,res) => {
     }
 }
 
+const rewardPointsPage = async (req, res) => {
+    try {
+        const id = req.query.id
+        const userToShow = await User.findById(id)
+
+        const categories = ['yogaRewards', 'fnbRewards', 'vitaSpaRewards', 'retreatRewards']
+        const filteredRewards = {}
+
+        function markFiltered(rewardsArray, maxPoints, category) {
+            return rewardsArray.map((rewardDoc) => {
+                const reward = rewardDoc[category]
+                return {
+                    name: reward.reward, 
+                    points: reward.pointRequired,
+                    filtered: reward.pointRequired <= maxPoints
+                };
+            });
+        }
+
+        for (const category of categories) {
+            const rewards = await Reward.find({ [category]: { $exists: true, $ne: null } }).select(category)
+            const filtered = markFiltered(rewards, userToShow.membershipInfo.pointsForRedemptions, category).flat()
+            filteredRewards[category] = filtered
+        }
+
+        return res.render('reward-points', {
+            user: userToShow,
+            filteredRewards
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.redirect('/dashboard')
+    }
+}
 
 module.exports = {
     adminDashboard,
@@ -982,7 +985,6 @@ module.exports = {
     profileInformation,
     updateProfile,
     mainlogin,
-    redemption,
     privacyAndPreferences,
     membershipInformation,
     pointsWallet,
@@ -997,5 +999,6 @@ module.exports = {
     addMemberPage,
     addMember,
     importAdmins,
-    redeemPoints
+    redeemPoints,
+    rewardPointsPage
 }

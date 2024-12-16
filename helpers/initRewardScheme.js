@@ -9,61 +9,61 @@ const initRewardsScheme = async () => {
         return
     }
 
-    const yPoints = [
-        { yRewards: "1 Group Class Drop-in", yPointRequired: 2500 },
-        { yRewards: "1-week unlimited Class Tickets", yPointRequired: 10000 },
-        { yRewards: "1 Month Unlimited", yPointRequired: 15000 },
-        { yRewards: "Healthy Day", yPointRequired: 12500 },
-        { yRewards: "Healthy Morning/ Afternoon", yPointRequired: 5000 },
-        { yRewards: "Private Class 1-on-1", yPointRequired: 12500 }
+    const yoga = [
+        { reward: "1 Group Class Drop-in", pointRequired: 2500 },
+        { reward: "1-week unlimited Class Tickets", pointRequired: 10000 },
+        { reward: "1 Month Unlimited", pointRequired: 15000 },
+        { reward: "Healthy Day", pointRequired: 12500 },
+        { reward: "Healthy Morning/ Afternoon", pointRequired: 5000 },
+        { reward: "Private Class 1-on-1", pointRequired: 12500 }
     ]
 
-    const fPoints = [
-        {fbRewards: "Free Breakfast or Dinner Set", fbPointRequired: 2500},
-        {fbRewards: "Free Signature Juices or Smoothies", fbPointRequired: 1000},
-        {fbRewards: "Free Coffee or Tea", fbPointRequired: 700},
-        {fbRewards: "Free Raw Cheesecake", fbPointRequired: 1000},
+    const fnb = [
+        {reward: "Free Breakfast or Dinner Set", pointRequired: 2500},
+        {reward: "Free Signature Juices or Smoothies", pointRequired: 1000},
+        {reward: "Free Coffee or Tea", pointRequired: 700},
+        {reward: "Free Raw Cheesecake", pointRequired: 1000},
     ]
 
-    const vPoints = [
-        {vsRewards: "Any massages/Treatments 60mn", vsPointRequired: 10000},
-        {vsRewards: "Any massages/Treatments 90mn", vsPointRequired: 12500},
-        {vsRewards: "Free upgrade 30 min massage", vsPointRequired: 2500},
+    const vitaSpa = [
+        {reward: "Any massages/Treatments 60mn", pointRequired: 10000},
+        {reward: "Any massages/Treatments 90mn", pointRequired: 12500},
+        {reward: "Free upgrade 30 min massage", pointRequired: 2500},
     ]
 
-    const rPoints = [
-        {rRewards: "Room upgrade", rPointRequired: 10000},
-        {rRewards: "Free room night", rPointRequired: 15000},
+    const retreats = [
+        {reward: "Room upgrade", pointRequired: 10000},
+        {reward: "Free room night", pointRequired: 15000},
     ]
 
-    for (const entry of yPoints) {
+    for (const entry of yoga) {
         await Reward.updateOne(
-            { "yogaRewards.yRewards": entry.yRewards },
-            { $set: { "yogaRewards.yPointRequired": entry.yPointRequired, "yogaRewards.yRewards": entry.yRewards } },
+            { "yogaRewards.reward": entry.reward },
+            { $set: { "yogaRewards.pointRequired": entry.pointRequired, "yogaRewards.reward": entry.reward } },
             { upsert: true }
         )
     }
 
-    for (const entry of fPoints) {
+    for (const entry of fnb) {
         await Reward.updateOne(
-            { "fnbRewards.fbRewards": entry.fbRewards },
-            { $set: { "fnbRewards.fbPointRequired": entry.fbPointRequired, "fnbRewards.fbRewards": entry.fbRewards } },
+            { "fnbRewards.reward": entry.reward },
+            { $set: { "fnbRewards.pointRequired": entry.pointRequired, "fnbRewards.reward": entry.reward } },
             { upsert: true }
         )
     }
 
-    for (const entry of vPoints) {
+    for (const entry of vitaSpa) {
         await Reward.updateOne(
-            { "vitaSpaRewards.vsRewards": entry.vsRewards },
-            { $set: { "vitaSpaRewards.vsPointRequired": entry.vsPointRequired, "vitaSpaRewards.vsRewards": entry.vsRewards } },
+            { "vitaSpaRewards.reward": entry.reward },
+            { $set: { "vitaSpaRewards.pointRequired": entry.pointRequired, "vitaSpaRewards.reward": entry.reward } },
             { upsert: true }
         )
     }
 
-    for (const entry of rPoints) {
+    for (const entry of retreats) {
         await Reward.updateOne(
-            { "retreatRewards.rRewards": entry.rRewards },
-            { $set: { "retreatRewards.rPointRequired": entry.rPointRequired, "retreatRewards.rRewards": entry.rRewards } },
+            { "retreatRewards.reward": entry.reward },
+            { $set: { "retreatRewards.pointRequired": entry.pointRequired, "retreatRewards.reward": entry.reward } },
             { upsert: true }
         )
     }

@@ -730,3 +730,22 @@ dialog[data-modal]::backdrop {
 .currency-input .editable{
   padding-left: 70px;
 }
+
+.signup-link {
+  margin-top: 20px;
+  font-size: 0.9em;
+}
+
+.signup-now{
+  margin: 0px;
+}
+
+.signup-now a{
+  font-size: 0.9em;
+  color: #555;
+  text-decoration: underline;
+}
+
+.signup-link a:hover {
+  color: #667391;
+}

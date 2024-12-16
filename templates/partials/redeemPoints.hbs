@@ -20,6 +20,16 @@
     </select>
   </div>
 
+  <div class="signup-link">
+    <div class="signup-now">
+      {{#if user.id}}
+        <p> <a target="_blank" href="/rewardPoints?id={{user.id}}">Check redeemable rewards</a></p>
+      {{else}}
+        <p> <a target="_blank" href="/rewardPoints?id={{this.id}}">Check redeemable rewards</a></p>
+      {{/if}}
+    </div>
+  </div>
+
   <button type="submit" class="confirm-button">Confirm Transaction</button>
     {{#if rewardMessage}}
     <h4 style="color: #667391;">{{rewardMessage}}.</h4>

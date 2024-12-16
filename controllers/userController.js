@@ -18,8 +18,6 @@ const dashboardRedirect = async (req, res) => {
     }
 }
 
-
-
 const profilePage = async (req, res) => {
     try {
         let userData
@@ -38,7 +36,7 @@ const profilePage = async (req, res) => {
         userData.membershipInfo.pointsAvailable = totalPoints;
         await userData.save();
 
-        res.render('user-profile', { user: userData })
+        return res.render('user-profile', { user: userData })
     } catch (error) {
         return res.status(400).json({
             success: false,

@@ -54,7 +54,7 @@ router.get('/delete-transaction', auth, superAdminCheck, adminController.deleteT
 router.get('/delete-redemption', auth, superAdminCheck, adminController.deleteRedemption)
 
 router.get('/profile-info', auth, adminCheck, adminController.profileInformation)
-router.get('/redemption', auth, adminCheck, adminController.redemption)
+
 router.get('/privacy-pref', auth, adminCheck, adminController.privacyAndPreferences)
 router.get('/membership-info', auth, adminCheck, adminController.membershipInformation)
 router.get('/points-wallet', auth, adminCheck, adminController.pointsWallet)
@@ -76,5 +76,6 @@ router.post('/add-member', auth, adminCheck, addMemberValidator, adminController
 router.post('/import-admins', upload.single('csvFile'), adminController.importAdmins)
 router.post('/redeem', auth, adminCheck, adminController.redeemPoints)
 
+router.get('/rewardPoints', auth, adminCheck, adminController.rewardPointsPage)
 
 module.exports = router
