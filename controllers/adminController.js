@@ -273,6 +273,26 @@ const profileInformation = async (req, res) => {
         const discounts = await getValues.getDiscountValues()
         const multipliers = await getValues.getMultiplierValues()
 
+        const categories = ['yogaRewards', 'fnbRewards', 'vitaSpaRewards', 'retreatRewards']
+        const filteredRewards = {}
+
+        function markFiltered(rewardsArray, maxPoints, category) {
+            return rewardsArray.map((rewardDoc) => {
+                const reward = rewardDoc[category]
+                return {
+                    name: reward.reward, 
+                    points: reward.pointRequired,
+                    filtered: reward.pointRequired <= maxPoints
+                };
+            });
+        }
+
+        for (const category of categories) {
+            const rewards = await Reward.find({ [category]: { $exists: true, $ne: null } }).select(category)
+            const filtered = markFiltered(rewards, userToShow.membershipInfo.pointsForRedemptions, category).flat()
+            filteredRewards[category] = filtered
+        }
+
         return res.render('admin-page', { 
             user: userToShow, 
             refUser, 
@@ -285,7 +305,8 @@ const profileInformation = async (req, res) => {
             rewardError,
             historiesToShow,
             updateMemberError, 
-            updateMemberMessage
+            updateMemberMessage,
+            filteredRewards
         })
     } catch (error) {
         return res.status(400).json({
@@ -938,7 +959,7 @@ const redeemPoints = async(req,res) => {
             return res.redirect(redirectPath)
         }
 
-        return res.redirect(`/profile-info?id=${id}`)
+        return res.redirect(`/profile-info?id=${id}#points-wallet`)
 
         // return res.render('redemption', { 
         //     user: userToShow, 

@@ -175,7 +175,7 @@ body {
 
 }
 
-.profile-form, .systemdata-form, .privacy-form, .membership-form, .rdetails-form {
+.profile-form, .systemdata-form, .privacy-form, .membership-form, .rdetails-form, .addTransaction-form {
   display: flex;
   gap: 50px;
   width: 100%;
@@ -495,12 +495,12 @@ a{
 }
 
 .points-table {
-  width: 100%;
+  width: 90%;
   border-collapse: separate;
-  border-spacing: 0 10px; 
+  border-spacing: 0 10px;
   background-color: #f8f9fc;
-  margin-top: 10px;
-  }
+  margin: 10px auto;
+}
   
   .points-table th,
   .points-table td {
@@ -748,4 +748,83 @@ dialog[data-modal]::backdrop {
 
 .signup-link a:hover {
   color: #667391;
+}
+
+.no-transaction{
+  margin: 20px 80px;
+}
+
+
+.rewardstable-container {
+  width: 100%;
+  margin: 0 auto; /* Centers the tables horizontally */
+  text-align: center; /* Ensures text inside the table is also centered */
+  margin-top: 10px; 
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.rewardstable-container .table-card {
+  background-color: #ffffff; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.1); 
+  padding: 20px; 
+  width: 100%; 
+  margin: 0px;
+}
+
+.redemption-table {
+  width: 100%;
+  background-color: #f8f9fc;
+}
+  
+.redemption-table th, .redemption-table td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  width: 50%;
+}
+
+.redemption-table th {
+font-weight: 600;
+color: #555;
+}
+
+.redemption-table td {
+color: #333;
+}
+
+.redemption-table tbody tr.non-filtered td {
+  color: #33333342;
+}
+
+.redemption-table tbody tr.filtered .redeem-button {
+  background-color: blue;
+  color: white;
+  cursor: pointer;
+}
+
+.redemption-table tbody tr.non-filtered .redeem-button {
+  background-color: #e0e0e0; 
+  color: #33333342;
+  cursor: not-allowed;
+}
+
+
+
+.redemption-table tbody tr {
+background-color: white; 
+cursor: pointer;
+}
+
+.redemption-table tbody tr.filtered:hover {
+  background-color: #E1E4F0;
+  cursor: pointer;
+}
+
+.redemption-table tbody tr.non-filtered:hover {
+  background-color: white;
+  cursor: pointer;
 }

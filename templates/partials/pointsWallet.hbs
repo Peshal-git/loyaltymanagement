@@ -1,4 +1,4 @@
-<div class="single-column">
+{{!-- <div class="single-column"> --}}
     {{#if historiesToShow.length}}
 
 <table class="points-table">
@@ -56,7 +56,7 @@
   </table>
 
 {{else}}
-    <p>No transaction yet.</p>
+    <p class="no-transaction">No transaction yet.</p>
 {{/if}}
 
 {{#if error}}
@@ -66,7 +66,7 @@
 <h4 style="color: #709166;">{{message}}</h4>
 {{/if}}
 
-<div data-open-modal="modal2" class="addreservation-button"> 
+{{!-- <div data-open-modal="modal2" class="addreservation-button"> 
     <p class="redeem-button">&minus; </p>
 </div>
 
@@ -83,14 +83,16 @@
 
 <dialog data-modal="modal2">
     {{> redeemPoints}}
-</dialog>
+</dialog> --}}
 
 
-</div>
+{{!-- </div> --}}
 
 </div>
 </body>
+
 <script>
+
 function toggleDropdown(event) {
   const dropdown = event.target.nextElementSibling; // Get the next sibling (dropdown menu)
   const isVisible = dropdown.style.display === "block"; // Check if it's currently visible

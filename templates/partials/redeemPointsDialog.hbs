@@ -1,0 +1,99 @@
+{{#if user.id}}
+<form action="/redeem?id={{user.id}}" method="post" class="reservation-form" autocomplete="off">
+{{else}}
+<form action="/redeem?id={{this.id}}" method="post" class="reservation-form" autocomplete="off">
+{{/if}}
+
+  <div class="form-group">
+    <label for="category">Category</label>
+    <select name="category" id="category" required>
+      <option value="yogaCategory">Yoga</option>
+      <option value="fnbCategory">F&B</option>
+      <option value="vitaSpaCategory">Vita Spa</option>
+      <option value="retreatsCategory">Retreats and YTT Packages</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="reward">Reward</label>
+    <select name="reward" id="reward" required>
+    </select>
+  </div>
+
+  <div class="signup-link">
+    <div class="signup-now">
+      {{#if user.id}}
+        <p> <a target="_blank" href="/rewardPoints?id={{user.id}}">Check redeemable rewards</a></p>
+      {{else}}
+        <p> <a target="_blank" href="/rewardPoints?id={{this.id}}">Check redeemable rewards</a></p>
+      {{/if}}
+    </div>
+  </div>
+
+  <button type="submit" class="confirm-button">Confirm Transaction</button>
+    {{#if rewardMessage}}
+    <h4 style="color: #667391;">{{rewardMessage}}.</h4>
+    {{/if}}
+    {{#if rewardError}}
+    <h4 style="color: #CD5C5C;">{{rewardError}}</h4>
+    {{/if}}
+</form>
+
+
+<script>
+  const rewardOptions = {
+    yogaCategory: [
+      "1 Group Class Drop-in",
+      "1-week unlimited Class Tickets",
+      "1 Month Unlimited",
+      "Healthy Day",
+      "Healthy Morning/ Afternoon",
+      "Private Class 1-on-1",
+    ],
+    fnbCategory: [
+      "Free Breakfast or Dinner Set",
+      "Free Signature Juices or Smoothies",
+      "Free Coffee or Tea",
+      "Free Raw Cheesecake",
+    ],
+    vitaSpaCategory: [
+      "Any massages/Treatments 60mn",
+      "Any massages/Treatments 90mn",
+      "Free upgrade 30 min massage",
+    ],
+    retreatsCategory: ["Room upgrade", "Free room night"],
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const categorySelect = document.getElementById("category");
+    const rewardSelect = document.getElementById("reward");
+
+    // Function to update rewards based on selected category
+    const updateRewards = (selectedCategory) => {
+      // Clear current options
+      rewardSelect.innerHTML = "";
+
+      // Get rewards for the selected category
+      const rewards = rewardOptions[selectedCategory];
+
+      // Populate the rewards dropdown
+      if (rewards) {
+        rewards.forEach((reward) => {
+          const option = document.createElement("option");
+          option.value = reward;
+          option.textContent = reward;
+          rewardSelect.appendChild(option);
+        });
+      }
+    };
+
+    // Add event listener for category selection change
+    categorySelect.addEventListener("change", (event) => {
+      const selectedCategory = event.target.value;
+      updateRewards(selectedCategory);
+    });
+
+    // Initialize rewards dropdown with the default category
+    updateRewards(categorySelect.value);
+  });
+</script>
