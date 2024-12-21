@@ -28,10 +28,22 @@ const API_BASE_URL = process.env.NODE_ENV === 'production'
 const adminDashboard = async (req, res) => {
     try {
         const query = req.query.search || ''
+        const section = req.query.section
         const page = Number(req.query.page) || 1
-        const limit = 5
-        
-        const { user, totalPages, prevPage, nextPage, currentPage, pages } = await getPaginations.getPaginatedUsers(query, page, limit)
+
+        const admin = req?.user?.user || req.user
+        const superadmin = admin.isSuperAdmin
+
+        let usersToShow, totalPages, prevPage, nextPage, currentPage, pages
+        let activePage = "members"
+
+        if(section=="admins"){
+            ({ usersToShow, totalPages, prevPage, nextPage, currentPage, pages } = await getPaginations.getPaginatedAdmins(query, page))
+            activePage = "admins"
+        }
+        else{
+            ({ usersToShow, totalPages, prevPage, nextPage, currentPage, pages } = await getPaginations.getPaginatedMembers(query, page))
+        }
         
         if (req?.session?.reservationMessage || req?.session?.reservationError || req?.session?.rewardMessage || req?.session?.rewardError) {
             let message = req.session.reservationMessage || req.session.rewardMessage
@@ -41,24 +53,28 @@ const adminDashboard = async (req, res) => {
             req.session.rewardMessage = null
             req.session.rewardError = null
             return res.render('admin-dashboard', { 
-                user, 
+                user: usersToShow,
+                activePage,
                 message,
                 error, 
                 currentPage,
                 totalPages,
                 prevPage,
                 nextPage,
-                pages 
+                pages,
+                superadmin 
             });
         }
 
         return res.render('admin-dashboard', {
-             user,
+             user: usersToShow,
+             activePage,
              currentPage,
              totalPages,
              prevPage,
              nextPage,
-             pages 
+             pages,
+             superadmin
             })
 
     } catch (error) {

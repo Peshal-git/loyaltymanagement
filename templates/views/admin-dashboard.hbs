@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Member List</title>
+  <title>Members List</title>
   <link rel="stylesheet" href="/css/admin-dashboard.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,11 +20,35 @@
     </div>
   </nav>
 
+{{#if superadmin}}
+<div class="menu">
+  <div class="menu-bar">
+      <ul class="menu-items">
+
+          <li class="menu-item {{isActive activePage 'members'}}">
+              <a href="/dashboard?section=members" target="_self" class="link">
+                  <span class="menu-text">Members</span>
+              </a>
+          </li>
+          
+          <li class="menu-item {{isActive activePage 'admins'}}">
+              <a href="/dashboard?section=admins" target="_self" class="link">
+                  <span class="menu-text">Admins</span>
+              </a>
+          </li>
+
+      </ul>
+  </div>
+</div>
+{{/if}}
+
+
 <div class="main-container">
 <div class="container">
   <div class="header">
         <div class="search-container">
             <form action="/dashboard" method="GET">
+                <input type="hidden" name="section" value="{{activePage}}">
                 <input type="text" class="search-bar" name="search" placeholder="Search...">
                 <input type="image" src="/images/search-icon.png" alt="Search Icon" class="search-icon">
             </form>
@@ -65,21 +89,6 @@
         <td>{{this.email}}</td>
         <td>{{this.mobile}}</td>
         <td onclick="event.stopPropagation();">
-            {{!-- <div class="options-container">
-                <img src="/images/three-dots.png" alt="Options" class="options-icon" onclick="event.stopPropagation(); toggleDropdown(event);">
-                <div class="options-dropdown">
-                    <a href="/profile-info?id={{this.id}}">
-                        <span class="edit-icon">&#9998;</span> Edit
-                    </a>
-                    <a href="/delete-user/?id={{this.id}}" onclick="return confirm('Are you sure you want to delete this member?');">
-                        <span class="delete-icon">&#x1F5D1;</span> Delete
-                    </a>
-                    <a href="/add-reservation?id={{this.id}}">
-                        <span class="add-icon">&#43;</span> Add Reservation
-                    </a>
-                </div>
-            </div> --}}
-
             <a data-open-modal="modal1"> 
             <span class="add-icon">&#43;</span>
             </a>
@@ -99,16 +108,9 @@
                 {{> redeemPoints}}
             </dialog>
 
-            {{!-- <a href="/add-transaction?id={{this.id}}">
-                <span class="add-icon">&#43;</span>
-            </a>
-            <a href="/redemption?id={{this.id}}">
-                <span class="minus-icon">&minus;</span>
-            </a> --}}
-
         </td>
         </tr>
-         {{/each}}
+        {{/each}}
       
     </tbody>
   </table>
@@ -138,40 +140,10 @@
 
 </body>
 <script>
-function openOptionsMenu(event) {
-  console.log("Options menu clicked");
-  // Add code here to open a menu or handle any specific action
-};
-
-function toggleDropdown(event) {
-  const dropdown = event.target.nextElementSibling; // Get the next sibling (dropdown menu)
-  const isVisible = dropdown.style.display === "block"; // Check if it's currently visible
-  dropdown.style.display = isVisible ? "none" : "block"; // Toggle visibility
-
-  // Close other dropdowns if needed
-  const allDropdowns = document.querySelectorAll('.options-dropdown');
-  allDropdowns.forEach((otherDropdown) => {
-    if (otherDropdown !== dropdown) {
-      otherDropdown.style.display = "none";
-    }
-  });
-
-  event.stopPropagation(); // Prevent the event from bubbling up to the row click
-}
-
-// Optionally, close the dropdown when clicking outside
-document.addEventListener('click', function(event) {
-  const allDropdowns = document.querySelectorAll('.options-dropdown');
-  allDropdowns.forEach((dropdown) => {
-    dropdown.style.display = "none"; // Hide dropdowns when clicking outside
-  });
-});
-
 const fileInput = document.getElementById("csvFile");
 fileInput.addEventListener('change', function() {
-    this.form.submit();  // Automatically submit the form after the file is selected
+  this.form.submit();
 });
-
 
 const rewardMessage = document.getElementById('rewardMessage').dataset.message;
 const rewardError = document.getElementById('rewardError').dataset.error;
@@ -180,7 +152,7 @@ if (rewardMessage || rewardError) {
 
     const modal = document.querySelector('[data-modal="modal2"]');
     if (modal) {
-        modal.showModal(); // Trigger modal2
+        modal.showModal();
     }
 }
 
@@ -188,7 +160,7 @@ if (rewardMessage || rewardError) {
 const openElements = document.querySelectorAll("[data-open-modal]");
 const modals = document.querySelectorAll("[data-modal]");
 
-// Add event listener to trigger modal opening
+// Event listener to trigger modal opening
 openElements.forEach(element => {
     element.addEventListener("click", (event) => {
       event.preventDefault();
@@ -201,7 +173,7 @@ openElements.forEach(element => {
     });
 });
 
-// Add event listeners to close the modal when clicking outside of it
+// Event listeners to close the modal when clicking outside of it
 modals.forEach(modal => {
     modal.addEventListener("click", e => {
         const dialogDimensions = modal.getBoundingClientRect();
