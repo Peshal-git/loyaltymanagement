@@ -23,7 +23,7 @@
                 <span class="currency-symbol">THB | </span>
                 <div class="input-wrapper">
                 <input class="editable" type="number" name="amount" id="amount" 
-                    value="{{getValue transactionObj.amount enteredFields.amount}}" required>
+                    value="{{transactionObj.amount}}" required>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
         <label for="Category">Points Used:</label>
         <div class="input-wrapper">
         <input class="editable" type="text" name="category"
-            value="{{transactionObj.pointsLost}}" required readonly>
+            value="{{commaFormat transactionObj.pointsLost}}" required readonly>
         </div>
     </div>
 

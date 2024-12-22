@@ -20,7 +20,7 @@
         <div class="form-group">
             <label for="c">Total lifetime Points:</label>
                 <div class="input-wrapper">
-            <input class="editable" type="text" name="pointsAvailable" value="{{user.membershipInfo.pointsAvailable}}"
+            <input class="editable" type="text" name="pointsAvailable" value="{{commaFormat user.membershipInfo.pointsAvailable}}"
                 readonly>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="form-group">
             <label for="c">Points Balance:</label>
                 <div class="input-wrapper">
-            <input class="editable" type="text" name="pointsForRedemptions" value="{{user.membershipInfo.pointsForRedemptions}}"
+            <input class="editable" type="text" name="pointsForRedemptions" value="{{commaFormat user.membershipInfo.pointsForRedemptions}}"
                 readonly>
             </div>
         </div>

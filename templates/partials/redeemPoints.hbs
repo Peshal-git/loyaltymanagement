@@ -19,7 +19,7 @@
                       <form action="/redeem?id={{../user.id}}" method="POST">
 
                       <td>{{name}}</td>
-                      <td>{{points}}</td>
+                      <td>{{commaFormat points}}</td>
                       <td>
                         <input type="hidden" name="category" value="{{yogaCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
@@ -54,7 +54,7 @@
                       
                       
                       <td>{{name}}</td>
-                      <td>{{points}}</td>
+                      <td>{{commaFormat points}}</td>
                       <td>
                         <input type="hidden" name="category" value="{{fnbCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
@@ -85,7 +85,7 @@
                       <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
                       <form action="/redeem?id={{../user.id}}" method="POST">
                       <td>{{name}}</td>
-                      <td>{{points}}</td>
+                      <td>{{commaFormat points}}</td>
                       <td>
                         <input type="hidden" name="category" value="{{vitaSpaCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
@@ -115,7 +115,7 @@
                       <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
                       <form action="/redeem?id={{../user.id}}" method="POST">
                       <td>{{name}}</td>
-                      <td>{{points}}</td>
+                      <td>{{commaFormat points}}</td>
                       <td>
                         <input type="hidden" name="category" value="{{retreatsCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">

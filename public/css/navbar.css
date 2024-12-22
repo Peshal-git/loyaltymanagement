@@ -828,3 +828,11 @@ cursor: pointer;
   background-color: white;
   cursor: pointer;
 }
+
+.colorRed{
+  color: #E63946;
+}
+
+.colorGreen{
+  color: #4CAF50;
+}

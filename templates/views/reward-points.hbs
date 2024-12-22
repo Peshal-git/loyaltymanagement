@@ -43,7 +43,7 @@
                 {{#each filteredRewards.yogaRewards}}
                     <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
                     <td>{{name}}</td>
-                    <td>{{points}}</td>
+                    <td>{{commaFormat points}}</td>
                     </tr>
                 {{/each}}
                 
@@ -67,7 +67,7 @@
                 {{#each filteredRewards.fnbRewards}}
                     <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
                     <td>{{name}}</td>
-                    <td>{{points}}</td>
+                    <td>{{commaFormat points}}</td>
                     </tr>
                 {{/each}}
                 
@@ -89,7 +89,7 @@
                 {{#each filteredRewards.vitaSpaRewards}}
                     <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
                     <td>{{name}}</td>
-                    <td>{{points}}</td>
+                    <td>{{commaFormat points}}</td>
                     </tr>
                 {{/each}}
             </tbody>
@@ -110,7 +110,7 @@
                 {{#each filteredRewards.retreatRewards}}
                     <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
                     <td>{{name}}</td>
-                    <td>{{points}}</td>
+                    <td>{{commaFormat points}}</td>
                     </tr>
                 {{/each}}
             </tbody>

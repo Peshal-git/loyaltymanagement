@@ -15,7 +15,7 @@
         <tr onclick="window.location.href='/transaction-details/?id={{../user.id}}&tranCode={{this.tranCode}}'">
         <td>{{makeType this.transactionType}}</td>
         <td>{{this.service}}</td>
-        <td><span> {{getUsedOrGained transactionType}} </span> <span class="{{getColor transactionType}}"> {{this.points}} </span></td>
+        <td><span> {{getUsedOrGained transactionType}} </span> <span class="{{getColor transactionType}}"> {{commaFormat this.points}} </span></td>
         <td>
             <div class="options-container">
                 <img src="/images/three-dots.png" alt="Options" class="options-icon" onclick="event.stopPropagation(); toggleDropdown(event);">

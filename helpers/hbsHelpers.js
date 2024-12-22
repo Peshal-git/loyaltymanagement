@@ -93,3 +93,10 @@ hbs.registerHelper('getUsedOrGained', function (value) {
     return 'Error'
 
 });
+
+hbs.registerHelper('commaFormat', function (number) {
+    if (typeof number !== 'number') {
+        return number;
+    }
+    return number.toLocaleString('en-US');
+});
