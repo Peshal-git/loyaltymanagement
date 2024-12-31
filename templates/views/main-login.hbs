@@ -1,77 +1,94 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VIKASA</title>
-    <link rel="stylesheet" href="/css/main-login.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <div class="logo-section">
-            <img src="/images/vikasa-logo.png" alt="Vikasa Logo">
+    <link rel="stylesheet" href="/css/main-login.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <div class="left">
+
+          <div class="banner-content">
+            Welcome to Vikasa
+            <span>Vikasa is a global wellness brand with a goal to inspire
+              transformation and personal growth.</span>
+          </div>
+          <div class="overlay">
+          </div>
+
         </div>
-        
-        <div class="signin-box">
-            <h2>Sign in with</h2>
-            <div class="social-buttons">
-            <a href="/auth/facebook">
-                <button class="facebook-button">
-                <img src="/images/facebook-logo.png" alt="Facebook logo" class="logo">
-                Facebook
-                </button>   
-                </a>
 
-            <a href="/auth/google">
-                <button class="google-button">
-                <img src="/images/google-logo.png" alt="Google logo" class="logo">
-                Google
-                </button>
-                </a>
-                
-            </div>
-
-            <div class="apple-div">
-                <a href="/auth/apple">
-                <button class="apple-button">
-                <img src="/images/apple-logo.png" alt="Apple logo" class="logo">
-                Apple
-                </button>
-                </a>
-            </div>
+        <div class="right">
+          <div>
+            <img class="logo" src="/images/logo.png" alt="Visaka Logo" />
+            <h2>Sign in</h2>
+            <h4>Don't have an account? <a href="/register">Sign up</a></h4>
 
             <form action="/dashboard" method="POST" autocomplete="off">
-                <label for="email">Email</label>
-                <input type="email" name="email">
-                
-                <div class="password-container">
-                    <label for="password">Password</label>
-                    <div class="forgot-password">
-                        <a href="/forgot-password">Forgot Password?</a>
-                    </div>
-                </div>
-                <input type="password" name="password">
-                
-                <button type="submit" class="signin-btn" value="Login">Sign in </button>
-            </form>
-            {{#if error}}
-            <h4 style="color: #CD5C5C;">{{error}}</h4>
-            {{/if}}
-            {{#if message}}
-            <h4 style="color: #667391;">{{message}}. You may login.</h4>
-            {{/if}}
-            <div class="signup-link">
-                <p>Not a member?</p> 
-                <div class="signup-now">
-                    <p> <a href="/register">Sign up now</a></p>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+              <label for="email">Email</label>
+              <input type="email" name="email" />
 
+              <div class="password-container">
+                <label for="password">Password</label>
+
+              </div>
+              <input type="password" name="password" />
+
+              <button type="submit" class="signin-btn" value="Login">Sign in
+              </button>
+
+              <a class="forgot-password" href="/forgot-password">Forgot
+                Password?</a>
+
+            </form>
+
+            <div class="social-buttons">
+              <a href="/auth/facebook">
+                <button class="facebook-button">
+                  <img src="/images/facebook-logo.png" alt="Facebook logo" />
+                  Sign in with Facebook
+                </button>
+              </a>
+
+              <a href="/auth/google">
+                <button class="google-button">
+                  <img src="/images/google-logo.png" alt="Google logo" />
+                  Sign in with Google
+                </button>
+              </a>
+              <a href="/auth/apple">
+                <button class="apple-button">
+                  <img src="/images/apple-logo.png" alt="Apple logo" />
+                  Sign in with Apple
+                </button>
+              </a>
+            </div>
+
+          </div>
+          {{#if error}}
+            <h4 style="color: #CD5C5C;">{{error}}</h4>
+          {{/if}}
+          {{#if message}}
+            <h4 style="color: #667391;">{{message}}. You may login.</h4>
+          {{/if}}
+          {{! <div class="signup-link">
+          <p>Not a member?</p>
+          <div class="signup-now">
+            <p> Sign up now</a></p>
+          </div>
+
+        </div> }}
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
