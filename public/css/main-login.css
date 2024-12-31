@@ -29,7 +29,6 @@ button > img {
   display: flex;
   width: -webkit-fill-available;
   height: -webkit-fill-available;
-  gap: 20px;
   margin: 28px;
   border-radius: 10px;
   max-width: 1200px;
@@ -73,13 +72,18 @@ button > img {
   margin-top: 5px;
   display: block;
 }
+
+.right {
+  overflow: auto;
+}
+
 .right > div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100%;
   max-width: 80%;
-  margin: auto;
+  margin: 0px auto;
 }
 
 .logo {
@@ -168,4 +172,76 @@ input {
   text-decoration: none;
   background: #fff;
   border: 1px solid #e1e0e0;
+}
+
+@media (max-width: 1325px) {
+  .container {
+    margin: 24px;
+    max-width: unset;
+  }
+}
+
+@media (max-width: 1085px) {
+  .right > div {
+    max-width: 90%;
+    margin: 28px auto;
+  }
+}
+
+@media (max-width: 615px) {
+  .container {
+    margin: 0;
+    flex-direction: column;
+    background: #eee;
+  }
+
+  .container > div {
+    flex: unset;
+  }
+
+  .left {
+    min-height: 200px;
+    border-radius: 0;
+    align-items: flex-start;
+  }
+
+  .banner-content {
+    padding-top: 20px;
+  }
+
+  .right {
+    margin: -30px 14px 10px 14px;
+    z-index: 1;
+    background: white;
+    border-radius: 10px;
+  }
+
+  .right > div {
+    margin: 84px auto;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  .logo {
+    height: 60px;
+  }
+}
+
+@media (max-width: 465px) {
+  .left .banner-content {
+    padding: 20px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 395px) {
+  .left {
+    font-size: 30px;
+  }
 }
