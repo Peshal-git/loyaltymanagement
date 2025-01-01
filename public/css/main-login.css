@@ -51,7 +51,14 @@ button > img {
   border-bottom-left-radius: 10px;
   align-items: center;
   justify-content: center;
+}
+
+.login-banner {
   background: url("/images/welcome.jpg") center/cover no-repeat;
+}
+
+.signup-banner {
+  background: url("/images/signup-banner.jpg") center/cover no-repeat;
 }
 
 .left .banner-content {
@@ -71,19 +78,30 @@ button > img {
   font-size: 16px;
   margin-top: 5px;
   display: block;
+  text-align: justify;
 }
 
 .right {
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-link {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .right > div {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%;
-  max-width: 80%;
+  height: auto;
   margin: 0px auto;
+  flex: 1;
+  padding: 20px 0px;
+  width: 80%;
 }
 
 .logo {
@@ -103,11 +121,16 @@ h4 {
 }
 
 h4 a {
-  color: #7f90c6;
+  color: #546bb5;
   text-decoration: none;
 }
 
-input {
+a:hover {
+  color: #1c3eac;
+}
+
+input,
+select {
   padding: 7px 10px;
   margin-bottom: 12px;
   border: 1px solid #e1e0e0;
@@ -115,14 +138,37 @@ input {
   font-size: 14px;
 }
 
+input:focus,
+input:focus-visible,
+select:focus,
+select:focus-visible {
+  outline: 1px solid #546bb5;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
 label {
   margin-bottom: 6px;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 15px;
 }
 
+.checkbox-wrapper {
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.checkbox {
+  margin-bottom: 0;
+  height: 20px;
+  width: 20px;
+}
+
 form {
-  margin: 20px 0px;
+  margin: 20px 0px 0px 0px;
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -136,6 +182,10 @@ form {
   font-size: 17px;
 }
 
+button {
+  cursor: pointer;
+}
+
 button,
 input {
   border-radius: 4px;
@@ -146,8 +196,11 @@ input {
   display: block;
   text-align: right;
   margin-top: 10px;
-  color: #7f90c6;
+  margin-bottom: 10px;
+  color: #546bb5;
   font-size: 14px;
+  width: fit-content;
+  margin-left: auto;
 }
 
 .social-buttons {
@@ -161,6 +214,17 @@ input {
   text-decoration: none;
 }
 
+.name-fields {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.name-fields > input {
+  flex: 1;
+  margin-bottom: 0px;
+}
 .social-buttons button {
   width: 100%;
   display: flex;
@@ -174,6 +238,9 @@ input {
   border: 1px solid #e1e0e0;
 }
 
+.social-buttons button:hover {
+  color: #546bb5;
+}
 @media (max-width: 1325px) {
   .container {
     margin: 24px;
@@ -217,9 +284,11 @@ input {
   }
 
   .right > div {
-    margin: 84px auto;
+    max-width: 100%;
+    width: 100%;
+    margin: 28px 0px;
+    padding: 0px 20px;
   }
-
   h2 {
     font-size: 24px;
   }
@@ -231,11 +300,9 @@ input {
   .logo {
     height: 60px;
   }
-}
 
-@media (max-width: 465px) {
   .left .banner-content {
-    padding: 20px;
+    padding: 20px 24px;
     max-width: 100%;
   }
 }
