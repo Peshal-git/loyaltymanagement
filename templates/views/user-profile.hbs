@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile</title>
     <link rel="stylesheet" href="/css/user-profile.css" />
+    <link rel="stylesheet" href="/css/global.css" />
     <link rel="icon" href="/images/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,136 +14,127 @@
     />
   </head>
   <body>
-    <div class="container">
-
+    <div class="main-wrapper">
       <div class="bg-overlay"></div>
-      <!-- Top Navigation Bar -->
-      <nav class="sidebar">
-        <a href="/" class="dashboard-link">
-          <img src="/images/logo.png" alt="Vikasa" />
-        </a>
-        <div class="nav-links">
-          <a href="/profile" class="activities-link active">
-            <img src="/images/home.svg" height="16" />Home</a>
-          <a href="/activities" class="activities-link">
-            <img src="/images/activity.svg" height="16" />Activities</a>
-          <a href="/about-us" class="activities-link">
-            <img src="/images/info.svg" height="20" />About Us</a>
-          <a href="/logout" class="logout-link">
-            <img src="/images/logout.svg" height="16" />Logout</a>
-        </div>
-      </nav>
-
+    <div class="container">
+      {{> sidebar}}
       <!-- Main Container -->
       <div class="main-container">
         <!-- Left Division for Form -->
         <div class="left-division">
+          <div class="breadcrumbs">
+            <img src="/images/home-white.svg" height="15" />
+            <p>/</p>
+            <p>Profile</p>
+          </div>
+
+          <div class="content">
+
+                <div class="banner">
+            <div class="overlay">
+              <img src="/images/vikasa-name.png" />
+
+                  </div>
+                </div>
+
           {{!-- <form class="profile-container" action="/update-profileinfo?id={{user.id}}"> --}}
           <form class="profile-container">
-            <!-- Profile Form Fields -->
-            <div class="profile-field">
-              <label for="name">Name</label>
-              <div class="field-content">
-                <input
-                  class="editable"
-                  type="text"
-                  name="name"
-                  value="{{user.name}}"
-                  readonly
-                />
+            <div class="profile">
+              <!-- Profile Form Fields -->
+              <div class="profile-field">
+                <label for="name">Name</label>
+                <div class="field-content">
+                  <input
+                    class="editable"
+                    type="text"
+                    name="name"
+                    value="{{user.name}}"
+                    readonly
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="separator"></div>
-
-            <div class="profile-field">
-              <label for="member-id">Member ID</label>
-              <div class="field-content">
-                <input
-                  type="text"
-                  name="member-id"
-                  value="{{user.memberId}}"
-                  readonly
-                />
+              <div class="profile-field">
+                <label for="member-id">Member ID</label>
+                <div class="field-content">
+                  <input
+                    type="text"
+                    name="member-id"
+                    value="{{user.memberId}}"
+                    readonly
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="separator"></div>
+              <div class="profile-field">
+                <label for="email">Email</label>
+                <div class="field-content">
+                  <input
+                    type="email"
+                    class="editable"
+                    name="email"
+                    value="{{user.email}}"
+                    readonly
+                  />
 
-            <div class="profile-field">
-              <label for="email">Email</label>
-              <div class="field-content">
-                <input
-                  type="email"
-                  class="editable"
-                  name="email"
-                  value="{{user.email}}"
-                  readonly
-                />
-
+                </div>
               </div>
-            </div>
 
-            <div class="separator"></div>
-
-            <div class="profile-field">
-              <label for="mobile">Mobile</label>
-              <div class="field-content">
-                <input
-                  type="tel"
-                  class="editable"
-                  name="mobile"
-                  value="{{user.mobile}}"
-                  readonly
-                />
+              <div class="profile-field">
+                <label for="mobile">Mobile</label>
+                <div class="field-content">
+                  <input
+                    type="tel"
+                    class="editable"
+                    name="mobile"
+                    value="{{user.mobile}}"
+                    readonly
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="separator"></div>
-
-            <div class="profile-field">
-              <label for="language">Preferred Language</label>
-              <div class="field-content">
-                <input
-                  type="text"
-                  class="editable"
-                  name="language"
-                  value="{{user.language}}"
-                  readonly
-                />
-                {{! <button type="button" class="edit-button">✎</button> }}
+              <div class="profile-field">
+                <label for="language">Preferred Language</label>
+                <div class="field-content">
+                  <input
+                    type="text"
+                    class="editable"
+                    name="language"
+                    value="{{user.language}}"
+                    readonly
+                  />
+                  {{! <button type="button" class="edit-button">✎</button> }}
+                </div>
               </div>
-            </div>
 
-            <div class="separator"></div>
+              <div class="profile-field">
+                <label for="dob">Date of Birth</label>
+                <div class="field-content">
+                  <input
+                    type="text"
+                    class="editable"
+                    name="dob"
+                    value="{{makeDate user.dob}}"
+                    readonly
+                  />
 
-            <div class="profile-field">
-              <label for="dob">Date of Birth</label>
-              <div class="field-content">
-                <input
-                  type="text"
-                  class="editable"
-                  name="dob"
-                  value="{{makeDate user.dob}}"
-                  readonly
-                />
-
+                </div>
               </div>
-            </div>
 
-            <div class="separator"></div>
-
-            <div class="profile-field">
-              <label for="member-since">Anniversary Date</label>
-              <div class="field-content">
-                <input
-                  type="text"
-                  name="member-since"
-                  value="{{makeDate user.createdAt}}"
-                  readonly
-                />
+              <div class="profile-field">
+                <label for="member-since">Anniversary Date</label>
+                <div class="field-content">
+                  <input
+                    type="text"
+                    name="member-since"
+                    value="{{makeDate user.createdAt}}"
+                    readonly
+                  />
+                </div>
               </div>
+
             </div>
+            <img src="/images/balance.svg" alt="Logo" class="balance-card" />
 
             {{!-- <div class="lastbuttons">
           <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
@@ -151,12 +143,14 @@
 
             <!-- Add remaining profile fields here as per original code -->
           </form>
+          </div>
+
         </div>
 
         <!-- Right Division -->
-        <div class="right-division">
-          <!-- Top Division for Loyalty Card -->
-          {{!-- <div class="loyalty-card">
+        {{! <div class="right-division"> }}
+        <!-- Top Division for Loyalty Card -->
+        {{!-- <div class="loyalty-card">
         <div class="card-content">
           <h2>Loyalty Card</h2>
           <p class="points-label">Current Points</p>
@@ -167,11 +161,11 @@
         </div>
       </div> --}}
 
-          {{!-- <div class="credit-card {{lowercase user.tier}}"> --}}
+        {{!-- <div class="credit-card {{lowercase user.tier}}"> --}}
 
-          <img src="/images/balance.svg" alt="Logo" class="balance-card" />
+        {{! <img src="/images/balance.svg" alt="Logo" class="balance-card" /> }}
 
-          {{!-- <div class="card-logo">
+        {{!-- <div class="card-logo">
     {{#if (eq user.tier "Serenity")}}
         <img src="/images/vikasa-logo-lighter.png" alt="Logo" width="50">
     {{else}}
@@ -202,9 +196,10 @@
         <div class="circle"></div>
     </div> --}}
 
-          {{! </div> }}
-        </div>
+        {{! </div> }}
+        {{! </div> }}
       </div>
+    </div>
     </div>
 
   </body>

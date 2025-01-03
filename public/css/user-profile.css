@@ -8,8 +8,9 @@
 .container {
   position: relative;
   display: flex;
-  background: #f5f6f8;
   height: 100%;
+  max-width: 1440px;
+  margin: auto;
 }
 
 .bg-overlay {
@@ -36,12 +37,51 @@
 .main-container {
   display: flex;
   flex-direction: row;
-  margin-top: 20px;
-  padding: 20px;
   gap: 20px;
-  width: 80%;
   margin: 0 auto;
   z-index: 1;
+  flex: 1;
+  margin-top: 28px;
+  margin-right: 24px;
+  overflow: auto;
+  margin-bottom: 24px;
+}
+
+.main-wrapper {
+  position: relative;
+  background: #f5f6f8;
+}
+.banner {
+  background: url("/images/banner.jpg") center/cover no-repeat;
+  min-height: 180px;
+  height: 180px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  color: #dddddd;
+  font-size: 14px;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.overlay {
+  height: 100%;
+  background: #6573904a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 24px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+
+.overlay h3 {
+  font-weight: 500;
 }
 
 .top-nav {
@@ -106,16 +146,34 @@
 }
 
 .left-division {
-  width: 60%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  box-shadow: rgba(0, 0, 0, 0.05) 0rem 1.25rem 1.6875rem 0rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  flex: 1;
 }
 
 .profile-container {
-  background-color: #ffffff;
   padding: 20px;
+  display: flex;
+  flex: 1;
+  gap: 12px;
 }
 
 .profile-field {
   margin-bottom: 10px;
+  background: rgb(248, 249, 250);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.profile {
+  flex: 1;
 }
 
 .right-division {
@@ -363,8 +421,7 @@ h2 {
 }
 
 .balance-card {
-  width: 100%;
-  height: 250px;
+  height: 200px;
 }
 
 .trophy-icon {
@@ -377,7 +434,7 @@ h2 {
 
 label {
   color: #aaa;
-  font-size: 12px;
+  font-size: 13px;
   display: block;
   margin-bottom: 5px;
 }
@@ -403,8 +460,9 @@ input[type="date"] {
 }
 
 input[readonly] {
-  color: #333;
+  color: #4e546d;
   cursor: default;
+  font-weight: 500;
 }
 
 .edit-button {
@@ -457,4 +515,97 @@ input[readonly] {
 .lastbuttons .update-button:hover,
 .lastbuttons .delete-button:hover {
   transform: scale(1.05);
+}
+
+@media (max-width: 1245px) {
+  .balance-card {
+    height: 180px;
+  }
+}
+
+@media (max-width: 1065px) {
+  .balance-card {
+    height: 150px;
+  }
+
+  .sidebar {
+    min-width: 250px;
+  }
+}
+
+@media (max-width: 875px) {
+  .profile-container {
+    flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 768px) {
+  .bg-overlay {
+    background: #b1c7dd;
+    height: 100%;
+  }
+  .breadcrumbs {
+    color: #fff;
+  }
+  .container {
+    flex-direction: column;
+  }
+
+  .main-container {
+    width: 100%;
+    padding: 7px 10px 10px 10px;
+    margin: 0;
+  }
+  .sidebar {
+    align-items: center;
+    margin: 10px 10px 6px 10px;
+    padding: 10px;
+  }
+
+  .dashboard-link {
+    margin-right: 14px;
+    margin-left: 10px;
+  }
+
+  .dashboard-link img {
+    height: 40px;
+  }
+
+  .nav-links {
+    margin-top: 0;
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .breadcrumbs {
+    margin-bottom: 12px;
+  }
+  .nav-links a {
+    padding: 8px;
+    font-size: 14px;
+  }
+  .sidebar,
+  .nav-links {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 595px) {
+  .nav-links {
+    gap: 6px;
+  }
+  .nav-links a {
+    padding: 6px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 460px) {
+  .nav-links a img {
+    display: none;
+  }
+
+  .dashboard-link {
+    margin-left: 0px;
+  }
 }
