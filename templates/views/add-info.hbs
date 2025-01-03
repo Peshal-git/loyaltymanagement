@@ -6,23 +6,34 @@
     <title>Vikasa</title>
     <link rel="stylesheet" href="/css/add-info.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="stylesheet" href="/css/global.css" />
+    <link rel="icon" href="/images/favicon.ico" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+   <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 </head>
 <body>
 
-    <header class="header">
-        <div class="logo">
-           <a href="/"> <img src="/images/vikasa-logo.png" alt="Vikasa Logo"> </a>
-        </div>
-        <h1 class="welcome-text">Welcome to Vikasa</h1>
-    </header>
+  <div class="main-wrapper">
+      <div class="bg-overlay"></div>
+       <div class="container">
+           {{> sidebar hideItems=true}}
+             <div class="main-container">
+       <div class="left-container">
+         <div class="breadcrumbs">
+            <img src="/images/home-white.svg" height="15" />
+            <p>/</p>
+            <p>Add Info</p>
+          </div>
 
+   <div class="content">
+     {{> banner}}
     <div class="whole-form">
         <form class="registration-form" id="registrationForm" action="/update-dob-mobile?id={{userToUpdate.id}}" method="POST">
-            <div class="left-column">
                 <div class="form-group">
                     <label for="mobileInput">Enter your mobile number:</label>
                     <input type="tel" id="phone" name="mobile" placeholder="Please enter a valid number" required value="{{#if enteredFields.mobile}}{{enteredFields.mobile}}{{/if}}" />
@@ -33,26 +44,31 @@
                     <input type="text" name="referredBy" placeholder="Referrer's email or member ID (Optional)" value="{{#if enteredFields.referredBy}}{{enteredFields.referredBy}}{{/if}}" />
                 </div>
     
-                <div class="form-group checkboxes">
-                    <label><input type="checkbox" name="hasAcceptedPrivacyPolicy" value="true" required {{#if enteredFields.hasAcceptedPrivacyPolicy}}checked{{/if}}> I agree to the Privacy Policy</label>
-                    <label><input type="checkbox" name="hasGivenMarketingConsent" value="true" {{#if enteredFields.hasGivenMarketingConsent}}checked{{/if}}> I agree to receive marketing communications</label>
-                </div>
-            </div>
-    
-            <div class="right-column">
-                <div class="form-group">
+      <div class="form-group">
                     <label for="dateInput">Enter your date of birth:</label>
                     <input type="date" id="date-input" max="" name="dob" value="{{#if enteredFields.dob}}{{enteredFields.dob}}{{/if}}">
                 </div>
+                
+                <div class="form-group checkboxes">
+                    <label class="checkbox-wrapper"><input type="checkbox" class="checkbox" name="hasAcceptedPrivacyPolicy" value="true" required {{#if enteredFields.hasAcceptedPrivacyPolicy}}checked{{/if}}> I agree to the Privacy Policy</label>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="checkbox" name="hasGivenMarketingConsent" value="true" {{#if enteredFields.hasGivenMarketingConsent}}checked{{/if}}> I agree to receive marketing communications</label>
+                </div>
+    
+              
        
                 <button type="submit" class="register-button">Continue</button>
-            </div>
         </form>
 
         {{#if error}}
             <h3 style="color: #CD5C5C;">{{error}}</h3>
         {{/if}}
     </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
 
 </body>
 <script>
