@@ -110,6 +110,11 @@
   font-size: 15px;
 }
 
+.nav-links a:hover {
+  background: #65739021;
+  color: rgb(52, 71, 103);
+}
+
 .nav-links .active {
   background: #65739021;
   color: rgb(52, 71, 103);
