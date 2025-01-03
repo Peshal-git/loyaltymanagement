@@ -1,93 +1,149 @@
 * {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: "Inknut Antiqua", serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  background: #f5f6f8;
+  height: 100%;
+}
+
+.bg-overlay {
+  background-color: #667391;
+  height: 280px;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+.sidebar {
+  position: relative;
+  z-index: 1;
+  background: white;
+  min-width: 280px;
+  margin: 24px;
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0rem 1.25rem 1.6875rem 0rem;
 }
 
 .main-container {
-display: flex;
-flex-direction: row;
-margin-top: 20px;
-padding: 20px;
-gap: 20px;
-width: 80%;
-margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  padding: 20px;
+  gap: 20px;
+  width: 80%;
+  margin: 0 auto;
+  z-index: 1;
 }
 
 .top-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #667391;
-    padding: 10px 20px;
-    color: #fff;
-    font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #667391;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 1.2rem;
 }
 
 .top-nav a {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
 }
 
-.top-nav .dashboard-link img {
-    background-color: transparent;
+.dashboard-link {
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dashboard-link img {
+  height: 90px;
 }
 
 .nav-links {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  margin-top: 24px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
 }
 
+.nav-links a {
+  color: #67748e;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.nav-links .active {
+  background: #65739021;
+  color: rgb(52, 71, 103);
+}
 .top-nav .logout-link:hover,
 .top-nav .activities-link:hover {
-    background-color: #fff;
-    color: #161a2d;
+  background-color: #fff;
+  color: #161a2d;
 }
 
 .left-division {
-width: 60%;
+  width: 60%;
 }
 
 .profile-container {
-background-color: #ffffff;
-padding: 20px;
+  background-color: #ffffff;
+  padding: 20px;
 }
 
 .profile-field {
-margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .right-division {
-display: flex;
-flex-direction: column;
-width: 40%;
-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  gap: 20px;
 }
 
 .loyalty-card {
-width: 100%;
-height: 250px;
-padding: 20px;
-border-radius: 10px;
-background: linear-gradient(to top, #8E6B38 0%, #281E10 100%);
-color: white;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-position: relative;
+  width: 100%;
+  height: 250px;
+  padding: 20px;
+  border-radius: 10px;
+  background: linear-gradient(to top, #8e6b38 0%, #281e10 100%);
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
 .card-content {
-position: relative;
+  position: relative;
 }
 
-.points-label, .points-value {
-color: #FFA500;
-font-size: 20px;
+.points-label,
+.points-value {
+  color: #ffa500;
+  font-size: 20px;
 }
 
 /* .credit-card {
@@ -105,29 +161,29 @@ background: linear-gradient(135deg, #D5DCE4 0%, #667391 25%, #D5DCE4 55%, #66739
 } */
 
 .top-nav .logout-link .material-symbols-outlined {
-font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 h2 {
-font-size: 20px;
-margin: 0;
+  font-size: 20px;
+  margin: 0;
 }
 
 .divider {
-width: 50%;
-height: 1px;
-background-color: #ccc;
-margin: 10px 0;
-margin-top: 20px;
+  width: 50%;
+  height: 1px;
+  background-color: #ccc;
+  margin: 10px 0;
+  margin-top: 20px;
 }
 
 .redeem-text {
-font-size: 16px;
-color: #ddd;
+  font-size: 16px;
+  color: #ddd;
 }
 
 .card-content .redeem-text {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 /* .card-logo img{
@@ -180,219 +236,225 @@ color: #ddd;
 } */
 
 .credit-card {
-    position: relative;
-    width: 100%;
-    height: 250px;
-    border-radius: 10px;
-    padding: 20px;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(135deg, #D5DCE4 0%, #667391 25%, #D5DCE4 55%, #667391 95%);
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border-radius: 10px;
+  padding: 20px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(
+    135deg,
+    #d5dce4 0%,
+    #667391 25%,
+    #d5dce4 55%,
+    #667391 95%
+  );
 }
 
 .card-logo img {
-    width: 100px;
+  width: 100px;
 }
 
 .card-type {
-    position: absolute;
-    top: 85px;
-    right: 87px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fdf9f8;
-    text-transform: uppercase;
+  position: absolute;
+  top: 85px;
+  right: 87px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fdf9f8;
+  text-transform: uppercase;
 }
 
 .card-details {
-    color: #494e64;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  color: #494e64;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .card-name {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
-    padding: 5px;
-    font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  padding: 5px;
+  font-weight: 600;
 }
 
 .card-info {
-    display: flex;
-    justify-content: flex-start;
-    gap: 15px;
-    font-size: 8px;
-    color: #333;
-    margin-top: 5px;
-    padding-left: 5px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  font-size: 8px;
+  color: #333;
+  margin-top: 5px;
+  padding-left: 5px;
 }
 
 .info-item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: Arial, sans-serif;
 }
 
 .info-value {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 4px 8px;
-    font-size: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 8px;
+  font-size: 10px;
 }
 
 .label {
-    font-size: 6px;
-    color: #494e64;
-    margin-top: 2px;
-    padding: 0px 3px;
+  font-size: 6px;
+  color: #494e64;
+  margin-top: 2px;
+  padding: 0px 3px;
 }
 
 .card-circles {
-    position: absolute;
-    top: 90px;
-    right: 20px;
-    display: flex;
-    align-items: center;
+  position: absolute;
+  top: 90px;
+  right: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #fff;
-    opacity: 0.5;
-    position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  opacity: 0.5;
+  position: relative;
 }
 
 .circle:last-child {
-    left: -10px;
-    opacity: 0.8;
+  left: -10px;
+  opacity: 0.8;
 }
 
 .credit-card.balance {
-    background: linear-gradient(135deg, #e3bfa3 0%,#7d4e3c 100%);
+  background: linear-gradient(135deg, #e3bfa3 0%, #7d4e3c 100%);
 }
 
 .credit-card.vitality {
-    background: linear-gradient(135deg, #edecf1 0%, #9699a0 100%);
+  background: linear-gradient(135deg, #edecf1 0%, #9699a0 100%);
 }
 
 .credit-card.harmony {
-    background: linear-gradient(135deg, #bc8d57 0%, #f7f5c9 100%);
+  background: linear-gradient(135deg, #bc8d57 0%, #f7f5c9 100%);
 }
 
 .credit-card.serenity {
-    background: linear-gradient(135deg, #161e21 0%, #20282b 50%, #748b91 100%);
+  background: linear-gradient(135deg, #161e21 0%, #20282b 50%, #748b91 100%);
 }
 
-.credit-card.serenity .label{
-    color: #556282;
+.credit-card.serenity .label {
+  color: #556282;
 }
 
-.credit-card.serenity .card-details{
-    color: #556282;
+.credit-card.serenity .card-details {
+  color: #556282;
 }
 
-.credit-card.serenity .card-info .info-item .info-value{
-    color: #d5dce4;
+.credit-card.serenity .card-info .info-item .info-value {
+  color: #d5dce4;
 }
 
-.balance-card{
-    width: 100%;
-    height: 250px; 
+.balance-card {
+  width: 100%;
+  height: 250px;
 }
 
 .trophy-icon {
-position: absolute;
-top: 15px;
-right: 15px;
-width: 130px;
-height: auto;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 130px;
+  height: auto;
 }
 
 label {
-color: #aaa;
-font-size: 12px;
-display: block;
-margin-bottom: 5px;
+  color: #aaa;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .field-content {
-display: flex;
-align-items: center;
-justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="date"] {
-border: none;
-background: none;
-color: #333;
-font-size: 14px;
-font-weight: 600;
-width: 100%;
-outline: none;
-cursor: default;
+  border: none;
+  background: none;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  width: 100%;
+  outline: none;
+  cursor: default;
 }
 
 input[readonly] {
-color: #333;
-cursor: default;
+  color: #333;
+  cursor: default;
 }
 
 .edit-button {
-background: none;
-border: none;
-color: #333;
-font-size: 14px;
-cursor: pointer;
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .separator {
-border-bottom: 1px solid #ddd;
-margin-top: 10px;
-margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .lastbuttons {
-display: flex; 
-justify-content: center; 
-gap: 20px;
-float: right;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  float: right;
 }
 
-.lastbuttons .update-button, 
+.lastbuttons .update-button,
 .lastbuttons .delete-button {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-gap: 50px; 
-padding: 10px 15px; 
-font-size: 18px;
-width: 200px;
-border: none;
-cursor: pointer;
-text-decoration: none;
-border-radius: 5px; 
-transition: background-color 0.3s, transform 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  padding: 10px 15px;
+  font-size: 18px;
+  width: 200px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .lastbuttons .delete-button {
-background-color: #d75f5f;
-color: white;
+  background-color: #d75f5f;
+  color: white;
 }
 
 .lastbuttons .update-button {
-background-color: #6c7c9f; 
-color: white;
+  background-color: #6c7c9f;
+  color: white;
 }
 
 .lastbuttons .update-button:hover,
 .lastbuttons .delete-button:hover {
-transform: scale(1.05);
+  transform: scale(1.05);
 }

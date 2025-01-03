@@ -1,114 +1,162 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile</title>
-  <link rel="stylesheet" href="/css/user-profile.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-</head>
-<body>
-  <!-- Top Navigation Bar -->
-  <nav class="top-nav">
-    <a href="/" class="dashboard-link">
-      <img src="/images/vikasa-name.png" alt="Vikasa">
-    </a>
-    <div class="nav-links">
-        <a href="/profile" class="activities-link">Home</a>
-        <a href="/activities" class="activities-link">Activities</a>
-        <a href="/about-us" class="activities-link">About Us</a>
-        <a href="/logout" class="logout-link">Logout</a>
-    </div>
-  </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="/css/user-profile.css" />
+    <link rel="icon" href="/images/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
 
-  <!-- Main Container -->
-  <div class="main-container">
-    <!-- Left Division for Form -->
-    <div class="left-division">
-      {{!-- <form class="profile-container" action="/update-profileinfo?id={{user.id}}"> --}}
-      <form class="profile-container">
-        <!-- Profile Form Fields -->
-        <div class="profile-field">
-          <label for="name">Name</label>
-          <div class="field-content">
-            <input class="editable" type="text" name="name" value="{{user.name}}" readonly>
-          </div>
+      <div class="bg-overlay"></div>
+      <!-- Top Navigation Bar -->
+      <nav class="sidebar">
+        <a href="/" class="dashboard-link">
+          <img src="/images/logo.png" alt="Vikasa" />
+        </a>
+        <div class="nav-links">
+          <a href="/profile" class="activities-link active">
+            <img src="/images/home.svg" height="16" />Home</a>
+          <a href="/activities" class="activities-link">
+            <img src="/images/activity.svg" height="16" />Activities</a>
+          <a href="/about-us" class="activities-link">
+            <img src="/images/info.svg" height="20" />About Us</a>
+          <a href="/logout" class="logout-link">
+            <img src="/images/logout.svg" height="16" />Logout</a>
         </div>
+      </nav>
 
-        <div class="separator"></div>
-        
-        <div class="profile-field">
-            <label for="member-id">Member ID</label>
-            <div class="field-content">
-                <input type="text" name="member-id" value="{{user.memberId}}" readonly>
+      <!-- Main Container -->
+      <div class="main-container">
+        <!-- Left Division for Form -->
+        <div class="left-division">
+          {{!-- <form class="profile-container" action="/update-profileinfo?id={{user.id}}"> --}}
+          <form class="profile-container">
+            <!-- Profile Form Fields -->
+            <div class="profile-field">
+              <label for="name">Name</label>
+              <div class="field-content">
+                <input
+                  class="editable"
+                  type="text"
+                  name="name"
+                  value="{{user.name}}"
+                  readonly
+                />
+              </div>
             </div>
-        </div>
-        
-        <div class="separator"></div>
-        
-        <div class="profile-field">
-            <label for="email">Email</label>
-            <div class="field-content">
-                <input type="email" class="editable" name="email" value="{{user.email}}" readonly>
-                
-            </div>
-        </div>
-        
-        <div class="separator"></div>
-        
-        <div class="profile-field">
-            <label for="mobile">Mobile</label>
-            <div class="field-content">
-                <input type="tel" class="editable" name="mobile" value="{{user.mobile}}" readonly>
-            </div>
-        </div>
-        
-        <div class="separator"></div>
-        
-        <div class="profile-field">
-            <label for="language">Preferred Language</label>
-            <div class="field-content">
-                <input type="text" class="editable" name="language" value="{{user.language}}" readonly>
-                {{!-- <button type="button" class="edit-button">✎</button> --}}
-            </div>
-        </div>
-        
-        <div class="separator"></div>
-        
-        <div class="profile-field">
-            <label for="dob">Date of Birth</label>
-            <div class="field-content">
-                <input type="text" class="editable" name="dob" value="{{makeDate user.dob}}" readonly>
-                 
-            </div>
-        </div>
-        
-        <div class="separator"></div>
-        
-        <div class="profile-field">
-            <label for="member-since">Anniversary Date</label>
-            <div class="field-content">
-                <input type="text" name="member-since" value="{{makeDate user.createdAt}}" readonly>
-            </div>
-        </div>
 
-        {{!-- <div class="lastbuttons">
+            <div class="separator"></div>
+
+            <div class="profile-field">
+              <label for="member-id">Member ID</label>
+              <div class="field-content">
+                <input
+                  type="text"
+                  name="member-id"
+                  value="{{user.memberId}}"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="profile-field">
+              <label for="email">Email</label>
+              <div class="field-content">
+                <input
+                  type="email"
+                  class="editable"
+                  name="email"
+                  value="{{user.email}}"
+                  readonly
+                />
+
+              </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="profile-field">
+              <label for="mobile">Mobile</label>
+              <div class="field-content">
+                <input
+                  type="tel"
+                  class="editable"
+                  name="mobile"
+                  value="{{user.mobile}}"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="profile-field">
+              <label for="language">Preferred Language</label>
+              <div class="field-content">
+                <input
+                  type="text"
+                  class="editable"
+                  name="language"
+                  value="{{user.language}}"
+                  readonly
+                />
+                {{! <button type="button" class="edit-button">✎</button> }}
+              </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="profile-field">
+              <label for="dob">Date of Birth</label>
+              <div class="field-content">
+                <input
+                  type="text"
+                  class="editable"
+                  name="dob"
+                  value="{{makeDate user.dob}}"
+                  readonly
+                />
+
+              </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="profile-field">
+              <label for="member-since">Anniversary Date</label>
+              <div class="field-content">
+                <input
+                  type="text"
+                  name="member-since"
+                  value="{{makeDate user.createdAt}}"
+                  readonly
+                />
+              </div>
+            </div>
+
+            {{!-- <div class="lastbuttons">
           <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
           <a href="/delete-user/?id={{user.id}}" class="delete-button">&#x1F5D1; Delete</a>
         </div> --}}
 
+            <!-- Add remaining profile fields here as per original code -->
+          </form>
+        </div>
 
-        <!-- Add remaining profile fields here as per original code -->
-      </form>
-    </div>
-
-    <!-- Right Division -->
-    <div class="right-division">
-      <!-- Top Division for Loyalty Card -->
-      {{!-- <div class="loyalty-card">
+        <!-- Right Division -->
+        <div class="right-division">
+          <!-- Top Division for Loyalty Card -->
+          {{!-- <div class="loyalty-card">
         <div class="card-content">
           <h2>Loyalty Card</h2>
           <p class="points-label">Current Points</p>
@@ -118,13 +166,12 @@
           <img src="/images/trophy.png" alt="Trophy Icon" class="trophy-icon">
         </div>
       </div> --}}
-      
 
-{{!-- <div class="credit-card {{lowercase user.tier}}"> --}}
+          {{!-- <div class="credit-card {{lowercase user.tier}}"> --}}
 
-    <img src="/images/balance.svg" alt="Logo" class="balance-card">
+          <img src="/images/balance.svg" alt="Logo" class="balance-card" />
 
-    {{!-- <div class="card-logo">
+          {{!-- <div class="card-logo">
     {{#if (eq user.tier "Serenity")}}
         <img src="/images/vikasa-logo-lighter.png" alt="Logo" width="50">
     {{else}}
@@ -155,33 +202,23 @@
         <div class="circle"></div>
     </div> --}}
 
-    {{!-- </div> --}}
-  </div>
-</div>
-</body>
-<script>
-  document.querySelectorAll('.profile-field').forEach(group => {
-    const inputField = group.querySelector('.editable');
-    const editIcon = group.querySelector('.edit-button');
+          {{! </div> }}
+        </div>
+      </div>
+    </div>
 
-    if (inputField && editIcon) {
-        editIcon.addEventListener('click', function() {
-            inputField.removeAttribute('readonly'); 
-            inputField.focus();
+  </body>
+  <script>
+    document.querySelectorAll('.profile-field').forEach(group => { const
+    inputField = group.querySelector('.editable'); const editIcon =
+    group.querySelector('.edit-button'); if (inputField && editIcon) {
+    editIcon.addEventListener('click', function() {
+    inputField.removeAttribute('readonly'); inputField.focus(); const end =
+    inputField.value.length; inputField.setSelectionRange(end, end); });
+    inputField.addEventListener('focus', function() { editIcon.style.visibility
+    = 'hidden'; // Hide the icon when input is focused });
+    inputField.addEventListener('blur', function() { editIcon.style.visibility =
+    'visible'; // Show the icon when input loses focus }); } });
 
-            const end = inputField.value.length;
-            inputField.setSelectionRange(end, end);
-        });
-
-        inputField.addEventListener('focus', function() {
-            editIcon.style.visibility = 'hidden'; // Hide the icon when input is focused
-        });
-
-        inputField.addEventListener('blur', function() {
-            editIcon.style.visibility = 'visible'; // Show the icon when input loses focus
-        });
-    }
-  });
-
-</script>
+  </script>
 </html>
