@@ -12,7 +12,7 @@
 }
 
 .banner {
-  background: url("/images/banner.jpg") center/cover no-repeat;
+  background: url("/images/banner.jpg") bottom/cover no-repeat;
   min-height: 180px;
   height: 180px;
   border-top-left-radius: 10px;

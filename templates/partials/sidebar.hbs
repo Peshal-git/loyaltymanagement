@@ -5,11 +5,11 @@
   <div class="nav-links">
     {{#unless hideItems}}
 
-      <a href="/profile" class="activities-link active">
+      <a href="/profile" class="activities-link {{#if (eq active "profile")}}active{{/if}}">
         <img src="/images/home.svg" height="16" />Profile</a>
-      <a href="/activities" class="activities-link">
+      <a href="/activities" class="activities-link {{#if (eq active "activities")}}active{{/if}}">
         <img src="/images/activity.svg" height="16" />Activities</a>
-      <a href="/about-us" class="activities-link">
+      <a href="/about-us" class="activities-link {{#if (eq active "about-us")}}active{{/if}}">
         <img src="/images/info.svg" height="20" />About Us</a>
     {{/unless}}
     <a href="/logout" class="logout-link">

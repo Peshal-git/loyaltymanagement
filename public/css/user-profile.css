@@ -1,3 +1,8 @@
+body,
+html {
+  height: 100%;
+}
+
 .top-nav {
   display: flex;
   justify-content: space-between;
@@ -8,6 +13,16 @@
   font-size: 1.2rem;
 }
 
+.about {
+  padding: 24px;
+}
+
+.about p {
+  margin-bottom: 14px;
+  color: #494e65;
+  text-align: justify;
+  font-size: 15px;
+}
 .top-nav a {
   color: #fff;
   text-decoration: none;

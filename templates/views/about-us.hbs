@@ -6,24 +6,64 @@
   <title>About Us</title>
   <link rel="stylesheet" href="/css/user-profile.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="stylesheet" href="/css/global.css" /
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+   <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 </head>
 <body>
-  <!-- Top Navigation Bar -->
-  <nav class="top-nav">
-    <a href="/" class="dashboard-link">
-      <img src="/images/vikasa-name.png" alt="Vikasa">
-    </a>
-    <div class="nav-links">
-        <a href="/profile" class="activities-link">Home</a>
-        <a href="/activities" class="activities-link">Activities</a>
-        <a href="/about-us" class="activities-link">About Us</a>
-        <a href="/logout" class="logout-link">Logout</a>
-    </div>
-  </nav>
-  <h1>About Vikasa</h1>
-  <p>We are ....</p>
+   <div class="main-wrapper">
+    <div class="bg-overlay"></div>
+    <div class="container">
+       {{> sidebar hideItems=false active="about-us" }}
+        <div class="main-container">
+           <div class="left-container">
+             <div class="breadcrumbs">
+            <img src="/images/home-white.svg" height="15" />
+
+            <p>/</p>
+            <p>About Us</p>
+          </div>
+          <div class="content about-us-banner">
+
+               {{> banner}}
+
+               <div class="about"> 
+<p>Vikasa is a global wellness brand with a goal to inspire transformation and personal growth.
+  </p>
+
+<p>Our flagship retreat center located on the picturesque island of Koh Samui, Thailand offers 50 boutique private rooms, 4 yoga salas, the Vikasa Life Cafe, Vita Spa, infinity pool and private beach all immersed within lush tropical gardens. 
+</p>
+<p>
+The year-round schedule offers a diverse range of specialised yoga teacher trainings, unique yoga retreats, personalised wellness programs as well as daily classes, workshops and special events. 
+</p>
+<p>
+Our diverse range of offerings have been designed to meet people at every level on their wellness journey. Regardless of background or experience, our strength lies in our ability to cater to all needs and goals. 
+</p>
+<p>
+By joining our loyalty program, you will receive perks and benefits to uplevel and enhance your own state of wellbeing. Enjoy discounts on classes, spa and holistic therapies, our vibrant Life Cafe menu and more. The more you engage with Vikasa, the more bonuses you unlock and receive. 
+</p>
+<p>
+Our loyalty program isn't just about the monetary perks. 
+
+It's about becoming part of a thriving global community. 
+</p>
+<p>
+As we continue to expand our locations around the world, your loyalty pass unlocks even more benefits at new venues, expanding your capacity to value self care wherever you travel, and connect with likeminded people wherever you go. 
+</p>
+<p>
+Become a member. Join the Vikasa (r)evolution. 
+</p>
+
+               </div>
+  
+ 
+  </div>
+  </div>
+  </div>
+  </div>
+
 </body>
 </html>
