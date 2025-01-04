@@ -335,13 +335,6 @@ const membershipInformation = async (req, res) => {
         const id = req.query.id
         const userToShow = await User.findOne({ _id: id })
 
-        // const totalPoints = userToShow.transaction.reduce((total, transaction) => {
-        //     return total + (transaction.pointsGained || 0)
-        //   }, 0)
-        
-        // userToShow.membershipInfo.pointsAvailable = totalPoints;
-        // await userToShow.save();
-
         return res.render('admin-page', { user: userToShow, activePage: 'membership' })
     } catch (error) {
         return res.status(400).json({
@@ -382,13 +375,13 @@ const transactionDetails = async (req, res) => {
             add = true
             const reservationIndex = userToShow.transaction.findIndex(obj => obj.tranCode === tranCode)
             const transactionObj = userToShow.transaction[reservationIndex]
-            return res.render('transaction-details', { user: userToShow, add, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
+            return res.render('transaction-details', { user: userToShow, add, tranCode, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
         }
 
         add = false
         const reservationIndex = userToShow.redeem.findIndex(obj => obj.tranCode === tranCode)
         const transactionObj = userToShow.redeem[reservationIndex]
-        return res.render('transaction-details', { user: userToShow, add, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
+        return res.render('transaction-details', { user: userToShow, add, tranCode, transactionObj, superadmin, reservationIndex, activePage: 'pointsWallet' })
 
 
 
@@ -960,16 +953,6 @@ const redeemPoints = async(req,res) => {
         }
 
         return res.redirect(`/profile-info?id=${id}#points-wallet`)
-
-        // return res.render('redemption', { 
-        //     user: userToShow, 
-        //     activePage: 'redemption', 
-        //     yogaRewards,
-        //     fnbRewards,
-        //     vitaSpaRewards,
-        //     retreatRewards,
-        //     message
-        // })
 
     } catch (error) {
         return res.status(500).json({ success: false, msg: error.message });

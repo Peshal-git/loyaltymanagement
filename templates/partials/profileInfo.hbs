@@ -1,110 +1,93 @@
-<div class="whole-form">
-    <form action="/update-profileinfo?id={{user.id}}" method="POST">
-    <div class="profile-form">
-      <div class="left-column">
-        <div class="form-group">
-          <label for="a">Member Id:</label>
-          <input type="text" name="memberId" value="{{user.memberId}}" readonly="readonly">
-        </div>
+<div class="user-information-container">
+  <form action="/update-profileinfo?id={{user.id}}" method="POST">
 
-        
-        <div class="form-group">
-          <label for="mobile">Mobile:</label>
-          <div class="input-wrapper">
+      <div class="user-information-header">
+        <h2 class="title">Profile</h2>
+        <div class="lastbuttons">
+          <input class="update-button" type="submit" value="Update">
+          {{#if superadmin}}
+          <a href="/delete-user/?id={{user.id}}" class="delete-button">Delete</a>
+          {{/if}}
+        </div>
+      </div>
+
+
+    <div class="user-information-grid">
+      <div class="user-information-field">
+        <label>Member ID:</label>
+        <span class="non-editable">{{user.memberId}}</span>
+      </div>
+
+      <div class="user-information-field">
+        <label>Name:</label>
+        <div class="input-wrapper">
+          <input class="editable" type="text" name="name" value="{{user.name}}" readonly>
+          <span class="edit-icon">&#9998;</span>
+        </div>
+      </div>
+
+      <div class="user-information-field">
+        <label>Mobile:</label>
+        <div class="input-wrapper">
           <input class="editable" type="text" name="mobile" value="{{user.mobile}}" readonly>
           <span class="edit-icon">&#9998;</span>
-          </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="language">Preferred Language:</label>
-          <div class="input-wrapper">
+      <div class="user-information-field">
+        <label>Email:</label>
+        <div class="input-wrapper">
+          <input class="editable" type="text" name="email" value="{{user.email}}" readonly>
+          <span class="edit-icon">&#9998;</span>
+        </div>
+      </div>
+
+      <div class="user-information-field">
+        <label>Date of Birth:</label>
+        <div class="input-wrapper">
+          <input class="editable" type="text" name="dob" value="{{mmddyyyy}}" readonly>
+          <span class="edit-icon">&#9998;</span>
+        </div>
+      </div>
+
+      <div class="user-information-field">
+        <label>Preferred Language:</label>
+        <div class="input-wrapper">
           <input class="editable" type="text" name="lang" value="{{user.language}}" readonly>
           <span class="edit-icon">&#9998;</span>
-          </div>
         </div>
-
-
       </div>
 
-       <div class="middle-column">
-
-            <div class="form-group">
-            <label for="name">Name:</label>
-            <div class="input-wrapper">
-                <input class="editable" type="text" name="name" value="{{user.name}}" readonly>
-                <span class="edit-icon">&#9998;</span>
-            </div>
-            </div>
-
-            <div class="form-group">
-            <label for="dob">Date of Birth:</label>
-            <div class="input-wrapper">
-            <input class="editable" type="text" name="dob" value="{{mmddyyyy}}" readonly>
-            <span class="edit-icon">&#9998;</span>
-            </div>
-            </div>
-
-            <div class="form-group">
-            <label for="updatedDate">Updated Date:</label>
-            <input type="text" name="updatedAt" value="{{makeDate user.updatedAt}}" readonly>
-            </div>
-
-       </div>
-
-
-
-      <div class="right-column">
-
-            <div class="form-group">
-            <label for="email">Email:</label>
-            <div class="input-wrapper">
-            <input class="editable" type="text" name="email" value="{{user.email}}" readonly>
-            <span class="edit-icon">&#9998;</span>
-            </div>
-            </div>
-
-            <div class="form-group">
-            <label for="createdDate">Tier:</label>
-            <input type="text" name="createdAt" value="{{user.tier}}" readonly>
-            </div>
-
-            <div class="form-group">
-            <label for="createdDate">Anniversary Date:</label>
-            <input type="text" name="createdAt" value="{{makeDate user.createdAt}}" readonly>
-            </div>
-
-
-        {{#if refUser.memberId}}
-        <div class="form-group">
-          <label for="referredBy">Referred By:</label>
-          <div class="input-wrapper">
-            <a href="/profile-info?id={{refUser.id}}"> <span class="likeEditable">{{refUser.memberId}}</span> </a>
-          </div>
-        </div>
-        {{/if}}
+      <div class="user-information-field">
+        <label>Updated Date:</label>
+        <span class="non-editable">{{makeDate user.updatedAt}}</span>
       </div>
-    </div>
-    
-        <div class="lastbuttons">
-        <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
 
-        {{#if superadmin}}
-        <a href="/delete-user/?id={{user.id}}" class="delete-button">&#x1F5D1; Delete</a>
-        {{/if}}
+      <div class="user-information-field">
+        <label>Anniversary Date:</label>
+        <span class="non-editable">{{makeDate user.createdAt}}</span>
+      </div>
 
-        </div>
+      <div class="user-information-field">
+        <label>Tier:</label>
+        <span class="non-editable">{{user.tier}}</span>
+      </div>
 
-    </form>
-  
-  </div>
+      {{#if refUser.memberId}}
+      <div class="user-information-field">
+        <label>Referred By:</label>
+        <span class="non-editable">
+          <a href="/profile-info?id={{refUser.id}}">{{refUser.memberId}}</a>
+        </span>
+      </div>
+      {{/if}}
+  </form>
 </div>
-</body>
 
 <script>
-  document.querySelectorAll('.form-group').forEach(group => {
-    const inputField = group.querySelector('.editable');
-    const editIcon = group.querySelector('.edit-icon');
+  document.querySelectorAll('.user-information-field').forEach(field => {
+    const inputField = field.querySelector('.editable');
+    const editIcon = field.querySelector('.edit-icon');
 
     if (inputField && editIcon) {
         editIcon.addEventListener('click', function() {
@@ -124,5 +107,5 @@
         });
     }
   });
-
 </script>
+

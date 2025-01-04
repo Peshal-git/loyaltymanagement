@@ -1,37 +1,30 @@
 {{> navbar}}
 
 <section id="profile-info">
-<h3 id="profile-info">Profile</h3>
 {{> profileInfo}}
 </section>
 
 <section id="membership-info">
-<h3>Membership Info</h3>
 {{> membershipInfo }}
 </section>
 
 <section id="points-wallet">
-<h3>Points Wallet</h3>
 {{> pointsWallet}}
 </section>
 
 <section id="discounts">
-<h3>Discounts</h3>
 {{> discounts}}
 </section>
 
 <section id="privacy-pref">
-<h3>Privacy and Preference</h3>
 {{> privacyPreference}}
 </section>
 
 <section id="add-transaction">
-<h3>Add transaction</h3>
 {{> addTransaction}}
 </section>
 
 <section id="redemption">
-<h3>Redemption</h3>
 {{> redeemPoints}}
 </section>
 
@@ -49,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(section => {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.offsetHeight;
-      if (window.scrollY >= sectionTop - 250) { // Offset for navbar height
+      if (window.scrollY >= sectionTop - 60) { // Offset for navbar height
         currentSection = section.getAttribute('id');
       }
     });

@@ -256,7 +256,7 @@ const updateTransaction = async (req, res) => {
         }
 
         const {
-            reservationIndex,
+            tranCode,
             memberId,
             spendingType,
             amount,
@@ -272,10 +272,13 @@ const updateTransaction = async (req, res) => {
             })
         }
 
-        
+        const reservationIndex = existingProfile.transaction.findIndex(obj => obj.tranCode === tranCode);
+
         if (reservationIndex >= 0 && reservationIndex < existingProfile.transaction.length) {
             const originalPointsGained = existingProfile.transaction[reservationIndex].pointsGained || 0
             existingProfile.membershipInfo.pointsForRedemptions -= originalPointsGained;
+            existingProfile.membershipInfo.pointsAvailable -= originalPointsGained
+
             await existingProfile.save()
 
             await User.findOneAndUpdate(
@@ -292,6 +295,7 @@ const updateTransaction = async (req, res) => {
            await pointsHistoryCalc.editPointsRecord(existingProfile.transaction[reservationIndex].tranCode, pointsGained)
 
             existingProfile.membershipInfo.pointsForRedemptions += pointsGained
+            existingProfile.membershipInfo.pointsAvailable -= pointsGained
             await existingProfile.save()
         }
         
