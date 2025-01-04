@@ -29,6 +29,10 @@
   margin-left: auto;
 }
 
+.csv-btn:hover {
+  opacity: 0.9;
+}
+
 .title-container {
   display: flex;
   justify-content: space-between;
@@ -79,6 +83,9 @@ td .title {
   padding: 7px 14px;
   color: #494e65;
   text-decoration: none;
+}
+.page-link-btn:hover {
+  background: #494e651a;
 }
 
 .page-link {

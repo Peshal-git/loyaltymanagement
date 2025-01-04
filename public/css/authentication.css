@@ -192,6 +192,15 @@ button {
   cursor: pointer;
 }
 
+.info-message {
+  color: #667391;
+  border: 1px solid #eee;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
 button,
 input {
   border-radius: 4px;

@@ -29,6 +29,13 @@
         <div class="right">
           <div>
             <img class="logo" src="/images/logo.png" alt="Visaka Logo" />
+            {{#if error}}
+              <h4 class="info-message" style="color: #CD5C5C;">{{error}}</h4>
+            {{/if}}
+            {{#if message}}
+              <h4 class="info-message" style="color: #667391;">{{message}}. You
+                may login.</h4>
+            {{/if}}
             <h2>Sign in</h2>
             <h4>Don't have an account? <a href="/register">Sign up</a></h4>
 
@@ -73,12 +80,7 @@
             </div>
 
           </div>
-          {{#if error}}
-            <h4 style="color: #CD5C5C;">{{error}}</h4>
-          {{/if}}
-          {{#if message}}
-            <h4 style="color: #667391;">{{message}}. You may login.</h4>
-          {{/if}}
+
           {{! <div class="signup-link">
           <p>Not a member?</p>
           <div class="signup-now">
