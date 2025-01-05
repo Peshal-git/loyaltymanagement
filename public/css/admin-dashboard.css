@@ -27,10 +27,13 @@ body {
   align-items: center;
   justify-content: right;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .header a {
   text-decoration: none;
+  margin: 0px;
 }
 
 .search-container {
@@ -388,4 +391,20 @@ dialog select:focus {
 .menu-text {
   display: inline-block;
   white-space: nowrap; /* Ensure the text does not wrap */
+}
+
+.table-container {
+  overflow: auto;
+}
+@media (max-width: 625px) {
+  .header > * {
+    width: calc(50% - 5px);
+  }
+
+  .search-container {
+    max-width: unset;
+  }
+  .header > form > label {
+    width: 100%;
+  }
 }
