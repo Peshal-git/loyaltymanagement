@@ -57,6 +57,11 @@ select {
   border: 1px solid #e1e0e0;
   box-shadow: none;
   font-size: 14px;
+  border-radius: 4px;
+}
+
+select {
+  width: 100%;
 }
 
 input:focus,
@@ -74,6 +79,12 @@ label {
   font-size: 15px;
 }
 
+button {
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.9;
+}
 button,
 input {
   border-radius: 4px;

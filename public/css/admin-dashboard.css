@@ -61,8 +61,17 @@ body {
 
 .btn-outlined {
   background: #fff;
+  cursor: pointer;
   border: 1px solid #f85b26;
   color: #f85b26;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn-outlined:hover {
+  background-color: #f85b260a;
 }
 
 .search-bar {
@@ -212,8 +221,8 @@ a:hover .minus-icon {
 dialog[data-modal] {
   border: none;
   border-radius: 8px;
-  padding: 2rem;
-  width: 300px;
+  padding: 20px;
+  width: 350px;
   max-width: 90%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: white;
@@ -255,8 +264,19 @@ dialog[data-modal]::backdrop {
 
 .form-group label {
   display: block;
-  font-weight: bold;
   margin-bottom: 5px;
+  font-size: 14px;
+  text-align: left;
+  color: #494e65;
+}
+
+.form-group select {
+  padding: 7px 10px;
+  font-size: 14px;
+}
+
+.form-group input {
+  font-size: 14px;
 }
 
 dialog input[type="text"],
