@@ -202,17 +202,4 @@
     </div>
 
   </body>
-  <script>
-    document.querySelectorAll('.profile-field').forEach(group => { const
-    inputField = group.querySelector('.editable'); const editIcon =
-    group.querySelector('.edit-button'); if (inputField && editIcon) {
-    editIcon.addEventListener('click', function() {
-    inputField.removeAttribute('readonly'); inputField.focus(); const end =
-    inputField.value.length; inputField.setSelectionRange(end, end); });
-    inputField.addEventListener('focus', function() { editIcon.style.visibility
-    = 'hidden'; // Hide the icon when input is focused });
-    inputField.addEventListener('blur', function() { editIcon.style.visibility =
-    'visible'; // Show the icon when input loses focus }); } });
-
-  </script>
 </html>
