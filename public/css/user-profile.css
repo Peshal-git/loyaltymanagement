@@ -318,6 +318,11 @@ h2 {
 
 .balance-card {
   height: 200px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.balance-card.flipped {
+  transform: rotateY(180deg); /* Flips the image */
 }
 
 .trophy-icon {
