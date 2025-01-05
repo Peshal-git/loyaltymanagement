@@ -206,10 +206,11 @@ h2 {
 
 .cardholder-name {
   position: absolute;
-  left: 16px;
+  left: 12px;
   bottom: 18px;
   text-transform: uppercase;
   color: white;
+  font-size: 12px;
   letter-spacing: 1px;
 }
 .card-type {
