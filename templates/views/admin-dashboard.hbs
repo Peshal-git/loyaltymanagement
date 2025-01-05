@@ -6,20 +6,32 @@
   <title>Members List</title>
   <link rel="stylesheet" href="/css/admin-dashboard.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" href="/images/favicon.ico" />
+     <link rel="stylesheet" href="/css/global.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 </head>
 <body>
-    <nav class="top-nav">
-    <a href="/" class="dashboard-link">
-      <img src="/images/vikasa-name.png" alt="Vikasa">
-    </a>
-    <div class="nav-links">
-        <a href="/logout" class="logout-link"> Logout </a>
-    </div>
-  </nav>
+     <div class="main-wrapper">
+         
+        <div class="bg-overlay"></div>
+         <div class="container">
+    {{> sidebar hideItems=true active="home" }}
+ <div class="main-container">
+    <div class="left-container">
+             <div class="breadcrumbs">
+            <img src="/images/home-white.svg" height="15" />
 
+            <p>/</p>
+            <p>Home</p>
+          </div>
+           <div class="content about-us-banner">
+
+               {{> banner}}
+               <div class="content-wrapper">
 {{#if superadmin}}
 <div class="menu">
   <div class="menu-bar">
@@ -43,8 +55,7 @@
 {{/if}}
 
 
-<div class="main-container">
-<div class="container">
+<div class="main-content">
   <div class="header">
         <div class="search-container">
             <form action="/dashboard" method="GET">
@@ -53,23 +64,26 @@
                 <input type="image" src="/images/search-icon.png" alt="Search Icon" class="search-icon">
             </form>
         </div>
-    <a href="/get-csv" class="btn csv-btn">
-    <img src="/images/download-icon.png" alt="CSV Icon"> Export CSV
+         <a href="/add-member" class="btn add-btn btn-filled">
+    <img src="/images/add.svg" height="20" alt="Add Icon"> Add Member
     </a>
 
-    <a href="/add-member" class="btn add-btn">
-    <img src="/images/add-icon.png" alt="Add Icon"> Add Member
+    <a href="/get-csv" class="btn csv-btn btn-outlined">
+    <img src="/images/download.svg" alt="CSV Icon"> Export CSV
     </a>
+
+   
 
     <form action="/import-admins" method="POST" enctype="multipart/form-data">
-      <label for="csvFile" class="btn csv-btn">
-         <img src="/images/download-icon.png" alt="CSV Icon"> Import Users
+      <label for="csvFile" class="btn csv-btn btn-outlined">
+         <img src="/images/import.svg" alt="CSV Icon"> Import Users
       </label>
       <input type="file" id="csvFile" name="csvFile" accept=".csv" style="display: none;" />
     </form>
 
 
   </div>
+  <div class="table-container">
 
   <table class="member-table">
     <thead>
@@ -115,6 +129,7 @@
     </tbody>
   </table>
 
+</div>
     {{#if error}}
     <h4 style="color: #CD5C5C;">{{error}}</h4>
     {{/if}}
@@ -122,10 +137,9 @@
         <h4 style="color: #667391;">{{message}}</h4>
     {{/if}}
 </div>
-</div>
 
 <div class="pagination">
-    <a href="?page={{prevPage}}" class="page-link" aria-label="Previous">&lsaquo; Prev</a>
+    <a href="?page={{prevPage}}" class="page-link-btn" aria-label="Previous">&lsaquo; Prev</a>
     
     {{#each pages}}
     <a href="?page={{this}}" class="page-link {{#if (eq this ../currentPage)}}active{{/if}}">
@@ -133,10 +147,16 @@
     </a>
     {{/each}}
     
-    <a href="?page={{nextPage}}" class="page-link" aria-label="Next">Next &rsaquo;</a>
-    <a href="?page={{totalPages}}" class="page-link">Last &raquo;</a>
+    <a href="?page={{nextPage}}" class="page-link-btn" aria-label="Next">Next &rsaquo;</a>
+    <a href="?page={{totalPages}}" class="page-link-btn">Last &raquo;</a>
+</div>
 </div>
 
+</div>
+</div>
+</div>
+</div>
+</div>
 
 </body>
 <script>
