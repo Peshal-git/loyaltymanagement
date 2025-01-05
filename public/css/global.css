@@ -109,6 +109,36 @@ input {
   height: 40px;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.page-link-btn {
+  border: 1px solid #494e65;
+  border-radius: 5px;
+  padding: 7px 14px;
+  color: #494e65;
+  font-size: 14px;
+  text-decoration: none;
+}
+.page-link-btn:hover {
+  background: #494e651a;
+}
+
+.page-link {
+  padding: 7px 8px;
+  color: #494e65;
+  text-decoration: none;
+}
+
+.active {
+  color: #f85b26;
+}
+
 .nav-links a {
   color: #67748e;
   text-decoration: none;
