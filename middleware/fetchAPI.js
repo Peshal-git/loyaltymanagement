@@ -172,7 +172,7 @@ const updateMembershipInfo = async (req, res, next) => {
 
 const updateTransactionInfo = async (req, res, next) => {
     try {
-        const { id, reservationIndex } = req.query
+        const { id, tranCode } = req.query
         const userToUpdate = await User.findById(id)
 
         const {
@@ -189,7 +189,7 @@ const updateTransactionInfo = async (req, res, next) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                reservationIndex,
+                tranCode,
                 memberId: userToUpdate.memberId,
                 spendingType,
                 amount,
@@ -203,7 +203,8 @@ const updateTransactionInfo = async (req, res, next) => {
             if (data?.errors) {
                 return res.render('transaction-details', { error: data.errors[0].msg })
             }
-            return res.render('points-wallet', { error: data.msg })
+            console.log(data.msg) 
+            return res.redirect(`/profile-info?id=${id}#points-wallet`)
         }
 
         next()

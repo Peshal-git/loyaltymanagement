@@ -1,5 +1,10 @@
-<div class="single-column">
-<div class="rewardstable-container">
+<div class="user-information-container">
+
+    <div class="user-information-header">
+        <h2 class="title">Redemption</h2>
+    </div>
+
+    <div class="rewardstable-container">
   <div class="table-card">
       <div class="category-name">
           <p>Yoga Category</p>
@@ -9,6 +14,7 @@
                   <tr>
                       <th>Rewards</th>
                       <th>Points Required</th>
+                      <th></th>
                   </tr>
               </thead>
               <tbody>
@@ -23,7 +29,7 @@
                       <td>
                         <input type="hidden" name="category" value="{{yogaCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
-                        <button type="submit" class="redeem-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
+                        <button type="submit" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
 
                       </form>
@@ -43,6 +49,7 @@
                   <tr>
                       <th>Rewards</th>
                       <th>Points Required</th>
+                      <th></th>
                   </tr>
               </thead>
               <tbody>
@@ -58,7 +65,7 @@
                       <td>
                         <input type="hidden" name="category" value="{{fnbCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
-                        <button type="submit" class="redeem-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
+                        <button type="submit" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
 
                       </form>
@@ -78,6 +85,7 @@
                   <tr>
                       <th>Rewards</th>
                       <th>Points Required</th>
+                      <th></th>
                   </tr>
               </thead>
               <tbody>
@@ -89,7 +97,7 @@
                       <td>
                         <input type="hidden" name="category" value="{{vitaSpaCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
-                        <button type="submit" class="redeem-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
+                        <button type="submit" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
 
                       </form>
@@ -108,6 +116,7 @@
                   <tr>
                       <th>Rewards</th>
                       <th>Points Required</th>
+                      <th></th>
                   </tr>
               </thead>
               <tbody>
@@ -119,7 +128,7 @@
                       <td>
                         <input type="hidden" name="category" value="{{retreatsCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
-                        <button type="submit" class="redeem-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
+                        <button type="submit" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
 
                       </form>
@@ -130,4 +139,6 @@
   </div>
 
 </div>
+
+
 </div>

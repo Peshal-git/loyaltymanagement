@@ -1,176 +1,178 @@
 *{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inknut Antiqua", serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "brandon-grotesque", sans-serif;
+    font-weight: 500;
 }
 
-html {
-  scroll-behavior: smooth;
+body{
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  margin-top: 4rem;
+  margin-left: 15rem;
+  background-color: #ffffffd5;
 }
 
-body {
-  min-height: 100vh;
-  background: #fff;
-  margin-top: 100px;
-  margin-left: 300px;
-}
-
-/* Top Navigation Bar */
-.top-nav {
-  position: fixed;
-  width: calc(100% - 300px); /* Adjusted to not overlap with the sidebar */
-  left: 300px; /* Start next to the sidebar */
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #2C2F3A;
-  padding: 10px 20px;
-  color: #fff;
-  font-size: 1.2rem;
-  z-index: 1;
-}
-
-.top-nav a {
-  color: #fff;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.top-nav .logout-link:hover, .home-link:hover,
-.top-nav .activities-link:hover {
-  background-color: #fff;
-  color: #161a2d;
-}
-
-.top-nav .dashboard-link {
-  font-weight: 500;
-}
-
-.top-nav .logout-link .material-symbols-outlined,
-.top-nav .home-link .material-symbols-outlined {
-  font-size: 1.5rem;
-}
-
-
-/* Sidebar */
-.sidebar {
+.platform-navbar {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 300px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 0.05rem solid rgba(238, 238, 238, 1);
+  height: 1.55rem;
+  padding: 0.2rem 0.5rem;
+  width: 100%;
+  z-index: 1;
+}
+
+.platform-menu-items {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.platform-menu-item {
+  list-style: none;
+  color: black;
+  font-size: 0.8rem; 
+}
+
+.platform-menu-item img {
+  height: 3.5rem; 
+  width: auto;
+}
+
+.platform-text{
+  margin-top: 0;
+}
+
+
+.sidebar {
+  position: fixed;
+  top: 1.5rem;
+  left: 0;
+  height: calc(100vh - 1.5rem);
+  width: 15rem;
   display: flex;
   flex-direction: column;
-  background: #667391;
-  padding: 25px 20px;
-  transition: all 0.4s ease;
-  z-index: 2;
+  background: #f6f8fb;
 }
 
 .sidebar .sidebar-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  height: 2.5rem;
+}
+
+.sidebar .sidebar-header img {
+  width: 5rem;
+}
+
+.sidebar .sidebar-header img:first-of-type {
+  width: 2.5rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.sidebar .menu-separator {
   width: 100%;
-  margin-bottom: 50px;
-}
-
-.logo-image {
-  width: 50px; 
-}
-
-.name-image {
-  width: 150px;
-  margin-right: 40px;
-}
-
-.sidebar .sidebar-header h2 {
-  color: #fff;
-  font-size: 1.25rem;
-  font-weight: 600;
-  white-space: nowrap;
-  margin-left: 23px;
-}
-
-.sidebar-links h4 {
-  color: #fff;
-  font-weight: 500;
-  white-space: nowrap;
-  margin: 10px 0;
-  position: relative;
-}
-
-.sidebar-links h4 span {
-  opacity: 1;
-}
-
-.sidebar-links .menu-separator {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 100%;
-  height: 1px;
-  transform: scaleX(1);
-  transform: translateY(-50%);
-  background: #fff;
-  transform-origin: right;
-  transition-delay: 0.2s;
+  height: 0.05rem;
+  background: #babbbe;
 }
 
 .sidebar-links {
   list-style: none;
-  height: 80%;
-  scrollbar-width: none;
-}
-
-.sidebar-links::-webkit-scrollbar {
-  display: none;
+  padding: 0 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .sidebar-links li a {
-  display: flex;
-  align-items: center;
-  gap: 0 20px;
-  color: #fff;
-  font-weight: 500;
-  white-space: nowrap;
-  padding: 15px 10px;
-  text-decoration: none;
-  transition: 0.2s ease;
-  border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0 1rem;
+    color: #5f646c;
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 0.8rem 0.6rem;
+    text-decoration: none;
+    font-size: 0.9rem;
 }
 
 .sidebar-links li a:hover {
-  color: #161a2d;
-  background: #fff;
+  color: #5c6167;
+  background: #d7dee7;
+  border-radius: 4px;
 }
 
-.sidebar:hover {
-  background: #667391;
+.sidebar-links li a.active {
+  /* color: #ffffff;  
+  border-left: 4px solid #D5DCE4; */
+  color: #5c6167;
+  background: #d7dee7;
+  border-radius: 4px;  
+}
+
+
+.bottom-aside {
+  margin-top: auto;
+  margin-bottom: 0.8rem;
+  padding: 0 0.5rem;
+}
+
+.bottom-aside a{
+    display: flex;
+    align-items: center;
+    gap: 0 1rem;
+    color: #5f646c;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.logout-section{
+    padding: 0.8rem 0.6rem;
+}
+
+.logout-section:hover {
+    color: #5c6167;
+    background: #d7dee7;
+    border-radius: 4px;
+}
+
+.sidebar-links .material-symbols-outlined,
+.bottom-aside .material-symbols-outlined {
+    font-size: 1rem;
+}
+
+.top-navbar {
+  position: fixed;
+  left: 15rem;
+  background-color: #ffffff;
+  color: #5f626c;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 0.05rem solid #babbbe;
+  height: 2.5rem;
+  padding: 0 1.95rem;
+  top: 1.55rem;
+  width: 100%;
+  font-size: 0.9rem;
+  z-index: 1;
 }
 
 .whole-form {
-  /* display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  background-color: #ffffff;
-  flex-shrink: 0;
-  width: 90%; */
-
   display: flex;
   width: 90%;
-  margin: 0 auto; /* Center the table on the page */
+  margin: 0 auto; 
   flex-direction: column;
 
 }
@@ -215,69 +217,45 @@ body {
   flex: 1;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="email"],
-input[type="tel"],
-input[type="date"],
-select{
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #F5F5F5;
-  font-size: 1rem;
-}
-  
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="tel"]:focus,
-input[type="date"]:focus,
-select:focus{
-  border-color: #667391; /* Optional: Change border color on focus */
-  background-color: #c9cfda;
-  outline: none;
-}
 
 .spacer {
-  height: 110px; /* Adjust height to control spacing */
-  width: 100%; /* Ensures full width in flex column */
+  height: 110px;
+  width: 100%; 
 }
 
 .centered-table {
   width: 100%;
-  border-collapse: collapse; /* Remove space between cells */
+  border-collapse: collapse; 
 }
 
 .centered-table th,
 .centered-table td {
-  padding: 10px; /* Add padding for readability */
-  text-align: center; /* Center-align text */
-  border-bottom: 1px solid #ddd; /* Light border below each row */
+  padding: 10px; 
+  text-align: center; 
+  border-bottom: 1px solid #ddd; 
 }
 
 .centered-table th {
-  background-color: #f4f4f4; /* Light background color for headers */
+  background-color: #f4f4f4; 
   font-weight: bold;
   font-size: 1.1em;
 }
 
 .centered-table a {
-  color: #007BFF; /* Link color */
-  text-decoration: none; /* Remove underline */
+  color: #007BFF; 
+  text-decoration: none;
 }
 
 .centered-table a:hover {
-  text-decoration: underline; /* Underline on hover for links */
+  text-decoration: underline; 
 }
 
 .centered-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9; /* Subtle row striping */
+  background-color: #f9f9f9;
 }
 
 .centered-table tbody tr:hover {
-  background-color: #f1f1f1; /* Row highlight on hover */
+  background-color: #f1f1f1; 
 }
 
 .input-wrapper {
@@ -286,11 +264,40 @@ select:focus{
   width: 100%;
 }
 
-.editable {
-  width: 100%;
-  padding-right: 20px;
-  box-sizing: border-box;
+.user-information-field .editable {
+  all: unset; 
+  display: inline;
+  font-family: inherit;
+  font-size: 0.9rem; 
+  color: inherit; 
+  text-decoration: none;
+  border: none; 
+  outline: none; 
+  background: none; 
+  padding: 0;
+  margin: 0;
+  margin-top: 0.3rem;
+  width: auto; 
+  white-space: nowrap;
 }
+
+select{
+  display: inline;
+  font-family: inherit;
+  font-size: 0.9rem; 
+  color: inherit; 
+  text-decoration: none;
+  border: none; 
+  outline: none; 
+  background: none; 
+  padding: 0;
+  margin: 0;
+  margin-left: -4px;
+  width: auto; 
+  white-space: nowrap;
+  margin-top: 0.3rem;
+}
+
 
 .edit-icon {
   position: absolute;
@@ -303,10 +310,27 @@ select:focus{
 }
 
 .lastbuttons {
-  display: flex; /* Enable flexbox layout */
-  justify-content: center; /* Center the buttons horizontally */
-  gap: 20px; /* Space between buttons, adjust as needed */
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  gap: 0.8rem; 
   float: right;
+}
+
+.update-button{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px; 
+  font-size: 0.9rem;
+  width: 4rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.3s;
+  background-color: #f6f8fb; 
+  color: #5c6167; 
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .lastbuttons .update-button, 
@@ -314,31 +338,62 @@ select:focus{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 50px; /* Adjust space between icon and text */
-  padding: 5px 10px; /* Adjust padding for better button appearance */
-  margin-bottom: 20px;
-  font-size: 18px;
-  width: 150px;
-  border: none;
+  padding: 5px 10px; 
+  font-size: 0.9rem;
+  width: 4rem;
   cursor: pointer;
   text-decoration: none;
-  border-radius: 5px; /* Rounded corners */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  transition: background-color 0.3s, transform 0.3s; 
+}
+
+.update-button:hover{
+  color: #5c6167;
+  background: #d7dee7;
+}
+
+.update-button:disabled {
+  background-color: #f3f3f3;
+  color: #a1a1a1;
+  cursor: not-allowed;
+}
+
+.title{
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.non-editable{
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
+
+label{
+  font-size: 0.8rem;
 }
 
 .lastbuttons .delete-button {
-  background-color: #d75f5f; /* Background color for delete button */
-  color: white; /* Text color */
+  color: #f1eeee;
+  background: #953232;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .lastbuttons .update-button {
-  background-color: #6c7c9f; /* Background color for update button */
-  color: white; /* Text color */
+  background-color: #f6f8fb; 
+  color: #5c6167; 
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.lastbuttons .update-button:hover,
+.lastbuttons .update-button:hover{
+  color: #5c6167;
+  background: #d7dee7;
+}
+
 .lastbuttons .delete-button:hover {
-  transform: scale(1.05); /* Slightly enlarge on hover */
+  background-color: #780303; 
+  color: #f1eeee; 
 }
 
 .addreservation-button {
@@ -348,7 +403,7 @@ select:focus{
 
 .single-column{
   width: 90%;
-  margin: 0 auto; /* Center the table on the page */
+  margin: 0 auto;
   margin-bottom: 60px;
 }
 
@@ -356,16 +411,16 @@ select:focus{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 5px; /* Adjust space between icon and text */
-  padding: 0px 15px; /* Adjust padding for better button appearance */
+  gap: 5px;
+  padding: 0px 15px; 
   font-size: 16px;
   border: none;
   cursor: pointer;
   text-decoration: none;
-  border-radius: 5px; /* Rounded corners */
-  background-color: rgb(56, 193, 56); /* Background color for add button */
-  color: white; /* Text color */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  border-radius: 5px; 
+  background-color: rgb(56, 193, 56); 
+  color: white; 
+  transition: background-color 0.3s, transform 0.3s; 
   margin-bottom: 20px;
 }
 
@@ -373,31 +428,31 @@ select:focus{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 5px; /* Adjust space between icon and text */
-  padding: 0px 15px; /* Adjust padding for better button appearance */
+  gap: 5px; 
+  padding: 0px 15px; 
   font-size: 16px;
   border: none;
   cursor: pointer;
   text-decoration: none;
-  border-radius: 5px; /* Rounded corners */
-  background-color: #c33d3d; /* Background color for add button */
-  color: white; /* Text color */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  border-radius: 5px; 
+  background-color: #c33d3d; 
+  color: white; 
+  transition: background-color 0.3s, transform 0.3s; 
   margin-bottom: 20px;
 }
 
 .addreservation-button .add-button:hover {
-  background-color: #005700; /* Darker shade on hover for add button */
+  background-color: #005700; 
 }
 
 .addreservation-button .redeem-button:hover {
-  background-color: #570d00; /* Darker shade on hover for add button */
+  background-color: #570d00; 
 }
 
-.sidebar-links a.active {
+/* .sidebar-links a.active {
   color: #ffffff;  
   border-left: 4px solid #D5DCE4;  
-}
+} */
 
 .single-column p{
   padding: 20px;
@@ -420,26 +475,23 @@ a{
   text-decoration: none;
 }
 
-
-/* Centering the tables container */
 .dmtable-container {
   width: 100%;
-  margin: 0 auto; /* Centers the tables horizontally */
-  text-align: center; /* Ensures text inside the table is also centered */
+  margin: 0 auto; 
+  text-align: center; 
   margin-top: 10px;
 }
 
-/* Styling for both discount and multiplier tables */
 .dm-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 10px;
   background-color: #f8f9fc;
-  margin-bottom: 20px; /* Adds spacing between the two tables */
-  table-layout: fixed; /* Ensures columns are spaced evenly */
+  margin-bottom: 20px; 
+  table-layout: fixed; 
 }
 
-/* Table header and cells */
+
 .dm-table th,
 .dm-table td {
   padding: 12px;
@@ -448,13 +500,11 @@ a{
   font-size: 14px;
 }
 
-/* Ensuring table headers are bold */
 .dm-table th {
   font-weight: bold;
   color: #555;
 }
 
-/* Set fixed width for each column to ensure equal spacing between columns */
 .dm-table th:nth-child(1),
 .dm-table td:nth-child(1) {
   width: 70%;
@@ -465,7 +515,6 @@ a{
   width: 30%;
 }
 
-/* Table row styling */
 .dm-table tbody tr {
   background-color: white;
   cursor: pointer;
@@ -476,12 +525,10 @@ a{
   cursor: pointer;
 }
 
-/* Styling for the table data cells */
 .dm-table td {
   color: #333;
 }
 
-/* Center the text inside the <thead> and <tbody> */
 .dm-table thead {
   text-align: center;
 }
@@ -495,19 +542,18 @@ a{
 }
 
 .points-table {
-  width: 90%;
+  width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px;
-  background-color: #f8f9fc;
-  margin: 10px auto;
+  border-spacing: 0 0;
+  background-color: #f6f8fb;
 }
   
   .points-table th,
   .points-table td {
-  padding: 12px;
+  padding: 7px;
   text-align: left;
   border-bottom: 1px solid #ddd;
-  font-size: 14px;
+  font-size: 0.9rem;
   }
   
   .points-table th {
@@ -529,9 +575,51 @@ a{
   }
   
   .points-table tbody tr:hover {
-  background-color: #E1E4F0;
+  background-color: #d7dee7;
   cursor: pointer;
   }
+
+
+  .discounts-multiplier-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0;
+    background-color: #f6f8fb;
+    table-layout: fixed;
+  }
+    
+    .discounts-multiplier-table th,
+    .discounts-multiplier-table td {
+    padding: 7px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    }
+    
+    .discounts-multiplier-table th {
+    font-weight: 600;
+    color: #555;
+    }
+    
+    .discounts-multiplier-table td {
+    color: #333;
+    }
+    
+    .discounts-multiplier-table input[type="checkbox"] {
+    cursor: pointer;
+    }
+    
+    .discounts-multiplier-table tbody tr {
+    background-color: white; 
+    cursor: pointer;
+    }
+    
+    .discounts-multiplier-table tbody tr:hover {
+    background-color: #d7dee7;
+    cursor: pointer;
+    }
+  
   
   .options-icon {
   width: 20px;
@@ -578,10 +666,7 @@ a{
   }
 
 .table-card {
-  background-color: #ffffff; 
-  border-radius: 8px; 
-  box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.1); 
-  padding: 20px; 
+  background-color: #ffffff;
   margin: 20px 0; 
   width: 100%; 
 }
@@ -593,32 +678,26 @@ a{
 }
 
 .category-name p {
-  font-size: 18px; 
-  font-weight: bold;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #333; 
-  margin: 0; 
-  text-align: center; 
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+  text-align: left;
 }
 
 .redemption-table {
 width: 100%;
 border-collapse: separate;
-border-spacing: 0 10px; 
-background-color: #f8f9fc;
+border-spacing: 0 0; 
+background-color: #f6f8fb;
 }
 
 .redemption-table th,
 .redemption-table td {
-padding: 12px;
-text-align: left;
-border-bottom: 1px solid #ddd;
-font-size: 14px;
-}
-
-.redemption-table th {
-font-weight: 600;
-color: #555;
+  text-align: left;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #ddd;
+  padding: 7px;
 }
 
 .redemption-table td {
@@ -656,21 +735,22 @@ h3 {
 }
 
 section{
-  scroll-margin-top: 90px;
+  scroll-margin-top: 55px;
 }
 
 td input[type="text"] {
-  background-color: transparent; /* Makes the background transparent */
-  border: none; /* Removes the border */
-  color: inherit; /* Ensures text is visible and inherits the color */
-  outline: none; /* Removes the focus outline */
+  background-color: transparent; 
+  border: none; 
+  color: inherit;
+  outline: none;
+  font-size: 0.9rem;
 }
 
 td input[type="text"]:focus{
   background-color: transparent;
 }
 
-/* Style the dialog/modal */
+
 dialog[data-modal] {
   border: none;
   border-radius: 8px;
@@ -681,13 +761,13 @@ dialog[data-modal] {
   background-color: white;
   font-family: Arial, sans-serif;
   text-align: center;
-  position: fixed; /* Fix the dialog to the viewport */
-  top: 50%;        /* Center vertically */
-  left: 50%;       /* Center horizontally */
-  transform: translate(-50%, -50%); /* Adjust for the element's own width/height */
+  position: fixed; 
+  top: 50%;        
+  left: 50%;       
+  transform: translate(-50%, -50%); 
 }
 
-/* Center the dialog on the screen */
+
 dialog[data-modal]::backdrop {
   background: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -696,7 +776,7 @@ dialog[data-modal]::backdrop {
 .confirm-button {
   width: 100%;
   padding: 10px;
-  background-color: #555; /* Placeholder color for sign-in button */
+  background-color: #555;
   border: none;
   border-radius: 5px;
   font-size: 1em;
@@ -715,21 +795,26 @@ dialog[data-modal]::backdrop {
 .currency-input .currency-symbol {
   position: absolute;
   top: 50%;
-  left: 10px; 
   transform: translateY(-50%);
-  font-size: 14px; 
+  font-size: 0.9rem; 
   color: black; 
   pointer-events: none;
-  z-index: 1;
 }
 
 .currency-input .form-input {
-  padding-left: 70px;
+  padding-left: 38px;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  outline: none;
+  font-size: 0.9rem;
 }
 
 .currency-input .editable{
-  padding-left: 70px;
+  padding-left: 38px;
+  margin-top: 0px;
 }
+
 
 .signup-link {
   margin-top: 20px;
@@ -751,41 +836,26 @@ dialog[data-modal]::backdrop {
 }
 
 .no-transaction{
-  margin: 20px 80px;
+  margin: 10px 0px;
+  font-size: 0.9rem;
 }
 
 
 .rewardstable-container {
   width: 100%;
-  margin: 0 auto; /* Centers the tables horizontally */
-  text-align: center; /* Ensures text inside the table is also centered */
-  margin-top: 10px; 
+  text-align: center;
+  margin: 0px 0px 15px 0px; 
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
 
 .rewardstable-container .table-card {
-  background-color: #ffffff; 
-  border-radius: 8px; 
-  box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.1); 
-  padding: 20px; 
+  background-color: #ffffff;  
   width: 100%; 
   margin: 0px;
 }
-
-.redemption-table {
-  width: 100%;
-  background-color: #f8f9fc;
-}
   
-.redemption-table th, .redemption-table td {
-  padding: 8px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-  font-size: 14px;
-  width: 50%;
-}
 
 .redemption-table th {
 font-weight: 600;
@@ -835,4 +905,111 @@ cursor: pointer;
 
 .colorGreen{
   color: #4CAF50;
+}
+
+
+
+
+.user-information-container {
+  width: 95%;
+  margin: auto;
+  background: #fff;
+  overflow: hidden;
+  padding-top: 10px;
+}
+
+.user-information-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+.user-information-header h1 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.user-information-header .edit-link {
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.user-information-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.3rem 3.6rem;
+}
+
+.user-information-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.user-information-field label {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.user-information-field .field-value {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.user-information-field .field-value .placeholder {
+  font-weight: normal;
+  color: #999;
+}
+
+.user-information-field .verification-link {
+  font-size: 12px;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 5px;
+}
+
+.user-information-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  border-top: 2px solid #f0f0f0;
+  padding-top: 10px;
+}
+
+.user-information-footer .change-password {
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.user-information-footer .auth-method {
+  font-size: 14px;
+  background-color: #e6f7ff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: #0056b3;
+  font-weight: bold;
+}
+
+
+.table-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.half-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }

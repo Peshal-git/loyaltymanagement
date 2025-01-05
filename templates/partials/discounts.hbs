@@ -1,9 +1,35 @@
-{{#if superadmin}}
-<div class="single-column">
-<div class="dmtable-container">
 
-    <form action="/discount-control?id={{user.id}}" method="POST">
-        <table class="dm-table discount-table">
+<div class="user-information-container">
+
+    <div class="half-grid">
+        <div class="user-information-header">
+            <h2 class="title">Discounts</h2>
+
+            {{#if superadmin}}
+            <div class="lastbuttons">
+                <input class="update-button" type="submit" value="Update" form="discount-form">
+            </div>
+            {{/if}}
+
+
+        </div>
+
+        <div class="user-information-header">
+            <h2 class="title">Multipliers</h2>
+
+            {{#if superadmin}}
+            <div class="lastbuttons">
+                <input class="update-button" type="submit" value="Update" form="multiplier-form">
+            </div>
+            {{/if}}
+        </div>
+    </div>
+
+{{#if superadmin}}
+    <div class="table-grid">
+    <!-- Discount Form -->
+    <form id="discount-form" action="/discount-control?id={{user.id}}" method="POST">
+        <table class="discounts-multiplier-table">
             <thead>
                 <tr>
                     <th>Tier</th>
@@ -29,23 +55,17 @@
                 </tr>
             </tbody>
         </table>
-
         {{#if discountError}}
-        <h4 style="color: #CD5C5C;">{{discountError}}</h4>
+        <h4 class="error-message">{{discountError}}</h4>
         {{/if}}
         {{#if discountMessage}}
-        <h4 style="color: #667391;">{{discountMessage}}</h4>
+        <h4 class="success-message">{{discountMessage}}</h4>
         {{/if}}
-
-        <div class="lastbuttons">
-            <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
-        </div>
-        
     </form>
 
 
-    <form action="/multiplier-control?id={{user.id}}" method="POST">
-        <table class="dm-table multiplier-table">
+    <form id="multiplier-form" action="/multiplier-control?id={{user.id}}" method="POST">
+        <table class="discounts-multiplier-table">
             <thead>
                 <tr>
                     <th>Service Type</th>
@@ -71,29 +91,20 @@
                 </tr>
             </tbody>
         </table>
-        
         {{#if multiplierError}}
-        <h4 style="color: #CD5C5C;">{{multiplierError}}</h4>
+        <h4 class="error-message">{{multiplierError}}</h4>
         {{/if}}
         {{#if multiplierMessage}}
-        <h4 style="color: #667391;">{{multiplierMessage}}</h4>
-        {{/if}}
-
-        {{#if superadmin}}
-        <div class="lastbuttons">
-            <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
-        </div>
+        <h4 class="success-message">{{multiplierMessage}}</h4>
         {{/if}}
     </form>
-</div>
 </div>
 
 {{else}}
 
-<div class="single-column">
-<div class="dmtable-container">
+ <div class="table-grid">
 
-    <table class="dm-table discount-table">
+     <table class="discounts-multiplier-table">
         <thead>
             <tr>
                 <th>Tier</th>
@@ -120,8 +131,8 @@
         </tbody>
     </table>
 
-    <!-- Multiplier Table -->
-    <table class="dm-table multiplier-table">
+
+     <table class="discounts-multiplier-table">
         <thead>
             <tr>
                 <th>Service Type</th>
@@ -150,3 +161,4 @@
 </div>
 </div>
 {{/if}}
+</div>

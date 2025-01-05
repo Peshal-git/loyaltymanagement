@@ -74,10 +74,7 @@ exports.updateProfileValidator = [
         min: 10,
         max: 10
     }),
-    check('mobile', 'Mobile number should contain 10 digits').isLength({
-        min: 10,
-        max: 10
-    }),
+    check('mobile', 'Please enter a valid phone number.').isMobilePhone()
 ]
 
 exports.updateSocialAuthValidator = [
@@ -96,10 +93,7 @@ exports.adminUpdateValidator = [
         min: 10,
         max: 10
     }),
-    check('mobile', 'Mobile number should contain 10 digits').isLength({
-        min: 10,
-        max: 10
-    }),
+    check('mobile', 'Please enter a valid phone number.').isMobilePhone()
 ]
 
 exports.transactionUpdateValidator = [

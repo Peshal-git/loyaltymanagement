@@ -1,48 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VIKASA</title>
-  <link rel="stylesheet" href="/css/navbar.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://use.typekit.net/hwh1xjc.css">
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="/css/navbar.css">
 </head>
 <body>
-  <!-- Top Navigation Bar -->
-  <nav class="top-nav">
-    <a href="#" class="dashboard-link">
-      <span>{{user.name}}</span>
-    </a>
-    <div class="nav-links">
-        <a href="/" class="home-link">Home</a>
-        <a href="/logout" class="logout-link">Logout</a>
-    </div>
-  </nav>
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <a href="/">
-    <div class="sidebar-header">
-      <img src="/images/vikasa-no-name.png" alt="logo" class="logo-image"/>
-      <img src="/images/vikasa-name.png" alt="name"  class="name-image"/>
-    </div>
-    </a>
-    <ul class="sidebar-links">
-      {{!-- <h4><span>-------------------------------</span></h4> --}}
-      <li><a href="#profile-info" class="{{isActive activePage 'profile'}}"><span class="material-symbols-outlined"> account_circle </span>Profile</a></li>
-      <li><a href="#membership-info" class="{{isActive activePage 'membership'}}"><span class="material-symbols-outlined"> groups </span>Membership Info</a></li>
-      <li><a href="#points-wallet" class="{{isActive activePage 'pointsWallet'}}"><span class="material-symbols-outlined"> flag </span>Points Wallet</a></li>
-      {{!-- <li><a href="/redemption?id={{user.id}}" class="{{isActive activePage 'redemption'}}"><span class="material-symbols-outlined"> folder </span>Redemptions</a></li> --}}
-      <li><a href="#discounts" class="{{isActive activePage 'discounts'}}"><span class="material-symbols-outlined"> dashboard </span>Discounts</a></li>
-      <li><a href="#privacy-pref" class="{{isActive activePage 'privacy'}}"><span class="material-symbols-outlined"> settings </span>Privacy and Preference</a></li>
-      <li><a href="#add-transaction" class="{{isActive activePage 'addTransaction'}}"><span class="material-symbols-outlined"> add_circle </span>Add Transaction</a></li>
-      <li><a href="#redemption" class="{{isActive activePage 'redemption'}}"><span class="material-symbols-outlined"> redeem </span>Redemption</a></li>
-      <li><a href="/logout"><span class="material-symbols-outlined"> logout </span>Logout</a></li>
-    </ul>
+    <nav class="platform-navbar">
+        <ul class="platform-menu-items">
+          <a href="https://dosink.com/" target="_blank">
+            <li class="platform-menu-item"> <img src="/images/dosink-logo.png" alt="dosink-logo"> </li>
+          </a>
+          <li class="platform-menu-item"><p class="platform-text">Platform</p></li>
+        </ul>
+    </nav>
 
-  </aside>
-  <div class="main-container">
+    <aside class="sidebar">
+
+      <a href="/">
+        <div class="sidebar-header">
+          <img src="/images/vikasa-no-name-newui.png" alt="logo" />
+          <img src="/images/vikasa-name-newui.png" alt="logo" />
+        </div>
+      </a>
+
+        <div class="menu-separator"></div>
+
+        <ul class="sidebar-links">
+          <li><a href="#profile-info" class="{{isActive activePage 'profile'}}"><span class="material-symbols-outlined"> account_circle </span>Profile</a></li>
+          <li><a href="#membership-info" class="{{isActive activePage 'membership'}}"><span class="material-symbols-outlined"> groups </span>Membership Info</a></li>
+          <li><a href="#points-wallet" class="{{isActive activePage 'pointsWallet'}}"><span class="material-symbols-outlined"> wallet </span>Points Wallet</a></li>
+          <li><a href="#discounts" class="{{isActive activePage 'discounts'}}"><span class="material-symbols-outlined"> sell </span>Discounts</a></li>
+          <li><a href="#privacy-pref" class="{{isActive activePage 'privacy'}}"><span class="material-symbols-outlined"> settings </span>Privacy and Preference</a></li>
+          <li><a href="#add-transaction" class="{{isActive activePage 'addTransaction'}}"><span class="material-symbols-outlined"> add_circle </span>Add Transaction</a></li>
+          <li><a href="#redemption" class="{{isActive activePage 'redemption'}}"><span class="material-symbols-outlined"> redeem </span>Redemption</a></li>
+        </ul>
+        <div class="bottom-aside">
+            <div class="logout-section">
+                <a href="/logout">
+                    <span class="material-symbols-outlined"> logout </span>Logout
+                </a>
+            </div>
+        </div>
+      </aside>
+
+      <nav class="top-navbar">
+        <span>{{user.name}}</span>
+      </nav>
+
 
   

@@ -1,10 +1,74 @@
-{{>navbar}}
-{{#if add}}
-<div class="whole-form">
-    <form class="rdetails-form" action="/update-transaction-details?id={{user.id}}&reservationIndex={{reservationIndex}}" method="POST">
-    <div class="left-column">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIKASA</title>
+  <link rel="stylesheet" href="https://use.typekit.net/hwh1xjc.css">
 
-        <div class="form-group">
+  <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="/css/navbar.css">
+</head>
+<body>
+    <nav class="platform-navbar">
+        <ul class="platform-menu-items">
+          <a href="https://dosink.com/" target="_blank">
+            <li class="platform-menu-item"> <img src="/images/dosink-logo.png" alt="dosink-logo"> </li>
+          </a>
+          <li class="platform-menu-item"><p class="platform-text">Platform</p></li>
+        </ul>
+    </nav>
+
+    <aside class="sidebar">
+
+      <a href="/">
+        <div class="sidebar-header">
+          <img src="/images/vikasa-no-name-newui.png" alt="logo" />
+          <img src="/images/vikasa-name-newui.png" alt="logo" />
+        </div>
+      </a>
+
+        <div class="menu-separator"></div>
+
+        <ul class="sidebar-links">
+          <li><a href="/profile-info?id={{user.id}}#profile-info" class="{{isActive activePage 'profile'}}"><span class="material-symbols-outlined"> account_circle </span>Profile</a></li>
+          <li><a href="/profile-info?id={{user.id}}#membership-info" class="{{isActive activePage 'membership'}}"><span class="material-symbols-outlined"> groups </span>Membership Info</a></li>
+          <li><a href="/profile-info?id={{user.id}}#points-wallet" class="{{isActive activePage 'pointsWallet'}}"><span class="material-symbols-outlined"> wallet </span>Points Wallet</a></li>
+          <li><a href="/profile-info?id={{user.id}}#discounts" class="{{isActive activePage 'discounts'}}"><span class="material-symbols-outlined"> sell </span>Discounts</a></li>
+          <li><a href="/profile-info?id={{user.id}}#privacy-pref" class="{{isActive activePage 'privacy'}}"><span class="material-symbols-outlined"> settings </span>Privacy and Preference</a></li>
+          <li><a href="/profile-info?id={{user.id}}#add-transaction" class="{{isActive activePage 'addTransaction'}}"><span class="material-symbols-outlined"> add_circle </span>Add Transaction</a></li>
+          <li><a href="/profile-info?id={{user.id}}#redemption" class="{{isActive activePage 'redemption'}}"><span class="material-symbols-outlined"> redeem </span>Redemption</a></li>
+        </ul>
+        <div class="bottom-aside">
+            <div class="logout-section">
+                <a href="/logout">
+                    <span class="material-symbols-outlined"> logout </span>Logout
+                </a>
+            </div>
+        </div>
+      </aside>
+
+      <nav class="top-navbar">
+        <span>{{user.name}}</span>
+      </nav>
+
+{{#if add}}
+<div class="user-information-container">
+<form action="/update-transaction-details?id={{user.id}}&tranCode={{tranCode}}" method="POST">
+
+    <div class="user-information-header">
+        <h2 class="title">Transaction Details</h2>
+        <div class="lastbuttons">
+            <input class="update-button" type="submit" value="Update">
+            {{#if superadmin}}
+            <a href="/delete-transaction?id={{user.id}}&tranCode={{tranCode}}" class="delete-button">Delete</a>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="user-information-grid">
+        <div class="user-information-field">
             <label for="spendingType">Spending Type:</label>
             <select name="spendingType" id="spendingType" required value="{{transactionObj.spendingType}}">
                 <option value="Life Café" {{#if (eq transactionObj.spendingType "Life Café")}}selected{{/if}}>Life Café</option>
@@ -13,11 +77,8 @@
                 <option value="Retreats and YTT Packages" {{#if (eq transactionObj.spendingType "Retreats and YTT Packages")}}selected{{/if}}>Retreats and YTT Packages</option>
             </select>
         </div>
-    </div>
 
-    <div class="right-column">
-
-        <div class="form-group">
+        <div class="user-information-field">
             <label for="amount">Amount</label>
             <div class="currency-input">
                 <span class="currency-symbol">THB | </span>
@@ -27,51 +88,49 @@
                 </div>
             </div>
         </div>
+    
+    </div>
 
         {{#if error}}
         <h4 style="color: #CD5C5C;">{{error}}</h4>
         {{/if}}
 
-        
-        <div class="lastbuttons">
-        <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
-
-        {{#if superadmin}}
-        <a href="/delete-transaction?id={{user.id}}&reservationIndex={{reservationIndex}}" class="delete-button">&#x1F5D1; Delete</a>
-        {{/if}}
-
-        </div>
-
-    </div>   
-
     </form>
 </div>
 
+
 {{else}}
-<div class="whole-form">
-<form class="rdetails-form">
+<div class="user-information-container">
+<form>
 
-    <div class="left-column">
-    <div class="form-group">
-        <label for="Category">Reward:</label>
-        <div class="input-wrapper">
-        <input class="editable" type="text" name="category"
-            value="{{transactionObj.reward}}" required readonly>
-        </div>
-    </div>
-    </div>
-
-    <div class="right-column">
-
-    <div class="form-group">
-        <label for="Category">Points Used:</label>
-        <div class="input-wrapper">
-        <input class="editable" type="text" name="category"
-            value="{{commaFormat transactionObj.pointsLost}}" required readonly>
+    <div class="user-information-header">
+        <h2 class="title">Redemption Details</h2>
+        <div class="lastbuttons">
+            {{#if superadmin}}
+            <a href="/delete-redemption?id={{user.id}}&tranCode={{tranCode}}" class="delete-button">Delete</a>
+            {{/if}}
         </div>
     </div>
 
+    <div class="user-information-grid">
+        <div class="user-information-field">
+            <label for="Category">Reward:</label>
+            <div class="input-wrapper">
+            <input class="editable" type="text" name="category"
+                value="{{transactionObj.reward}}" required readonly>
+            </div>
+        </div>
+
+        <div class="user-information-field">
+            <label for="Category">Points Used:</label>
+            <div class="input-wrapper">
+            <input class="editable" type="text" name="category"
+                value="{{commaFormat transactionObj.pointsLost}}" required readonly>
+            </div>
+        </div>
     </div>
+
+
 </form>
 </div>
 
