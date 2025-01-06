@@ -48,7 +48,7 @@ html {
 
 .profile-field {
   margin-bottom: 10px;
-  background: rgb(248, 249, 250);
+  /* background: rgb(248, 249, 250); */
   padding: 10px;
   border-radius: 8px;
 }
