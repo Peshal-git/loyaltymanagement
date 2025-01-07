@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Activities</title>
-  <link rel="stylesheet" href="/css/activities.css" />
+  <title>Wallet</title>
+  <link rel="stylesheet" href="/css/wallet.css" />
    <link rel="stylesheet" href="/css/global.css" />
      <link rel="icon" href="/images/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
    <div class="main-wrapper">
     <div class="bg-overlay"></div>
     <div class="container">
- {{> sidebar hideItems=false active="activities" }}
+ {{> sidebar hideItems=false active="wallet" }}
 
   
 
@@ -41,13 +41,14 @@
    
     <tbody>
         {{#each historiesToShow}}
-      
+
+        <tr class="header-row">
+          <td colspan="3">{{makeType this.transactionType}}</td>
+        </tr>
+
         <tr>
-            <td>{{makeType this.transactionType}}</td>
             <td>{{this.service}}</td>
             <td>{{makeDate this.transactionDate}}</td>
-            <td><div class="flex"><span class="title">Points Before: </span>{{this.totalPointsBefore}}</div> </td>
-            <td><div class="flex"><span class="title">Points After: </span>{{this.totalPointsAfter}} </div></td>
             <td> <div class="flex"><span class="title">Points <span> {{getUsedOrGained transactionType}} </span></span> <span class="{{getColor transactionType}}"> {{this.points}} </span></div> </td>
         </tr>
 

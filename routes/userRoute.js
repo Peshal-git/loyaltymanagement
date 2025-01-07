@@ -22,7 +22,7 @@ router.post('/register', registerUser, createToken, passport.authenticate('local
 }, auth, userCheck, userController.dashboardRedirect)
 
 router.get('/profile', auth, userCheck, userController.profilePage)
-router.get('/activities', auth, userCheck, userController.activitiesPage)
+router.get('/wallet', auth, userCheck, userController.walletPage)
 router.get('/about-us', auth, userCheck, userController.aboutUsPage)
 router.get('/membership', auth, userCheck, userController.membershipPage)
 router.get('/provide-addinfo', auth, userCheck, userController.addInfoPage)
