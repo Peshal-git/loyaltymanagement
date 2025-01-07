@@ -3,6 +3,10 @@ html {
   height: 100%;
 }
 
+.field-content input {
+  height: fit-content;
+}
+
 .top-nav {
   display: flex;
   justify-content: space-between;
@@ -15,6 +19,7 @@ html {
 
 .about {
   padding: 24px;
+  position: relative;
 }
 
 .about p {
@@ -47,14 +52,14 @@ html {
 }
 
 .profile-field {
-  margin-bottom: 10px;
-  background: rgb(248, 249, 250);
-  padding: 10px;
-  border-radius: 8px;
+  margin-bottom: 6px;
+  padding: 4px;
 }
 
 .profile {
   flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .right-division {
@@ -206,10 +211,11 @@ h2 {
 
 .cardholder-name {
   position: absolute;
-  left: 16px;
+  left: 12px;
   bottom: 18px;
   text-transform: uppercase;
   color: white;
+  font-size: 12px;
   letter-spacing: 1px;
 }
 .card-type {
@@ -317,6 +323,11 @@ h2 {
 
 .balance-card {
   height: 200px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.balance-card.flipped {
+  transform: rotateY(180deg); /* Flips the image */
 }
 
 .trophy-icon {
@@ -432,5 +443,11 @@ input[readonly] {
 @media (max-width: 875px) {
   .profile-container {
     flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-field label {
+    margin-bottom: 0px;
   }
 }
