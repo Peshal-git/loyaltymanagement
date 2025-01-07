@@ -12,7 +12,7 @@ hbs.registerHelper('makeDate', function (value) {
     if (value) {
         const formattedDate = value.toISOString().split('T')[0]
         const parts = formattedDate.split('-')
-        const mmddyyyy = `${parts[1]}-${parts[2]}-${parts[0]}`
+        const mmddyyyy = `${parts[0]}-${parts[2]}-${parts[1]}`
         return mmddyyyy
     }
     else {
