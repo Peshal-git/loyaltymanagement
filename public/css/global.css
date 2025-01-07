@@ -375,3 +375,15 @@ input {
     margin-left: 0px;
   }
 }
+
+@media (max-width: 395px) {
+  .nav-links a {
+    padding: 2px;
+    font-size: 12px;
+  }
+}
+@media (max-width: 355px) {
+  .nav-links a {
+    font-size: 11px;
+  }
+}
