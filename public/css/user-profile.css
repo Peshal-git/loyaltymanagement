@@ -339,8 +339,8 @@ h2 {
 }
 
 label {
-  color: #aaa;
-  font-size: 13px;
+  color: var(--soft);
+  font-size: 14px;
   display: block;
   margin-bottom: 5px;
 }
@@ -349,6 +349,7 @@ label {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 15px;
 }
 
 input[type="text"],
@@ -442,12 +443,39 @@ input[readonly] {
 
 @media (max-width: 875px) {
   .profile-container {
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 }
 
 @media (max-width: 768px) {
   .profile-field label {
     margin-bottom: 0px;
+    color: #000;
+    font-weight: 500;
+  }
+
+  .balance-card {
+    height: 200px;
+    width: 100%;
+  }
+
+  .profile {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+  }
+
+  .profile-field {
+    justify-content: center;
+    gap: 10px;
+    display: flex;
+  }
+  .profile-container {
+    position: relative;
+  }
+
+  .profile {
+    background: #ffffff38;
+    border-radius: 8px;
   }
 }

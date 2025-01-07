@@ -1,3 +1,38 @@
+@font-face {
+  font-family: "BRANDON GROTESQUE";
+  src: url("/fonts/Brandon_Grotesque_400.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --primary: rgb(126, 134, 170);
+  --deep: rgb(74, 76, 97);
+  --soft: rgb(162, 157, 124);
+  --sand: rgb(197, 197, 197);
+}
+
+@font-face {
+  font-family: "BRANDON GROTESQUE";
+  src: url("/fonts/Brandon_Grotesque_500.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BRANDON GROTESQUE";
+  src: url("/fonts/Brandon_Grotesque_600.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BRANDON GROTESQUE";
+  src: url("/fonts/Brandon_Grotesque_300.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
 .main-wrapper {
   position: relative;
   background: #f5f6f8;
@@ -12,7 +47,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Nunito", sans-serif;
+  font-family: "BRANDON GROTESQUE", sans-serif;
 }
 
 .banner {
@@ -151,7 +186,7 @@ input {
 }
 
 .active {
-  color: #f85b26;
+  font-weight: 500;
 }
 
 .nav-links a {
@@ -227,10 +262,10 @@ input {
     position: fixed;
     pointer-events: none;
     inset: 0;
-    background: linear-gradient(
-      90deg,
-      rgba(102, 115, 145, 1) 36%,
-      rgba(204, 204, 204, 1) 95%
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(102, 115, 145, 1) 100%
     );
   }
   .bg-overlay {
@@ -257,18 +292,23 @@ input {
     height: 40px;
   }
 
-  .nav-links {
-    margin-top: 0;
-    border-top: 0;
-    padding-top: 0;
-  }
-
-  .profile {
-    grid-template-columns: 1fr 1fr 1fr;
+  .nav-links img {
+    display: none;
   }
 
   .nav-links a {
-    padding: 8px;
+    padding: 2px 8px;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    margin-top: 0;
+    border-top: 0;
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 0;
+  }
+
+  .nav-links a {
     font-size: 14px;
   }
   .sidebar,
@@ -292,10 +332,6 @@ input {
     color: #4e4e4e;
   }
 
-  .profile-field label {
-    color: #5d5d5d;
-    font-weight: 600;
-  }
   .sidebar .active {
     background-color: transparent;
     text-decoration: underline;
@@ -313,14 +349,20 @@ input {
     align-items: center;
   }
 
-  .profile-field {
-    align-items: center;
-    gap: 12px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
   .nav-links {
     gap: 6px;
+  }
+}
+
+@media (max-width: 515px) {
+  .sidebar {
+    padding: 10px;
+  }
+  .nav-links {
+    gap: 0px;
+  }
+  .nav-links a {
+    font-size: 12px;
   }
 }
 

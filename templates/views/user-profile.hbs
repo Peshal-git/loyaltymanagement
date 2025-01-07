@@ -32,38 +32,41 @@
               <div class="profile-field">
                 <label for="name">Name</label>
                 <div class="field-content">
-                  <input
+                  <p class="text">{{user.name}}</p>
+                  {{!-- <input
                     class="editable"
                     type="text"
                     name="name"
                     value="{{user.name}}"
                     readonly
-                  />
+                  /> --}}
                 </div>
               </div>
 
               <div class="profile-field">
                 <label for="member-id">Member ID</label>
                 <div class="field-content">
-                  <input
+                  <p class="text">{{user.memberId}}</p>
+                  {{!-- <input
                     type="text"
                     name="member-id"
                     value="{{user.memberId}}"
                     readonly
-                  />
+                  /> --}}
                 </div>
               </div>
 
               <div class="profile-field">
                 <label for="email">Email</label>
                 <div class="field-content">
-                  <input
+                  <p class="text">{{user.email}}</p>
+                  {{!-- <input
                     type="email"
                     class="editable"
                     name="email"
                     value="{{user.email}}"
                     readonly
-                  />
+                  /> --}}
 
                 </div>
               </div>
@@ -71,26 +74,28 @@
               <div class="profile-field">
                 <label for="mobile">Mobile</label>
                 <div class="field-content">
-                  <input
+                  <p class="text">{{user.mobile}}</p>
+                  {{!-- <input
                     type="tel"
                     class="editable"
                     name="mobile"
                     value="{{user.mobile}}"
                     readonly
-                  />
+                  /> --}}
                 </div>
               </div>
 
               <div class="profile-field">
                 <label for="language">Preferred Language</label>
                 <div class="field-content">
-                  <input
+                  <p class="text">{{user.language}}</p>
+                  {{!-- <input
                     type="text"
                     class="editable"
                     name="language"
                     value="{{user.language}}"
                     readonly
-                  />
+                  /> --}}
                   {{! <button type="button" class="edit-button">✎</button> }}
                 </div>
               </div>
@@ -98,13 +103,14 @@
               <div class="profile-field">
                 <label for="dob">Date of Birth</label>
                 <div class="field-content">
-                  <input
+                  <p class="text">{{makeDate user.dob}}</p>
+                  {{!-- <input
                     type="text"
                     class="editable"
                     name="dob"
                     value="{{makeDate user.dob}}"
                     readonly
-                  />
+                  /> --}}
 
                 </div>
               </div>
@@ -112,12 +118,13 @@
               <div class="profile-field">
                 <label for="member-since">Anniversary Date</label>
                 <div class="field-content">
-                  <input
+                  <p class="text">{{makeDate user.createdAt}}</p>
+                  {{!-- <input
                     type="text"
                     name="member-since"
                     value="{{makeDate user.createdAt}}"
                     readonly
-                  />
+                  /> --}}
                 </div>
               </div>
 
