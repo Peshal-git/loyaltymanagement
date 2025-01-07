@@ -68,3 +68,18 @@ td .title {
   display: flex;
   flex-direction: column;
 }
+
+@media (max-width: 768px) {
+  table {
+    border-color: #c1c1c1;
+  }
+  td {
+    border-bottom: 1px solid #cacaca;
+  }
+  .content-container {
+    position: relative;
+  }
+  .title-container h3 {
+    color: #2d2d2d;
+  }
+}
