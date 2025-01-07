@@ -109,6 +109,26 @@ const aboutUsPage = async (req, res) => {
     }
 }
 
+const membershipPage = async (req, res) => {
+    try {
+        let userData
+
+        if (req?.user?.user) {
+            userData = req.user.user
+        }
+        else {
+            userData = req.user
+        }
+
+        res.render('membership', { user: userData })
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
 const addInfoPage = async (req, res) => {
     try {
         const id = req.query.id
@@ -264,6 +284,7 @@ const downloadPointsHistory = async (req,res) => {
 module.exports = {
     profilePage,
     aboutUsPage,
+    membershipPage,
     activitiesPage,
     addInfoPage,
     dashboardRedirect,
