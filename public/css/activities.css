@@ -18,7 +18,7 @@
 }
 
 .csv-btn {
-  background: #f85b26;
+  background: var(--primary);
   height: 40px;
   display: block;
   width: fit-content;

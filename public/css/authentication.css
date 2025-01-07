@@ -1,8 +1,36 @@
+@font-face {
+  font-family: "BRANDON GROTESQUE";
+  src: url("/fonts/Brandon_Grotesque_400.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BRANDON GROTESQUE";
+  src: url("/fonts/Brandon_Grotesque_500.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BRANDON GROTESQUE";
+  src: url("/fonts/Brandon_Grotesque_600.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BRANDON GROTESQUE";
+  src: url("/fonts/Brandon_Grotesque_300.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Nunito", sans-serif;
+  font-family: "BRANDON GROTESQUE", sans-serif;
 }
 
 /* #7e87aa */
