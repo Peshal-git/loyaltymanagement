@@ -443,7 +443,7 @@ input[readonly] {
 
 @media (max-width: 875px) {
   .profile-container {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 }
 
