@@ -1,17 +1,16 @@
 <div class="user-information-container">
     {{#if user.id}}
-    <form action="/add-transaction?id={{user.id}}" method="post" class="reservation-form" autocomplete="off">
+    <form id="transaction-form" action="/add-transaction?id={{user.id}}" method="post" class="reservation-form" autocomplete="off">
     {{else}}
-    <form action="/add-transaction?id={{this.id}}" method="post" class="reservation-form" autocomplete="off">
+    <form id="transaction-form" action="/add-transaction?id={{this.id}}" method="post" class="reservation-form" autocomplete="off">
     {{/if}}
 
-      <div class="user-information-header">
-        <h2 class="title">Add Transaction</h2>
-        <div class="lastbuttons">
-          <input class="update-button" type="submit" value="Confirm">
-        </div>
-      </div>
-
+    <div class="user-information-header">
+    <h2 class="title">Add Transaction</h2>
+    <div class="lastbuttons">
+        <button data-open-modal="confirm-dialog-1" type="submit" class="update-button">Confirm</button>
+    </div>
+    </div>
 
     <div class="user-information-grid">
         <div class="user-information-field">
@@ -42,52 +41,11 @@
 </form>
 </div>
 
-{{!-- <div class="whole-form">
-{{#if user.id}}
-<form action="/add-transaction?id={{user.id}}" method="post" class="reservation-form" autocomplete="off">
-{{else}}
-<form action="/add-transaction?id={{this.id}}" method="post" class="reservation-form" autocomplete="off">
-{{/if}}
-    <div class="addTransaction-form">
-
-        <div class="left-column">
-            <div class="form-group">
-            <label for="spendingType">Spending Type</label>
-            <select name="spendingType" id="spendingType" required value="{{#if enteredFields.spendingType}}{{enteredFields.spendingType}}{{/if}}">
-                <option value="Life Café">Life Café</option>
-                <option value="Yoga Class">Yoga Class</option>
-                <option value="Vita Spa">Vita Spa</option>
-                <option value="Retreats and YTT Packages">Retreats and YTT Packages</option>
-                <option value="Bonus 1">Bonus 1</option>
-                <option value="Bonus 2">Bonus 2</option>
-                <option value="Bonus 3">Bonus 3</option>
-                <option value="Bonus 4">Bonus 4</option>
-            </select>
-            </div>
-        </div>
-
-        
-        <div class="middle-column">
-            <div class="form-group">
-            <label for="amount">Amount</label>
-            <div class="currency-input">
-                <span class="currency-symbol">THB | </span>
-                <input type="number" name="amount" id="amount" 
-                    class="form-input" 
-                    value="{{getValue transactionObj.amount enteredFields.amount}}" 
-                    placeholder="Enter amount" required>
-            </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="lastbuttons">
-        <input class="update-button" type="submit" value="&#x1F4DD; Confirm"> 
-    </div>
-    
-    {{#if error}}
-        <h4 style="color: #CD5C5C;">{{error}}</h4>
-    {{/if}}
-</form> --}}
-{{!-- </div> --}}
+{{> flexibleModal 
+    dialogId="confirm-dialog-1"
+    message="Are you sure you want to proceed with this transaction?"
+    confirmButtonText="Confirm"
+    cancelButtonText="Cancel"
+    data-source="form"
+    data-form-id="transaction-form"
+}}

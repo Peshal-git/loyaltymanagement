@@ -83,29 +83,3 @@
       {{/if}}
   </form>
 </div>
-
-<script>
-  document.querySelectorAll('.user-information-field').forEach(field => {
-    const inputField = field.querySelector('.editable');
-    const editIcon = field.querySelector('.edit-icon');
-
-    if (inputField && editIcon) {
-        editIcon.addEventListener('click', function() {
-            inputField.removeAttribute('readonly'); // Make the input editable
-            inputField.focus(); // Set focus to the input field
-
-            const end = inputField.value.length;
-            inputField.setSelectionRange(end, end);
-        });
-
-        inputField.addEventListener('focus', function() {
-            editIcon.style.visibility = 'hidden'; // Hide the icon when input is focused
-        });
-
-        inputField.addEventListener('blur', function() {
-            editIcon.style.visibility = 'visible'; // Show the icon when input loses focus
-        });
-    }
-  });
-</script>
-

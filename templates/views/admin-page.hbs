@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIKASA</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/hwh1xjc.css">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="/css/navbar.css">
+</head>
+<body>
+
 {{> navbar}}
 
 <section id="profile-info">
@@ -28,40 +42,7 @@
 {{> redeemPoints}}
 </section>
 
-<script>
+<script src="/js/script.js"></script>
+</body>
 
-document.addEventListener('DOMContentLoaded', () => {
-  const sections = document.querySelectorAll('section'); // Adjust selector based on your markup
-  const navLinks = document.querySelectorAll('.sidebar-links a');
-
-  // Function to update active link
-  window.addEventListener('scroll', () => {
-    let currentSection = '';
-
-    // Determine which section is in the viewport
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      if (window.scrollY >= sectionTop - 60) { // Offset for navbar height
-        currentSection = section.getAttribute('id');
-      }
-    });
-
-    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
-    if (nearBottom) {
-      const lastSection = sections[sections.length - 1];
-      currentSection = lastSection.getAttribute('id');
-    }
-
-    // Update active class on nav links
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${currentSection}`) {
-        console.log('Adding active class to:', link);
-        link.classList.add('active');
-      }
-    });
-  });
-});
-
-</script>
+</html>

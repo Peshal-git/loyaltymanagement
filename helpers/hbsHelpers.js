@@ -100,3 +100,7 @@ hbs.registerHelper('commaFormat', function (number) {
     }
     return number.toLocaleString('en-US');
 });
+
+hbs.registerHelper('sanitizeId', function(name) {
+    return name.replace(/\s+/g, '-').toLowerCase();
+});
