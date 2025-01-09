@@ -104,3 +104,7 @@ hbs.registerHelper('commaFormat', function (number) {
 hbs.registerHelper('sanitizeId', function(name) {
     return name.replace(/\s+/g, '-').toLowerCase();
 });
+
+hbs.registerHelper('concat', function () {
+    return Array.prototype.join.call(arguments, '');
+});

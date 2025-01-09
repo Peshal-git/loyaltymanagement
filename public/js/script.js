@@ -93,6 +93,7 @@ function handleClick(event) {
 document.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', (event) => {
         const trigger = event.target.closest('[data-open-modal]');
+        console.log(trigger)
         if (trigger) {
             event.preventDefault();
             const modalId = trigger.getAttribute('data-open-modal');

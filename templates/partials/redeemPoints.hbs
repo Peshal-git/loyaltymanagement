@@ -29,21 +29,26 @@
                       <td>
                         <input type="hidden" name="category" value="{{yogaCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
-                        <button type="submit" data-open-modal="redeem-dialog-1" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
+                        <button type="submit" data-open-modal="dialog-{{sanitizeId name}}" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
 
-                      </form>
-                      </tr>
-
+                    {{#with (hash 
+                        dialogId=(concat "dialog-" (sanitizeId name))
+                        dataFormId=(concat "form-" (sanitizeId name))
+                    )}}
                     {{> flexibleModal 
-                        dialogId="dialog-{{name}}"
+                        dialogId=dialogId
                         message="Are you sure you want to redeem this reward?"
                         confirmButtonText="Confirm"
                         cancelButtonText="Cancel"
                         data-source="form"
-                        data-form-id="form-{{sanitizeId name}}"
+                        data-form-id=dataFormId
                     }}
+                    {{/with}}
 
+
+                      </form>
+                      </tr>
                   {{/each}}
                   
               </tbody>
@@ -75,20 +80,27 @@
                       <td>
                         <input type="hidden" name="category" value="{{fnbCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
-                        <button type="submit" data-open-modal="redeem-dialog-1" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
+                        <button type="submit" data-open-modal="dialog-{{sanitizeId name}}" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
 
-                      </form>
-                      </tr>
-
+                    {{#with (hash 
+                        dialogId=(concat "dialog-" (sanitizeId name))
+                        dataFormId=(concat "form-" (sanitizeId name))
+                    )}}
                     {{> flexibleModal 
-                        dialogId="dialog-{{name}}"
+                        dialogId=dialogId
                         message="Are you sure you want to redeem this reward?"
                         confirmButtonText="Confirm"
                         cancelButtonText="Cancel"
                         data-source="form"
-                        data-form-id="form-{{sanitizeId name}}"
+                        data-form-id=dataFormId
                     }}
+                    {{/with}}
+
+
+
+                      </form>
+                      </tr>
 
                   {{/each}}
                   
@@ -117,20 +129,27 @@
                       <td>
                         <input type="hidden" name="category" value="{{vitaSpaCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
-                        <button type="submit" data-open-modal="redeem-dialog-1" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
+                        <button type="submit" data-open-modal="dialog-{{sanitizeId name}}" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
 
-                      </form>
-                      </tr>
-
+                    {{#with (hash 
+                        dialogId=(concat "dialog-" (sanitizeId name))
+                        dataFormId=(concat "form-" (sanitizeId name))
+                    )}}
                     {{> flexibleModal 
-                        dialogId="dialog-{{name}}"
+                        dialogId=dialogId
                         message="Are you sure you want to redeem this reward?"
                         confirmButtonText="Confirm"
                         cancelButtonText="Cancel"
                         data-source="form"
-                        data-form-id="form-{{sanitizeId name}}"
+                        data-form-id=dataFormId
                     }}
+                    {{/with}}
+
+
+                      </form>
+                      </tr>
+
 
                   {{/each}}
               </tbody>
@@ -161,17 +180,23 @@
                         <button type="submit" data-open-modal="dialog-{{sanitizeId name}}" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
 
-                      </form>
-                      </tr>
-                    
+                    {{#with (hash 
+                        dialogId=(concat "dialog-" (sanitizeId name))
+                        dataFormId=(concat "form-" (sanitizeId name))
+                    )}}
                     {{> flexibleModal 
-                        dialogId="dialog-{{name}}"
+                        dialogId=dialogId
                         message="Are you sure you want to redeem this reward?"
                         confirmButtonText="Confirm"
                         cancelButtonText="Cancel"
                         data-source="form"
-                        data-form-id="form-{{sanitizeId name}}"
+                        data-form-id=dataFormId
                     }}
+                    {{/with}}
+
+                      </form>
+                      </tr>
+                
                   {{/each}}
               </tbody>
           </table>
