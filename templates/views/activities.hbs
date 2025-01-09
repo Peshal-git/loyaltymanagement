@@ -46,9 +46,9 @@
             <td>{{makeType this.transactionType}}</td>
             <td>{{this.service}}</td>
             <td>{{makeDate this.transactionDate}}</td>
-            <td><div class="flex"><span class="title">Points Before: </span>{{this.totalPointsBefore}}</div> </td>
-            <td><div class="flex"><span class="title">Points After: </span>{{this.totalPointsAfter}} </div></td>
-            <td> <div class="flex"><span class="title">Points <span> {{getUsedOrGained transactionType}} </span></span> <span class="{{getColor transactionType}}"> {{this.points}} </span></div> </td>
+            <td><div class="flex"><span class="title">Points Before: </span>{{commaFormat this.totalPointsBefore}}</div> </td>
+            <td><div class="flex"><span class="title">Points After: </span>{{commaFormat this.totalPointsAfter}} </div></td>
+            <td> <div class="flex"><span class="title">Points <span> {{ getUsedOrGained transactionType}} </span></span> <span class="{{getColor transactionType}}"> {{commaFormat this.points}} </span></div> </td>
         </tr>
 
         {{/each}}
