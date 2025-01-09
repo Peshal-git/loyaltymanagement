@@ -143,3 +143,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+var preloader = document.getElementsById('preloader')
+
+function hidePreloader(){
+    preloader.style.display = 'none';
+}
+
+function showPreloader() {
+    preloader.style.display = 'flex';
+}
