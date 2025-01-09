@@ -22,17 +22,27 @@
                   {{#each filteredRewards.yogaRewards}}
                       <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
 
-                      <form action="/redeem?id={{../user.id}}" method="POST">
+                      <form id="form-{{sanitizeId name}}" action="/redeem?id={{../user.id}}" method="POST">
 
                       <td>{{name}}</td>
                       <td>{{commaFormat points}}</td>
                       <td>
                         <input type="hidden" name="category" value="{{yogaCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
-                        <button type="submit" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
+                        <button type="submit" data-open-modal="dialog-{{sanitizeId name}}" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
+                    </form>
 
-                      </form>
+
+                    {{> flexibleModal 
+                        dialogId=(concat "dialog-" (sanitizeId name))
+                        message="Are you sure you want to redeem this reward?"
+                        confirmButtonText="Confirm"
+                        cancelButtonText="Cancel"
+                        source="form"
+                        formId=(concat "form-" (sanitizeId name))
+                    }}
+
                       </tr>
                   {{/each}}
                   
@@ -57,7 +67,7 @@
                   {{#each filteredRewards.fnbRewards}}
                       <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
 
-                      <form action="/redeem?id={{../user.id}}" method="POST">
+                      <form id="form-{{sanitizeId name}}" action="/redeem?id={{../user.id}}" method="POST">
                       
                       
                       <td>{{name}}</td>
@@ -65,11 +75,21 @@
                       <td>
                         <input type="hidden" name="category" value="{{fnbCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
-                        <button type="submit" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
+                        <button type="submit" data-open-modal="dialog-{{sanitizeId name}}" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
+                    </form>
 
-                      </form>
+                    {{> flexibleModal 
+                        dialogId=(concat "dialog-" (sanitizeId name))
+                        message="Are you sure you want to redeem this reward?"
+                        confirmButtonText="Confirm"
+                        cancelButtonText="Cancel"
+                        source="form"
+                        formId=(concat "form-" (sanitizeId name))
+                    }}
+
                       </tr>
+
                   {{/each}}
                   
               </tbody>
@@ -91,17 +111,28 @@
               <tbody>
                   {{#each filteredRewards.vitaSpaRewards}}
                       <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
-                      <form action="/redeem?id={{../user.id}}" method="POST">
+                      <form id="form-{{sanitizeId name}}" action="/redeem?id={{../user.id}}" method="POST">
                       <td>{{name}}</td>
                       <td>{{commaFormat points}}</td>
                       <td>
                         <input type="hidden" name="category" value="{{vitaSpaCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
-                        <button type="submit" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
+                        <button type="submit" data-open-modal="dialog-{{sanitizeId name}}" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
+                    
+                    </form>
 
-                      </form>
+                    {{> flexibleModal 
+                        dialogId=(concat "dialog-" (sanitizeId name))
+                        message="Are you sure you want to redeem this reward?"
+                        confirmButtonText="Confirm"
+                        cancelButtonText="Cancel"
+                        source="form"
+                        formId=(concat "form-" (sanitizeId name))
+                    }}
                       </tr>
+
+
                   {{/each}}
               </tbody>
           </table>
@@ -122,17 +153,27 @@
               <tbody>
                   {{#each filteredRewards.retreatRewards}}
                       <tr class="{{#if filtered}}filtered{{else}}non-filtered{{/if}}">
-                      <form action="/redeem?id={{../user.id}}" method="POST">
+                      <form id="form-{{sanitizeId name}}" action="/redeem?id={{../user.id}}" method="POST">
                       <td>{{name}}</td>
                       <td>{{commaFormat points}}</td>
                       <td>
                         <input type="hidden" name="category" value="{{retreatsCategory}}">
                         <input type="hidden" name="reward" value="{{name}}">
-                        <button type="submit" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
+                        <button type="submit" data-open-modal="dialog-{{sanitizeId name}}" class="update-button" {{#unless filtered}}disabled{{/unless}}>Redeem</button>
                       </td>
-
                       </form>
+
+                    {{> flexibleModal 
+                        dialogId=(concat "dialog-" (sanitizeId name))
+                        message="Are you sure you want to redeem this reward?"
+                        confirmButtonText="Confirm"
+                        cancelButtonText="Cancel"
+                        source="form"
+                        formId=(concat "form-" (sanitizeId name))
+                    }}
+
                       </tr>
+                
                   {{/each}}
               </tbody>
           </table>

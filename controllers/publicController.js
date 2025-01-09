@@ -18,7 +18,7 @@ const verifyMail = async (req, res) => {
         if (userr) {
 
             if (userr.isVerified) {
-                res.render('mail-verification', { message: 'Your mail is already verified.' })
+                return res.render('mail-verification', { message: 'Your mail is already verified.' })
             }
 
             await User.findByIdAndUpdate({ _id: id }, {
@@ -26,21 +26,21 @@ const verifyMail = async (req, res) => {
                     isVerified: true
                 }
             })
-            res.render('mail-verification', { message: 'Mail verified successfully' })
+            return res.render('mail-verification', { message: 'Mail verified successfully' })
 
         } else {
-            res.render('mail-verification', { message: 'User not found' })
+            return res.render('mail-verification', { message: 'User not found' })
         }
 
     } catch (error) {
         console.log(error.message)
-        res.render('404')
+        return res.render('404')
     }
 }
 
 const registerPage = async (req, res) => {
     try {
-        res.render('register')
+        return res.render('register')
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -51,7 +51,7 @@ const registerPage = async (req, res) => {
 
 const loginPage = async (req, res) => {
     try {
-        res.render('main-login')
+        return res.render('main-login')
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -63,7 +63,7 @@ const loginPage = async (req, res) => {
 
 const forgotPasswordPage = async (req, res) => {
     try {
-        res.render('forgot-password')
+        return res.render('forgot-password')
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -77,7 +77,7 @@ const resetPasswordPage = async (req, res) => {
         const tokenn = req.query.token
         const resetData = await PasswordReset.findOne({ token: tokenn })
 
-        res.render('reset-password', { resetData })
+        return res.render('reset-password', { resetData })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -189,7 +189,7 @@ const logout = async (req, res) => {
         })
 
         const message = "Successfully logged out!"
-        res.render('main-login', { message })
+        return res.render('main-login', { message })
     } catch (error) {
         return res.status(400).json({
             success: false,

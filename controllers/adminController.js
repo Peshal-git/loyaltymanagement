@@ -111,6 +111,14 @@ const makeTransaction = async (req, res) => {
             amount
         } = req.body
 
+        if (!amount || isNaN(amount)) {
+            req.session.reservationError = 'Amount is required and must be a valid number';
+            if (redirectPath === '/dashboard') {
+                return res.redirect(redirectPath);
+            }
+            return res.redirect(`/profile-info?id=${id}#points-wallet`);
+        }
+
         const multiplier = await getMultipliersDiscounts.getMultiplier(spendingType)
         const pointsGained = amount * multiplier
 
@@ -154,6 +162,7 @@ const makeTransaction = async (req, res) => {
         return res.redirect(`/profile-info?id=${id}#points-wallet`)
 
     } catch (error) {
+        const { id } = req.query
         const referer = req.get('Referer')
         const redirectPath = referer ? new URL(referer).pathname : null;
         req.session.reservationError = error

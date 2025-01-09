@@ -5,13 +5,13 @@
   <div class="nav-links">
     {{#unless hideItems}}
 
-      <a href="/profile" class="activities-link {{#if (eq active "profile")}}active{{/if}}">
+      <a href="/profile" class="wallet-link {{#if (eq active "profile")}}active{{/if}}">
         <img src="/images/home.svg" height="16" />Profile</a>
-      <a href="/activities" class="activities-link {{#if (eq active "activities")}}active{{/if}}">
-        <img src="/images/activity.svg" height="16" />Activities</a>
-      <a href="/about-us" class="activities-link {{#if (eq active "about-us")}}active{{/if}}">
+      <a href="/wallet" class="wallet-link {{#if (eq active "wallet")}}active{{/if}}">
+        <img src="/images/activity.svg" height="16" />Wallet</a>
+      <a href="/about-us" class="wallet-link {{#if (eq active "about-us")}}active{{/if}}">
         <img src="/images/info.svg" height="20" />About Us</a>
-      <a href="/membership" class="activities-link {{#if (eq active "membership")}}active{{/if}}">
+      <a href="/membership" class="wallet-link {{#if (eq active "membership")}}active{{/if}}">
         <img src="/images/info.svg" height="20" />Membership</a>
     {{/unless}}
     <a href="/logout" class="logout-link">

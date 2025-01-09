@@ -258,29 +258,6 @@ body{
   background-color: #f1f1f1; 
 }
 
-.input-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-
-.user-information-field .editable {
-  all: unset; 
-  display: inline;
-  font-family: inherit;
-  font-size: 0.9rem; 
-  color: inherit; 
-  text-decoration: none;
-  border: none; 
-  outline: none; 
-  background: none; 
-  padding: 0;
-  margin: 0;
-  margin-top: 0.3rem;
-  width: auto; 
-  white-space: nowrap;
-}
-
 select{
   display: inline;
   font-family: inherit;
@@ -298,15 +275,38 @@ select{
   margin-top: 0.3rem;
 }
 
+.input-wrapper {
+  position: relative;
+  display: flex; 
+  align-items: center;
+  width: 100%; 
+  max-width: 400px; 
+}
+
+.user-information-field .editable {
+  all: unset;
+  flex: 1; 
+  font-family: inherit;
+  font-size: 0.9rem; 
+  color: inherit;
+  text-decoration: none;
+  margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 .edit-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 16px;
+  position: relative; 
+  margin-left: 8px;
+  font-size: 14px; 
   color: #667391;
   cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.edit-icon:hover {
+  color: #4a5d80;
 }
 
 .lastbuttons {
@@ -365,7 +365,6 @@ select{
 
 .non-editable{
   font-size: 0.9rem;
-  margin-top: 0.3rem;
 }
 
 label{
@@ -773,6 +772,27 @@ dialog[data-modal]::backdrop {
   position: fixed;
 }
 
+dialog {
+  border: none;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 255px;
+  max-width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  position: fixed; 
+  top: 50%;        
+  left: 50%;       
+  transform: translate(-50%, -50%); 
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+}
+
 .confirm-button {
   width: 100%;
   padding: 10px;
@@ -914,7 +934,7 @@ cursor: pointer;
   width: 95%;
   margin: auto;
   background: #fff;
-  overflow: hidden;
+  overflow: visible;
   padding-top: 10px;
 }
 
@@ -1012,4 +1032,52 @@ cursor: pointer;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+}
+
+.dialog-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.dialog-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-button-dialog {
+  background-color: #4a4c61;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.confirm-button-dialog:hover {
+  background-color: #7e86aa;
+}
+
+
+.cancel-button-dialog {
+  background-color: white;
+  color: #4a4c61;
+  padding: 10px 20px;
+  border: 1px solid #4a4c61;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-button-dialog:hover {
+  background-color: #7e86aa;
+  color: white;
 }

@@ -34,13 +34,13 @@
 
                     {{#if (eq transactionType "add")}}
 
-                    <a href="/delete-transaction?id={{../user.id}}&tranCode={{this.tranCode}}" onclick="return confirm('Are you sure you want to delete this transaction?');">
+                    <a href="/delete-transaction?id={{../user.id}}&tranCode={{this.tranCode}}" data-open-modal="delete-dialog-1" onclick="handleClick(event)">
                         <span class="delete-icon-drop">&#x1F5D1;</span> Delete
                     </a>
 
                     {{else}}
 
-                    <a href="/delete-redemption?id={{../user.id}}&tranCode={{this.tranCode}}" onclick="return confirm('Are you sure you want to delete this transaction?');">
+                    <a href="/delete-redemption?id={{../user.id}}&tranCode={{this.tranCode}}" data-open-modal="delete-dialog-2" onclick="handleClick(event)">
                         <span class="delete-icon-drop">&#x1F5D1;</span> Delete
                     </a>
 
@@ -59,6 +59,25 @@
     </tbody>
   </table>
 
+    {{> flexibleModal 
+        dialogId="delete-dialog-1"
+        message="Are you sure you want to delete?"
+        confirmButtonText="Confirm"
+        cancelButtonText="Cancel"
+        source="link"
+        href="/delete-transaction?id={{../user.id}}&tranCode={{this.tranCode}}"
+    }}
+
+    {{> flexibleModal 
+        dialogId="delete-dialog-2"
+        message="Are you sure you want to delete?"
+        confirmButtonText="Confirm"
+        cancelButtonText="Cancel"
+        source="link"
+        href="/delete-redemption?id={{../user.id}}&tranCode={{this.tranCode}}"
+    }}
+
+
 {{else}}
     <p class="no-transaction">No transaction yet.</p>
 {{/if}}
@@ -70,96 +89,3 @@
 <h4 style="color: #709166;">{{message}}</h4>
 {{/if}}
 </div>
-{{!-- <div data-open-modal="modal2" class="addreservation-button"> 
-    <p class="redeem-button">&minus; </p>
-</div>
-
-<div id="rewardMessage" data-message="{{rewardMessage}}"></div>
-<div id="rewardError" data-error="{{rewardError}}"></div>
-
-<div data-open-modal="modal1" class="addreservation-button"> 
-    <p class="add-button">&#x271A; </p>
-</div>
-
-<dialog data-modal="modal1">
-    {{> addTransaction}}
-</dialog>
-
-<dialog data-modal="modal2">
-    {{> redeemPoints}}
-</dialog> --}}
-
-
-{{!-- </div> --}}
-
-</div>
-</body>
-
-<script>
-
-function toggleDropdown(event) {
-  const dropdown = event.target.nextElementSibling; // Get the next sibling (dropdown menu)
-  const isVisible = dropdown.style.display === "block"; // Check if it's currently visible
-  dropdown.style.display = isVisible ? "none" : "block"; // Toggle visibility
-
-  // Close other dropdowns if needed
-  const allDropdowns = document.querySelectorAll('.options-dropdown');
-  allDropdowns.forEach((otherDropdown) => {
-    if (otherDropdown !== dropdown) {
-      otherDropdown.style.display = "none";
-    }
-  });
-
-  event.stopPropagation(); // Prevent the event from bubbling up to the row click
-}
-
-// Optionally, close the dropdown when clicking outside
-document.addEventListener('click', function(event) {
-  const allDropdowns = document.querySelectorAll('.options-dropdown');
-  allDropdowns.forEach((dropdown) => {
-    dropdown.style.display = "none"; // Hide dropdowns when clicking outside
-  });
-});
-
-const rewardMessage = document.getElementById('rewardMessage').dataset.message;
-    const rewardError = document.getElementById('rewardError').dataset.error;
-
-    if (rewardMessage || rewardError) {
-
-        const modal = document.querySelector('[data-modal="modal2"]');
-        if (modal) {
-            modal.showModal(); // Trigger modal2
-        }
-    }
-
-
-const openElements = document.querySelectorAll("[data-open-modal]");
-const modals = document.querySelectorAll("[data-modal]");
-
-// Add event listener to trigger modal opening
-openElements.forEach(element => {
-    element.addEventListener("click", () => {
-        const modalId = element.getAttribute("data-open-modal");
-        const modal = document.querySelector(`[data-modal="${modalId}"]`);
-        if (modal) {
-            modal.showModal();
-        }
-    });
-});
-
-// Add event listeners to close the modal when clicking outside of it
-modals.forEach(modal => {
-    modal.addEventListener("click", e => {
-        const dialogDimensions = modal.getBoundingClientRect();
-        if (
-            e.clientX < dialogDimensions.left ||
-            e.clientX > dialogDimensions.right ||
-            e.clientY < dialogDimensions.top ||
-            e.clientY > dialogDimensions.bottom
-        ) {
-            modal.close();
-        }
-    });
-});
-
-</script>

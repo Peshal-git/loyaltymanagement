@@ -175,7 +175,7 @@ if (rewardMessage || rewardError) {
 const openElements = document.querySelectorAll("[data-open-modal]");
 const modals = document.querySelectorAll("[data-modal]");
 
-// Event listener to trigger modal opening
+
 openElements.forEach(element => {
     element.addEventListener("click", (event) => {
       event.preventDefault();
@@ -188,7 +188,7 @@ openElements.forEach(element => {
     });
 });
 
-// Event listeners to close the modal when clicking outside of it
+
 modals.forEach(modal => {
     modal.addEventListener("click", e => {
         const dialogDimensions = modal.getBoundingClientRect();

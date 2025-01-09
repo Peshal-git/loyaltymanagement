@@ -14,6 +14,7 @@ const getPaginatedMembers = async (query, page = 1) => {
                     $or: [
                         { name: { $regex: query, $options: 'i' } },
                         { email: { $regex: query, $options: 'i' } },
+                        { memberId: { $regex: query, $options: 'i' } },
                     ],
                 },
             ],
@@ -60,6 +61,7 @@ const getPaginatedAdmins = async (query, page = 1) => {
                     $or: [
                         { name: { $regex: query, $options: 'i' } },
                         { email: { $regex: query, $options: 'i' } },
+                        { memberId: { $regex: query, $options: 'i' } },
                     ],
                 },
             ],

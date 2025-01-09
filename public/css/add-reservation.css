@@ -43,7 +43,7 @@
 }
 
 .top-nav .logout-link:hover,
-.top-nav .activities-link:hover {
+.top-nav .wallet-link:hover {
     background-color: #fff;
     color: #161a2d;
 }

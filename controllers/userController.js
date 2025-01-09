@@ -45,7 +45,7 @@ const profilePage = async (req, res) => {
     }
 }
 
-const activitiesPage = async (req, res) => {
+const walletPage = async (req, res) => {
     try {
         let userData
 
@@ -66,12 +66,12 @@ const activitiesPage = async (req, res) => {
         const { historiesToShow, totalPages, prevPage, nextPage, currentPage, pages } = await getPaginations.getPaginatedHistory(history, page, limit)
 
         let message
-        if (req?.session?.activitiesMessage) {
-            message = req.session.activitiesMessage
-            req.session.activitiesMessage = null
+        if (req?.session?.walletMessage) {
+            message = req.session.walletMessage
+            req.session.walletMessage = null
         }
 
-        return res.render('activities', {
+        return res.render('wallet', {
             historiesToShow,
             totalPages,
             prevPage,
@@ -285,7 +285,7 @@ module.exports = {
     profilePage,
     aboutUsPage,
     membershipPage,
-    activitiesPage,
+    walletPage,
     addInfoPage,
     dashboardRedirect,
     updateAdditionalInfoAndConsent,
