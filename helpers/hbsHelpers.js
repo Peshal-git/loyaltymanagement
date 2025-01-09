@@ -105,6 +105,6 @@ hbs.registerHelper('sanitizeId', function(name) {
     return name.replace(/\s+/g, '-').toLowerCase();
 });
 
-hbs.registerHelper('concat', function () {
-    return Array.prototype.join.call(arguments, '');
+hbs.registerHelper('concat', function (...args) {
+    return args.slice(0, -1).join('');
 });
