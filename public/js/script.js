@@ -144,12 +144,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-var preloader = document.getElementsById('preloader')
 
-function hidePreloader(){
-    preloader.style.display = 'none';
-}
+const preloader = document.getElementById('preloader');
 
 function showPreloader() {
     preloader.style.display = 'flex';
 }
+
+function hidePreloader() {
+    preloader.style.display = 'none';
+}
+
+   
