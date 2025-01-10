@@ -141,8 +141,19 @@
               <p class="cardholder-name">{{user.name}} <br>
               <small>{{user.memberId}}</small>
               </p>
+              {{#if (eq user.tier "Balance")}}
+                <img  src="/images/balance-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
+                <img  src="/images/balance-card.svg" alt="Logo" class="balance-card back" id="cardImage" />
+                {{else if (eq user.tier "Vitality")}}
+                <img  src="/images/vitality-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
+                <img  src="/images/vitality-card.svg" alt="Logo" class="balance-card back" id="cardImage" />
+                {{else if (eq tier "Harmony")}}
+                <img  src="/images/harmony-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
+                <img  src="/images/harmony-card.svg" alt="Logo" class="balance-card back" id="cardImage" />
+                {{else}}
                 <img  src="/images/serenity-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
                 <img  src="/images/serenity-card.svg" alt="Logo" class="balance-card back" id="cardImage" />
+                {{/if}}
             </div>
 
             {{!-- <div class="lastbuttons">

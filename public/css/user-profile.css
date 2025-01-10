@@ -482,6 +482,13 @@ input[readonly] {
 }
 
 @media (max-width: 768px) {
+  .card-container {
+    height: 210px;
+  }
+
+  .cardholder-name {
+    bottom: 32px;
+  }
   .profile-field label {
     margin-bottom: 0px;
     color: #000;
@@ -517,5 +524,6 @@ input[readonly] {
 @media (max-width: 375px) {
   .card-container {
     width: 100%;
+    height: 180px;
   }
 }
