@@ -131,7 +131,7 @@
                 <div class="profile-field">
                 <label for="member-since">Points Balance</label>
                 <div class="field-content">
-                  <p class="text">{{ user.membershipInfo.pointsAvailable}}</p>
+                  <p class="text">{{ commaFormat user.membershipInfo.pointsAvailable}}</p>
                  
                 </div>
               </div>
@@ -142,7 +142,8 @@
               <small>{{user.memberId}}</small>
               </p>
               
-                <img  src="/images/card.png" alt="Logo" class="balance-card" id="cardImage" />
+                <img  src="/images/card.png" alt="Logo" class="balance-card front" id="cardImage" />
+                <img  src="/images/card.png" alt="Logo" class="balance-card back" id="cardImage" />
             </div>
 
             {{!-- <div class="lastbuttons">

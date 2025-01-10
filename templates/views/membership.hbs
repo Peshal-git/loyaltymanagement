@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Membership</title>
-  <link rel="stylesheet" href="/css/user-profile.css" />
+  <link rel="stylesheet" href="/css/membership.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="stylesheet" href="/css/global.css" />
      <link rel="icon" href="/images/favicon.ico" />
@@ -23,7 +23,30 @@
         <div class="left-container">
             <div class="content">
                {{> banner}}
-            Page to show applicable discounts, promotions, and progression to next tier
+               <div class="content-wrapper">
+                  <h3>Your Level Progress</h3>
+                  <p class="subtitle">Level us your membership status in three easy ways: with eligible nights stayed, eligible spend or stays at multiple brands.</p>
+                 {{> stepper}}
+
+                 <div class="booking-info">
+                  <div class="card">
+                     <div class="circular-progress" id="progress-1"></div>
+                     <p class="info">Book 10 more nights to level up</p>
+                  </div>
+
+                  <div class="card">
+                     <div class="circular-progress" id="progress-2"></div>
+                     <p class="info">Spend USD 1,000 more to level up</p>
+                  </div>
+
+                  <div class="card">
+                     <div class="circular-progress" id="progress-3"></div>
+                     <p class="info">Stay with 2 more brands to level up</p>
+                  </div>
+                 </div>
+
+               </div>
+
         </div>
         </div>
         </div>
@@ -31,3 +54,73 @@
 
 </body>
 </html>
+
+  <script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script>
+
+<script>
+   const progressBar = new ProgressBar.Circle(`#progress-1`, {
+      color: '#66748e',
+       strokeWidth: 5,
+       duration: 1400,
+        trailColor: '#2a353a45',
+      easing: 'easeInOut',
+      text: {
+        value: '0/10',
+        style: {
+          color: '#66748e',
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: '1em',
+          fontWeight: '400',
+        },
+      },
+      
+    });
+    progressBar.animate(0);
+
+    const progressBar2 = new ProgressBar.Circle(`#progress-2`, {
+      color: '#66748e',
+       strokeWidth: 5,
+       duration: 1400,
+        trailColor: '#2a353a45',
+      easing: 'easeInOut',
+      text: {
+        value: '0/1,000',
+        style: {
+          color: '#66748e',
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: '1em',
+          fontWeight: '400',
+        },
+      },
+      
+    });
+    progressBar2.animate(0);
+
+    const progressBar3 = new ProgressBar.Circle(`#progress-3`, {
+      color: '#66748e',
+       strokeWidth: 5,
+       duration: 1400,
+        trailColor: '#2a353a45',
+      easing: 'easeInOut',
+      text: {
+        value: '0/2',
+        style: {
+          color: '#66748e',
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: '1em',
+          fontWeight: '400',
+        },
+      },
+      
+    });
+    progressBar3.animate(0);
+</script>
