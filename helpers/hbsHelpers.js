@@ -124,3 +124,8 @@ hbs.registerHelper('minus', function(a, b){
 hbs.registerHelper('isSelected', function (currentTier, tier) {
     return currentTier === tier ? 'selected' : '';
 });
+
+hbs.registerHelper('divide', function (value1, value2) {
+    if (value2 === 0) return 0;
+    return value1 / value2;
+  })

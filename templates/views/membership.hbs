@@ -74,6 +74,7 @@
   <script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script>
 
 <script>
+   const progress1Percentage = {{divide user.membershipInfo.pointsAvailable basePoints.Vitality}}
    const progressBar = new ProgressBar.Circle(`#progress-1`, {
       color: '#66748e',
        strokeWidth: 5,
@@ -94,8 +95,9 @@
       },
       
     });
-    progressBar.animate(0);
+    progressBar.animate(progress1Percentage);
 
+    const progress2Percentage = {{divide user.membershipInfo.pointsAvailable basePoints.Harmony}}
     const progressBar2 = new ProgressBar.Circle(`#progress-2`, {
       color: '#66748e',
        strokeWidth: 5,
@@ -116,8 +118,9 @@
       },
       
     });
-    progressBar2.animate(0);
+    progressBar2.animate(progress2Percentage);
 
+    const progress3Percentage = {{divide user.membershipInfo.pointsAvailable basePoints.Serenity}}
     const progressBar3 = new ProgressBar.Circle(`#progress-3`, {
       color: '#66748e',
        strokeWidth: 5,
@@ -138,5 +141,5 @@
       },
       
     });
-    progressBar3.animate(0);
+    progressBar3.animate(progress3Percentage);
 </script>
