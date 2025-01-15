@@ -1,22 +1,26 @@
 <div class="stepper">
+
   <div class="step">
-    <p style="left: -8px;">Bronze</p>
-    <div class="circle bronze selected"></div>
+    <p style="left: -8px;">{{allTiers.tier1}}</p>
+    <div class="circle bronze {{isSelected user.tier allTiers.tier1}}"></div>
   </div>
   <div class="line"></div>
 
   <div class="step">
-    <p style="left: -4px;">Silver</p>
-    <div class="circle silver"></div>
+    <p style="left: -4px;">{{allTiers.tier2}}</p>
+    <div class="circle silver {{isSelected user.tier allTiers.tier2}}"></div>
   </div>
+  
   <div class="line"></div>
   <div class="step">
-    <p style="left: -6px;">Gold</p>
-    <div class="circle gold"></div>
+    <p style="left: -6px;">{{allTiers.tier3}}</p>
+    <div class="circle gold {{isSelected user.tier allTiers.tier3}}"></div>
   </div>
+
   <div class="line"></div>
   <div class="step">
-    <p style="left: -9px;">Black</p>
-    <div class="circle black"></div>
+    <p style="left: -9px;">{{allTiers.tier4}}</p>
+    <div class="circle black {{isSelected user.tier allTiers.tier4}}"></div>
   </div>
+
 </div>

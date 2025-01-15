@@ -7,6 +7,9 @@ const TierAndDiscountSchema = new mongoose.Schema({
     },
     discount: {
         type: Number
+    },
+    basePoints: {
+        type: Number
     }
 })
 

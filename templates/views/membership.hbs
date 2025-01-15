@@ -28,24 +28,40 @@
                   <p class="subtitle">Level us your membership status in three easy ways: with eligible nights stayed, eligible spend or stays at multiple brands.</p>
                  {{> stepper}}
 
-                 <div class="booking-info">
-                  <div class="card">
-                     <div class="circular-progress" id="progress-1"></div>
-                     <p class="info">Book 10 more nights to level up</p>
-                  </div>
+               <div class="booking-info">
+                {{#if user.tier}}
+                  {{#if (eq user.tier "Balance")}}
+                    <div class="card">
+                      <div class="circular-progress" id="progress-1"></div>
+                      <p class="info">Earn {{minus basePoints.Vitality user.membershipInfo.pointsAvailable}} more points to reach Vitality</p>
+                    </div>
+                    <div class="card">
+                      <div class="circular-progress" id="progress-2"></div>
+                      <p class="info">Earn {{minus basePoints.Harmony user.membershipInfo.pointsAvailable}} more points to reach Harmony</p>
+                    </div>
+                    <div class="card">
+                      <div class="circular-progress" id="progress-3"></div>
+                      <p class="info">Earn {{minus basePoints.Serenity user.membershipInfo.pointsAvailable}} more points to reach Serenity</p>
+                    </div>
+                  {{else if (eq user.tier "Vitality")}}
+                    <div class="card">
+                      <div class="circular-progress" id="progress-1"></div>
+                      <p class="info">Earn {{minus basePoints.Harmony user.membershipInfo.pointsAvailable}} more points to reach Harmony</p>
+                    </div>
+                    <div class="card">
+                      <div class="circular-progress" id="progress-2"></div>
+                      <p class="info">Earn {{minus basePoints.Serenity user.membershipInfo.pointsAvailable}} more points to reach Serenity</p>
+                    </div>
+                  {{else if (eq user.tier "Harmony")}}
+                    <div class="card">
+                      <div class="circular-progress" id="progress-1"></div>
+                      <p class="info">Earn {{minus basePoints.Serenity user.membershipInfo.pointsAvailable}} more points to reach Serenity</p>
+                    </div>
+                  {{else if (eq user.tier "Serenity")}}
+                  {{/if}}
+                {{/if}}
+              </div>
 
-                  <div class="card">
-                     <div class="circular-progress" id="progress-2"></div>
-                     <p class="info">Spend USD 1,000 more to level up</p>
-                  </div>
-
-                  <div class="card">
-                     <div class="circular-progress" id="progress-3"></div>
-                     <p class="info">Stay with 2 more brands to level up</p>
-                  </div>
-                 </div>
-
-               </div>
 
         </div>
         </div>
@@ -65,7 +81,7 @@
         trailColor: '#2a353a45',
       easing: 'easeInOut',
       text: {
-        value: '0/10',
+        value: "{{commaFormat user.membershipInfo.pointsAvailable}}/{{commaFormat basePoints.Vitality}}",
         style: {
           color: '#66748e',
           position: 'absolute',
@@ -87,7 +103,7 @@
         trailColor: '#2a353a45',
       easing: 'easeInOut',
       text: {
-        value: '0/1,000',
+        value: "{{commaFormat user.membershipInfo.pointsAvailable}}/{{commaFormat basePoints.Harmony}}",
         style: {
           color: '#66748e',
           position: 'absolute',
@@ -109,7 +125,7 @@
         trailColor: '#2a353a45',
       easing: 'easeInOut',
       text: {
-        value: '0/2',
+        value: "{{commaFormat user.membershipInfo.pointsAvailable}}/{{commaFormat basePoints.Serenity}}",
         style: {
           color: '#66748e',
           position: 'absolute',

@@ -108,3 +108,19 @@ hbs.registerHelper('sanitizeId', function(name) {
 hbs.registerHelper('concat', function (...args) {
     return args.slice(0, -1).join('');
 });
+
+hbs.registerHelper('lessThan', function(a, b) {
+    if (a < b) {
+        return true;  
+    } else {
+        return false;
+    }
+})
+
+hbs.registerHelper('minus', function(a, b){
+    return a-b
+})
+
+hbs.registerHelper('isSelected', function (currentTier, tier) {
+    return currentTier === tier ? 'selected' : '';
+});

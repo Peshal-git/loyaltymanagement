@@ -10,10 +10,10 @@ const initPricingScheme = async () => {
     }
 
     const discounts = [
-        { tier: "Balance", discount: 5 },
-        { tier: "Vitality", discount: 10 },
-        { tier: "Harmony", discount: 15 },
-        { tier: "Serenity", discount: 20 }
+        { tier: "Balance", discount: 5, basePoints: 0 },
+        { tier: "Vitality", discount: 10, basePoints: 10000 },
+        { tier: "Harmony", discount: 15, basePoints: 20000 },
+        { tier: "Serenity", discount: 20, basePoints: 30000 }
     ]
 
     const multipliers = [
@@ -31,7 +31,7 @@ const initPricingScheme = async () => {
     for (const entry of discounts) {
         await Pricing.updateOne(
             { "tierDiscount.tier": entry.tier },
-            { $set: { "tierDiscount.discount": entry.discount, "tierDiscount.tier": entry.tier } },
+            { $set: { "tierDiscount.discount": entry.discount, "tierDiscount.tier": entry.tier, "tierDiscount.basePoints": entry.basePoints } },
             { upsert: true }
         )
     }
