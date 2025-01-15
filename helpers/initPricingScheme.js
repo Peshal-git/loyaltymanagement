@@ -21,6 +21,7 @@ const initPricingScheme = async () => {
         {spendingType: "Yoga Class", multiplier: "0.2"},
         {spendingType: "Vita Spa", multiplier: "0.2"},
         {spendingType: "Retreats and YTT Packages", multiplier: "0.05"},
+        {spendingType: "Annual Membership Fee", multiplier: "2.5"},
         {spendingType: "Bonus 1", multiplier: "1"},
         {spendingType: "Bonus 2", multiplier: "1"},
         {spendingType: "Bonus 3", multiplier: "1"},

@@ -14,7 +14,7 @@ const TypeAndMultiplierSchema = new mongoose.Schema({
     spendingType: {
         type: String,
         required: true,
-        enum: ["Life Café", "Yoga Class", "Vita Spa", "Retreats and YTT Packages"]
+        enum: ["Life Café", "Yoga Class", "Vita Spa", "Retreats and YTT Packages", "Annual Membership Fee", "Bonus 1", "Bonus 2", "Bonus 3", "Bonus 4"]
     },
     multiplier: {
         type: Number

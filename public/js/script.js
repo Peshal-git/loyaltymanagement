@@ -155,4 +155,17 @@ function hidePreloader() {
     preloader.style.display = 'none';
 }
 
-   
+document.addEventListener("DOMContentLoaded", function () {
+    const spendingType = document.getElementById("spendingType");
+    const amount = document.getElementById("amount");
+
+    spendingType.addEventListener("change", function () {
+      if (spendingType.value === "Annual Membership Fee") {
+        amount.value = 1000;
+        amount.readOnly = true; 
+      } else {
+        amount.value = ""; 
+        amount.readOnly = false; 
+      }
+    });
+});
