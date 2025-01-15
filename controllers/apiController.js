@@ -494,19 +494,38 @@ const updateMemInfo = async (req, res) => {
             })
 
         } else {
-            const updatedUserData = await User.findByIdAndUpdate({ _id: userExits._id }, {
-                $set: {
-                    "membershipInfo.memberId": memberId,
-                    "membershipInfo.pointsAvailable": pointsAvailable,
-                    "membershipInfo.lastVisit": lastVisit,
-                    "membershipInfo.lastCommunication": lastCommunication,
-                    "membershipInfo.lastMarketingCommunication": lastMarketingCommunication,
-                    "membershipInfo.expiringPoints": expiringPoints,
-                    "membershipInfo.lastUsagePoints": lastUsagePoints,
-                    "membershipInfo.totalLifetimePoints": totalLifetimePoints,
-                    "membershipInfo.status": status
-                }
-            }, { new: true })
+            let updatedUserData
+
+            if(status == "Upgrade" || status == "Downgrade"){
+                updatedUserData = await User.findByIdAndUpdate({ _id: userExits._id }, {
+                    $set: {
+                        "membershipInfo.memberId": memberId,
+                        "membershipInfo.pointsAvailable": pointsAvailable,
+                        "membershipInfo.lastVisit": lastVisit,
+                        "membershipInfo.lastCommunication": lastCommunication,
+                        "membershipInfo.lastMarketingCommunication": lastMarketingCommunication,
+                        "membershipInfo.expiringPoints": expiringPoints,
+                        "membershipInfo.lastUsagePoints": lastUsagePoints,
+                        "membershipInfo.totalLifetimePoints": totalLifetimePoints,
+                        "membershipInfo.status": "Active"
+                    }
+                }, { new: true })
+                
+            }else{
+                updatedUserData = await User.findByIdAndUpdate({ _id: userExits._id }, {
+                    $set: {
+                        "membershipInfo.memberId": memberId,
+                        "membershipInfo.pointsAvailable": pointsAvailable,
+                        "membershipInfo.lastVisit": lastVisit,
+                        "membershipInfo.lastCommunication": lastCommunication,
+                        "membershipInfo.lastMarketingCommunication": lastMarketingCommunication,
+                        "membershipInfo.expiringPoints": expiringPoints,
+                        "membershipInfo.lastUsagePoints": lastUsagePoints,
+                        "membershipInfo.totalLifetimePoints": totalLifetimePoints,
+                        "membershipInfo.status": status
+                    }
+                }, { new: true })
+            }
 
             if(status == "Upgrade"){    
                 let newTier            

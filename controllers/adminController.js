@@ -817,6 +817,9 @@ const importAdmins = async (req,res) => {
             
             let admin = true
             let superAdmin = false
+            if(response[x].isSuperAdmin){
+                superAdmin = response[x].isSuperAdmin
+            }
             let verified = true
 
             usersData.push({
