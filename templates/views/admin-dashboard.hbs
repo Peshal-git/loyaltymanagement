@@ -71,7 +71,7 @@
 
     <form action="/import-admins" method="POST" enctype="multipart/form-data">
       <label for="csvFile" class="btn csv-btn btn-outlined">
-         <img src="/images/import.svg" alt="CSV Icon"> Import Users
+         <img src="/images/import.svg" alt="CSV Icon"> Import Admins
       </label>
       <input type="file" id="csvFile" name="csvFile" accept=".csv" style="display: none;" />
     </form>
@@ -200,6 +200,21 @@ modals.forEach(modal => {
         ) {
             modal.close();
         }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const spendingType = document.getElementById("spendingType");
+    const amount = document.getElementById("amount");
+
+    spendingType.addEventListener("change", function () {
+      if (spendingType.value === "Annual Membership Fee") {
+        amount.value = 1000;
+        amount.readOnly = true; 
+      } else {
+        amount.value = ""; 
+        amount.readOnly = false; 
+      }
     });
 });
 

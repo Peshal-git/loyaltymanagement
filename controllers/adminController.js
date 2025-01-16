@@ -205,6 +205,20 @@ const deleteTransaction = async (req, res) => {
         await pointsHistoryCalc.deletePointsRecord(requestedUser.transaction[reservationIndex].tranCode)
 
         requestedUser.transaction.splice(reservationIndex, 1)
+        const totalPoints = requestedUser.transaction.reduce(
+            (total, transaction) => total + (transaction.pointsGained || 0),
+            0
+        )
+        requestedUser.membershipInfo.pointsAvailable = totalPoints;
+        if (totalPoints > 29999) {
+            requestedUser.tier = "Serenity";
+        } else if (totalPoints > 19999) {
+            requestedUser.tier = "Harmony";
+        } else if (totalPoints > 9999) {
+            requestedUser.tier = "Vitality";
+        }else{
+            requestedUser.tier = "Balance"
+        }       
         await requestedUser.save()
 
         return res.redirect(`/profile-info?id=${id}#points-wallet`)
@@ -950,9 +964,8 @@ const redeemPoints = async(req,res) => {
         await pointsHistoryCalc.subtractPoints(userId, pointsToDeduct, totalPointsBefore, reward, tranCode)
 
         userToShow.membershipInfo.pointsForRedemptions -= pointsToDeduct
-        await userToShow.save()
-        
 
+        await userToShow.save()
 
         const message = `You have successfully redeemed ${reward}`
         req.session.rewardMessage = message

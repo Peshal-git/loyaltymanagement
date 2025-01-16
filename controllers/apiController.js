@@ -227,6 +227,14 @@ const addTransaction = async (req, res) => {
         )
         existingProfile.membershipInfo.pointsAvailable = totalPoints
 
+        if (totalPoints > 29999 && existingProfile.tier !== "Serenity") {
+            existingProfile.tier = "Serenity"
+        } else if (totalPoints > 19999 && existingProfile.tier !== "Harmony") {
+            existingProfile.tier = "Harmony"
+        } else if (totalPoints > 9999 && existingProfile.tier !== "Vitality") {
+            existingProfile.tier = "Vitality"
+        }        
+
         const updatedProfile = await existingProfile.save()
 
         return res.status(200).json({
@@ -304,6 +312,13 @@ const updateTransaction = async (req, res) => {
             0
         );
         existingProfile.membershipInfo.pointsAvailable = totalPoints;
+        if (totalPoints > 29999 && existingProfile.tier !== "Serenity") {
+            existingProfile.tier = "Serenity"
+        } else if (totalPoints > 19999 && existingProfile.tier !== "Harmony") {
+            existingProfile.tier = "Harmony"
+        } else if (totalPoints > 9999 && existingProfile.tier !== "Vitality") {
+            existingProfile.tier = "Vitality"
+        }        
         await existingProfile.save()
 
         const updatedProfile = await User.findOne({ memberId })
