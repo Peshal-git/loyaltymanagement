@@ -68,13 +68,14 @@
     </a>
 
    
-
+{{#if superadmin}}
     <form action="/import-admins" method="POST" enctype="multipart/form-data">
       <label for="csvFile" class="btn csv-btn btn-outlined">
          <img src="/images/import.svg" alt="CSV Icon"> Import Admins
       </label>
       <input type="file" id="csvFile" name="csvFile" accept=".csv" style="display: none;" />
     </form>
+{{/if}}
 
 
   </div>
