@@ -74,7 +74,7 @@
   <script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script>
 
 <script>
-   const progress1Percentage = {{divide user.membershipInfo.pointsAvailable basePoints.Vitality}}
+   const progress1Percentage = {{divide user.membershipInfo.pointsAvailable (progressOne user.tier basePoints)}}
    const progressBar = new ProgressBar.Circle(`#progress-1`, {
       color: '#66748e',
        strokeWidth: 5,
@@ -82,7 +82,7 @@
         trailColor: '#2a353a45',
       easing: 'easeInOut',
       text: {
-        value: "{{commaFormat user.membershipInfo.pointsAvailable}}/{{commaFormat basePoints.Vitality}}",
+        value: "{{commaFormat user.membershipInfo.pointsAvailable}}/{{commaFormat (progressOne user.tier basePoints)}}",
         style: {
           color: '#66748e',
           position: 'absolute',
@@ -97,7 +97,7 @@
     });
     progressBar.animate(progress1Percentage);
 
-    const progress2Percentage = {{divide user.membershipInfo.pointsAvailable basePoints.Harmony}}
+    const progress2Percentage = {{divide user.membershipInfo.pointsAvailable (progressTwo user.tier basePoints)}}
     const progressBar2 = new ProgressBar.Circle(`#progress-2`, {
       color: '#66748e',
        strokeWidth: 5,
@@ -105,7 +105,7 @@
         trailColor: '#2a353a45',
       easing: 'easeInOut',
       text: {
-        value: "{{commaFormat user.membershipInfo.pointsAvailable}}/{{commaFormat basePoints.Harmony}}",
+        value: "{{commaFormat user.membershipInfo.pointsAvailable}}/{{commaFormat (progressTwo user.tier basePoints)}}",
         style: {
           color: '#66748e',
           position: 'absolute',

@@ -128,4 +128,37 @@ hbs.registerHelper('isSelected', function (currentTier, tier) {
 hbs.registerHelper('divide', function (value1, value2) {
     if (value2 === 0) return 0;
     return value1 / value2;
-  })
+})
+
+hbs.registerHelper('progressOne', function (tier, basePoints) {
+    let pointsToBeShown
+
+    switch (tier) {
+      case 'Balance':
+        pointsToBeShown = basePoints["Vitality"];
+        break;
+      case 'Vitality':
+        pointsToBeShown = basePoints["Harmony"];
+        break;
+      case 'Harmony':
+        pointsToBeShown = basePoints["Serenity"];
+        break;
+    }
+  
+    return pointsToBeShown
+})
+
+hbs.registerHelper('progressTwo', function (tier, basePoints) {
+    let pointsToBeShown
+
+    switch (tier) {
+      case 'Balance':
+        pointsToBeShown = basePoints["Harmony"];
+        break;
+      case 'Vitality':
+        pointsToBeShown = basePoints["Serenity"];
+        break;
+    }
+    
+    return pointsToBeShown
+})
