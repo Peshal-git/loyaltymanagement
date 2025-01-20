@@ -373,14 +373,8 @@ const registerAndUpdateConsent = async (req, res) => {
         let superAdmin = false;
         let verified = false;
         let referrerId
-        if (email.endsWith('@dosink.com')) {
+        if (email.endsWith('@vikasa.com')) {
             admin = true;
-            verified = true;
-        }
-
-        if(email == "peshal@dosink.com"){
-            superAdmin = true
-            admin = true
         }
 
         if(referredBy){
