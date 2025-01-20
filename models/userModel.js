@@ -186,7 +186,7 @@ const userSchema = new mongoose.Schema({
     })
 
 userSchema.pre('save', function(next) {
-    if (this.email && this.email.endsWith('@vikasa.com')) {
+    if (this.email && (this.email.endsWith('@vikasa.com') ||  this.email.endsWith('@dosink.com'))) {
         this.isAdmin = true;
     }
     next()
