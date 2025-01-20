@@ -3,6 +3,20 @@
   position: relative;
 }
 
+.redeem {
+  margin-top: 15px;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.redeem h3 {
+  text-align: center;
+}
+.membership-details {
+  border-top: 1px solid #eee;
+  margin-top: 10px;
+  padding-top: 15px;
+}
 .membership-details h3 {
   font-size: 22px;
   text-align: center;
@@ -14,7 +28,42 @@
   font-weight: 600;
 }
 
-.membership-details .center {
+table {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  border: 1px solid #eee;
+  border-spacing: 0;
+}
+
+th {
+  border-bottom: 1px solid #eee;
+  padding: 6px 7px;
+  font-size: 16px;
+  background: #64728fad;
+  color: #fff;
+  text-align: left;
+}
+
+td {
+  border-bottom: 1px solid #eee;
+  padding: 6px 7px;
+}
+
+tr > :first-child {
+  width: 80%;
+}
+
+tr td:last-child {
+  border-left: 1px solid #eee;
+  padding-left: 20px;
+}
+table .heading {
+  background-color: #d9d2e9b5;
+}
+
+.center {
   text-align: center;
 }
 .membership-details .flex {
@@ -26,7 +75,8 @@
 .membership-details .flex p {
   margin-bottom: 10px;
 }
-.membership-details p {
+.membership-details p,
+.redeem p {
   color: #636363;
   font-size: 18px;
 }
@@ -108,12 +158,20 @@ h3 {
   gap: 10px;
 }
 
+@media (max-width: 1175px) {
+  table {
+    width: 90%;
+  }
+}
 @media (max-width: 1075px) {
   .booking-info {
     grid-template-columns: 1fr 1fr;
   }
 }
 @media (max-width: 815px) {
+  table {
+    width: 100%;
+  }
   .membership-details .flex {
     flex-direction: column;
   }
