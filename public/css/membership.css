@@ -3,6 +3,33 @@
   position: relative;
 }
 
+.membership-details h3 {
+  font-size: 22px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.membership-details .bold {
+  font-weight: 600;
+}
+
+.membership-details .center {
+  text-align: center;
+}
+.membership-details .flex {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.membership-details .flex p {
+  margin-bottom: 10px;
+}
+.membership-details p {
+  color: #636363;
+  font-size: 18px;
+}
 h3 {
   color: #66748e;
   font-size: 20px;
@@ -84,6 +111,14 @@ h3 {
 @media (max-width: 1075px) {
   .booking-info {
     grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 815px) {
+  .membership-details .flex {
+    flex-direction: column;
+  }
+  .membership-details .flex p {
+    text-align: center;
   }
 }
 
