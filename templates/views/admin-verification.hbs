@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mail verification</title>
+    <link rel="stylesheet" href="/css/mail-verification.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <img src="/images/vikasa-logo.png" alt="Vikasa Logo">
+        </div>
+
+        <div class="message-box">
+            <h2>Please verify your account and refresh. Verification link has been sent to your email.</h2>
+            <form action="/logout" method="GET">
+                <button type="submit" class="send-btn">Logout</button>
+            </form>
+            <p>Didn't get an email? <a href="/send-verification-link">Click here</a> to get a new verification email.</p>
+        </div>
+    </div>
+</body>
+</html>

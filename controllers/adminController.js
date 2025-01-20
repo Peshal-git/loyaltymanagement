@@ -19,7 +19,6 @@ const getMultipliersDiscounts = require('../helpers/getMultipliersDiscounts')
 const { validationResult } = require('express-validator')
 const pointsHistoryCalc = require('../helpers/pointsHistoryCalc')
 const PointsHistory = require('../models/pointsHistoryModel')
-const { trusted } = require('mongoose')
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
     ? process.env.API_BASE_URL_PROD
@@ -1020,6 +1019,33 @@ const rewardPointsPage = async (req, res) => {
     }
 }
 
+const adminVerificationPage = async(req,res)=> {
+    try {
+        return res.render('admin-verification')
+
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message,
+        });
+    }
+
+}
+
+const sendMailVerification = async(req,res)=> {
+    try {
+        const userData = req?.user?.user || req.user
+        const msg = '<p> Hello, ' + userData.name + `. Please <a href="${API_BASE_URL}/mail-verification?id=` + userData._id + '">Verify</a> your email. </p>'
+        mailer.sendMail(userData.email, 'Mail Verification', msg)
+        return res.redirect('/')
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message,
+        })
+    }
+}
+
 module.exports = {
     adminDashboard,
     addTransactionPage,
@@ -1045,5 +1071,7 @@ module.exports = {
     addMember,
     importAdmins,
     redeemPoints,
-    rewardPointsPage
+    rewardPointsPage,
+    adminVerificationPage,
+    sendMailVerification
 }

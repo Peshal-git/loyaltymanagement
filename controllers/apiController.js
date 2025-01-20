@@ -373,9 +373,6 @@ const registerAndUpdateConsent = async (req, res) => {
         let superAdmin = false;
         let verified = false;
         let referrerId
-        if (email.endsWith('@vikasa.com')) {
-            admin = true;
-        }
 
         if(referredBy){
             const userExists = await User.findOne({

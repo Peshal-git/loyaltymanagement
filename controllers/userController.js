@@ -227,8 +227,6 @@ const updateAdditionalInfoAndConsent = async (req, res) => {
       "marketing.createdAt": marketingCreated,
       "membershipInfo.pointsAvailable": 0.0,
       "membershipInfo.pointsForRedemptions": 0.0,
-      isAdmin: false,
-      isSuperAdmin: false,
     };
 
     const updatedUser = await User.findByIdAndUpdate(
