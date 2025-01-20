@@ -9,7 +9,7 @@ router.use(bodyParser.urlencoded({ extended: true }))
 
 const userController = require('../controllers/userController')
 const auth = require('../middleware/auth')
-const { userCheck, adminCheck, verificationCheck } = require('../middleware/middlewares')
+const { userCheck } = require('../middleware/middlewares')
 const { updateSocialAuthValidator } = require('../middleware/validation')
 const { registerUser, createToken } = require('../middleware/fetchAPI')
 const passport = require('passport')
@@ -19,7 +19,7 @@ router.post('/register', registerUser, createToken, passport.authenticate('local
     failureRedirect: '/'
 }), (req, res, next) => {
     next()
-}, auth, adminCheck, verificationCheck, userController.dashboardRedirect)
+}, auth, userCheck, userController.dashboardRedirect)
 
 router.get('/profile', auth, userCheck, userController.profilePage)
 router.get('/wallet', auth, userCheck, userController.walletPage)
