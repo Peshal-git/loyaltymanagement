@@ -821,7 +821,7 @@ const importAdmins = async (req,res) => {
 
         const csvData = req.file.buffer.toString();
         const response = await csv().fromString(csvData);
-        
+
         const usersData = []
 
         for (var x = 0; x < response.length; x++) {
@@ -835,24 +835,20 @@ const importAdmins = async (req,res) => {
                 mobile = '+' + mobile
             }
             
-            let admin = true
             let superAdmin = false
             if(response[x].isSuperAdmin){
                 superAdmin = response[x].isSuperAdmin
             }
-            let verified = true
 
-            usersData.push({
+            const user = new User({
                 name,
                 email: response[x].email,
-                systemData: {
-                    password: hashedPassword,
-                },
+                systemData: { password: hashedPassword },
                 dob: response[x].dob,
                 mobile,
                 memberId: uniqueMemberId,
-                isVerified: verified,
-                isAdmin: admin,
+                isVerified: true,
+                isAdmin: true,
                 isSuperAdmin: superAdmin,
                 privacy: {
                     hasAcceptedPrivacyPolicy: true,
@@ -864,14 +860,15 @@ const importAdmins = async (req,res) => {
                 },
                 membershipInfo: {
                     pointsAvailable: 0,
-                    pointsForRedemptions: 0
-                }
+                    pointsForRedemptions: 0,
+                },
             })
-        }
 
-        const users = await User.insertMany(usersData);
+            await user.save()
+            usersData.push(user)
+        }
         
-        for (const user of users){
+        for (const user of usersData){
             let randomString = randomstring.generate()
             let msg = '<p>Hello, ' + user.name + `, Please click <a href = "${API_BASE_URL}/reset-password?token=` + randomString + '">here</a> to set your password. </p>'
            

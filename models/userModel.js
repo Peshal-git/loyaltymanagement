@@ -151,7 +151,8 @@ const userSchema = new mongoose.Schema({
     },
     memberId: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     googleId: String,
     facebookId: String,
