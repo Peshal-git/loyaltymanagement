@@ -814,8 +814,15 @@ const addMember = async (req, res) => {
 
 const importAdmins = async (req,res) => {
     try {
+
+        if (!req.file) {
+            throw new Error('No file uploaded!');
+        }
+
+        const csvData = req.file.buffer.toString();
+        const response = await csv().fromString(csvData);
+        
         const usersData = []
-        const response = await csv().fromFile(req.file.path)
 
         for (var x = 0; x < response.length; x++) {
             let password = `${response[x].firstname}123`
@@ -862,26 +869,8 @@ const importAdmins = async (req,res) => {
             })
         }
 
-        let users
-
-        try {
-            users = await User.insertMany(usersData)
-        } catch (error) {
-            if (error.code && error.code === 11000) {
-
-                reservationError = error.writeErrors.map((writeError) => {
-                    return writeError.err.op.name
-                })
-
-                req.session.reservationError = "Duplicate error for the record: " + reservationError
-                return res.redirect('/dashboard')
-            }
-
-            req.session.reservationError = error.message
-            return res.redirect('/dashboard')
-        }
-
-
+        const users = await User.insertMany(usersData);
+        
         for (const user of users){
             let randomString = randomstring.generate()
             let msg = '<p>Hello, ' + user.name + `, Please click <a href = "${API_BASE_URL}/reset-password?token=` + randomString + '">here</a> to set your password. </p>'
@@ -906,6 +895,16 @@ const importAdmins = async (req,res) => {
         return res.redirect('/dashboard')
                 
     } catch (error) {
+        if (error.code && error.code === 11000) {
+
+            reservationError = error.writeErrors.map((writeError) => {
+                return writeError.err.op.name
+            })
+
+            req.session.reservationError = "Duplicate error for the record: " + reservationError
+            return res.redirect('/dashboard')
+        }
+
         req.session.reservationError = error.message
         return res.redirect('/dashboard')
     }

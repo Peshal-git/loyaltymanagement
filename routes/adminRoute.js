@@ -17,26 +17,18 @@ require('../config/passportSetup')
 const auth = require('../middleware/auth')
 
 const multer = require('multer')
-const storage = multer.diskStorage({
-    destination: (req,file,cb) => {
-        cb(null,'./public/csv-uploads')
-    },
-    filename: (req,file,cb) => {
-        const uniqueSuffix = Date.now() + '-'
-        cb(null, uniqueSuffix + '-' + file.originalname)
-    }
-})
+const storage = multer.memoryStorage()
 
 const upload = multer({
     storage,
     fileFilter: (req, file, cb) => {
         if (file.mimetype === 'text/csv') {
-            cb(null, true)
+            cb(null, true);
         } else {
-            cb(new Error('Only CSV files are allowed!'), false)
+            cb(new Error('Only CSV files are allowed!'), false);
         }
     },
-})
+});
 
 router.get('/dashboard', auth, adminCheck, verificationCheck, adminController.adminDashboard)
 
