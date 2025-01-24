@@ -31,7 +31,7 @@ passport.use(new GoogleStrategy({
         if (currentUser) {
             if (!currentUser.googleId) {
                 currentUser.googleId = profile.id
-                currentUser.isVerified = true
+                currentUser.isVerified = true;
             }
             currentUser.systemData = {
                 authentication: accessToken
