@@ -156,12 +156,6 @@ const userSchema = new mongoose.Schema({
     },
     googleId: String,
     facebookId: String,
-    method: {
-        type: String,
-        enum: ["Email", "Google", "Facebook"],
-        default: 'Email',
-        required: true
-    },
     systemData: SystemDataSchema,
     privacy: PrivacySchema,
     marketing: MarketingSchema,

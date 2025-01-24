@@ -26,9 +26,13 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        const currentUser = await User.findOne({ googleId: profile.id })
+        const currentUser = await User.findOne({ email: profile.emails[0].value })
 
         if (currentUser) {
+            if (!currentUser.googleId) {
+                currentUser.googleId = profile.id
+                currentUser.isVerified = true
+            }
             currentUser.systemData = {
                 authentication: accessToken
             }
@@ -39,7 +43,6 @@ passport.use(new GoogleStrategy({
             const uniqueMemberId = val.toString()
 
             const newUser = new User({
-                method: "Google",
                 name: profile.displayName,
                 googleId: profile.id,
                 email: profile.emails[0].value,
@@ -64,9 +67,13 @@ passport.use(new FacebookStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
     try {
 
-        const currentUser = await User.findOne({ facebookId: profile.id })
+        const currentUser = await User.findOne({ email: profile.emails[0].value })
 
         if (currentUser) {
+            if (!currentUser.facebookId) {
+                currentUser.facebookId = profile.id
+                currentUser.isVerified = true
+            }
             currentUser.systemData = {
                 authentication: accessToken
             }
@@ -77,7 +84,6 @@ passport.use(new FacebookStrategy({
             const uniqueMemberId = val.toString()
 
             const newUser = new User({
-                method: "Facebook",
                 name: profile.displayName,
                 facebookId: profile.id,
                 email: profile.emails[0].value,
