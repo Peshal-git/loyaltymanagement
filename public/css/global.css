@@ -51,7 +51,7 @@ body {
 }
 
 .banner {
-  background: url("/images/home-banner-lg.jpeg") center/cover no-repeat;
+  background: url("/images/home-banner-lg.jpg") center/cover no-repeat;
   min-height: 220px;
   height: 220px;
   position: relative;
@@ -259,13 +259,14 @@ input {
   }
   .banner-img-sm {
     display: block;
-    height: 100px !important;
+    height: 80px !important;
   }
   .main-container {
     overflow: unset;
   }
   .banner {
-    background: url("/images/home-banner.jpeg") center/cover no-repeat;
+    background: url("/images/home-banner.jpg") center/cover no-repeat;
+    border-radius: 0px !important;
   }
 
   .banner .overlay {
