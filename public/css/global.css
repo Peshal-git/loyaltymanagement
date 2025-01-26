@@ -200,6 +200,16 @@ input {
   font-size: 15px;
 }
 
+.privacy-link {
+  color: black;
+  margin-left: -3px;
+  text-decoration: none;
+}
+
+.privacy-link:hover {
+  text-decoration: underline;
+}
+
 .banner-img-sm {
   display: none;
 }
@@ -387,4 +397,3 @@ input {
     font-size: 11px;
   }
 }
-  

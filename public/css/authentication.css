@@ -179,6 +179,15 @@ select:focus-visible {
   outline: 1px solid #546bb5;
 }
 
+.privacy-link {
+  color: black;
+  margin-left: -3px;
+  text-decoration: none;
+}
+
+.privacy-link:hover {
+  text-decoration: underline;
+}
 .mt-10 {
   margin-top: 10px;
 }
