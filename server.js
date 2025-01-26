@@ -21,6 +21,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
 app.use(cookieParser())
 
+app.set('trust proxy', 1);
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,

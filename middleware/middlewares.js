@@ -2,8 +2,7 @@ const User = require('../models/userModel')
 
 const dobAndMobileCheck = async (req, res, next) => {
     try {
-        const userId = req.user.id
-        
+        const userId = req.user.id        
         const user = await User.findById(userId)
 
         if (!user.mobile || !user.dob) {
