@@ -8,6 +8,7 @@
 <table class="points-table">
     <thead>
       <tr>
+        <th>Date</th>
         <th>Type</th>
         <th>Service/Reward</th>
         <th>Points</th>
@@ -17,6 +18,7 @@
     <tbody>
         {{#each historiesToShow}}
         <tr onclick="window.location.href='/transaction-details/?id={{../user.id}}&tranCode={{this.tranCode}}'">
+        <td>{{makeDate this.transactionDate}}</td>
         <td>{{makeType this.transactionType}}</td>
         <td>{{this.service}}</td>
         <td><span> {{getUsedOrGained transactionType}} </span> <span class="{{getColor transactionType}}"> {{commaFormat this.points}} </span></td>
