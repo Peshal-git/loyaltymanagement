@@ -154,70 +154,14 @@
 </div>
 </div>
 
-</body>
+<script src="/js/dashboard-script.js"></script>
+{{#if superadmin}}
 <script>
-const fileInput = document.getElementById("csvFile");
-fileInput.addEventListener('change', function() {
-  this.form.submit();
-});
-
-const rewardMessage = document.getElementById('rewardMessage').dataset.message;
-const rewardError = document.getElementById('rewardError').dataset.error;
-
-if (rewardMessage || rewardError) {
-
-    const modal = document.querySelector('[data-modal="modal2"]');
-    if (modal) {
-        modal.showModal();
-    }
-}
-
-
-const openElements = document.querySelectorAll("[data-open-modal]");
-const modals = document.querySelectorAll("[data-modal]");
-
-
-openElements.forEach(element => {
-    element.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-        const modalId = element.getAttribute("data-open-modal");
-        const modal = document.querySelector(`[data-modal="${modalId}"]`);
-        if (modal) {
-            modal.showModal();
-        }
-    });
-});
-
-
-modals.forEach(modal => {
-    modal.addEventListener("click", e => {
-        const dialogDimensions = modal.getBoundingClientRect();
-        if (
-            e.clientX < dialogDimensions.left ||
-            e.clientX > dialogDimensions.right ||
-            e.clientY < dialogDimensions.top ||
-            e.clientY > dialogDimensions.bottom
-        ) {
-            modal.close();
-        }
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const spendingType = document.getElementById("spendingType");
-    const amount = document.getElementById("amount");
-
-    spendingType.addEventListener("change", function () {
-      if (spendingType.value === "Annual Membership Fee") {
-        amount.value = 1000;
-        amount.readOnly = true; 
-      } else {
-        amount.value = ""; 
-        amount.readOnly = false; 
-      }
-    });
-});
-
+  const fileInput = document.getElementById("csvFile");
+  fileInput.addEventListener("change", function () {
+    this.form.submit();
+  });
 </script>
+{{/if}}
+</body>
 </html>
