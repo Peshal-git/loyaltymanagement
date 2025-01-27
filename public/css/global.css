@@ -179,6 +179,18 @@ input {
   background: #494e651a;
 }
 
+.pending-status {
+  padding: 12px;
+  color: #d40707;
+  font-size: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid #b2000047;
+  margin: 20px 20px 0px 20px;
+  border-radius: 8px;
+}
+
 .page-link {
   padding: 7px 8px;
   color: #494e65;
