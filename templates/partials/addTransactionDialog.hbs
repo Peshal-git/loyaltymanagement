@@ -5,7 +5,7 @@
 {{/if}}
         <div class="form-group">
             <label for="spendingType">Spending Type</label>
-            <select name="spendingType" id="spendingType" required value="{{#if enteredFields.spendingType}}{{enteredFields.spendingType}}{{/if}}">
+            <select name="spendingType" class="spendingType" required value="{{#if enteredFields.spendingType}}{{enteredFields.spendingType}}{{/if}}">
                 <option value="Life Café">Life Café</option>
                 <option value="Yoga Class">Yoga Class</option>
                 <option value="Vita Spa">Vita Spa</option>
@@ -23,8 +23,8 @@
             <label for="amount">Amount</label>
             <div class="currency-input">
                 <span class="currency-symbol">THB | </span>
-                <input type="number" name="amount" id="amount" 
-                    class="form-input" 
+                <input type="number" name="amount" 
+                    class="form-input amount" 
                     value="{{getValue transactionObj.amount enteredFields.amount}}" 
                     placeholder="Enter amount" required>
             </div>

@@ -99,22 +99,22 @@
         <td>{{this.email}}</td>
         <td>{{this.mobile}}</td>
         <td onclick="event.stopPropagation();">
-            <a data-open-modal="modal1"> 
+            <a data-open-modal="{{this.id}}"> 
             <span class="add-icon">&#43;</span>
             </a>
 
-            <a data-open-modal="modal2"> 
+            <a data-open-modal="{{this.name}}"> 
             <span class="minus-icon">&minus;</span>
             </a>
 
             <div id="rewardMessage" data-message="{{rewardMessage}}"></div>
             <div id="rewardError" data-error="{{rewardError}}"></div>
            
-            <dialog data-modal="modal1">
+            <dialog data-modal="{{this.id}}">
                 {{> addTransactionDialog}}
             </dialog>
 
-            <dialog data-modal="modal2">
+            <dialog data-modal="{{this.name}}">
                 {{> redeemPointsDialog}}
             </dialog>
 

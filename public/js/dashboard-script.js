@@ -1,15 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const rewardMessage =
-    document.getElementById("rewardMessage").dataset.message;
-  const rewardError = document.getElementById("rewardError").dataset.error;
-
-  if (rewardMessage || rewardError) {
-    const modal = document.querySelector('[data-modal="modal2"]');
-    if (modal) {
-      modal.showModal();
-    }
-  }
-
   const openElements = document.querySelectorAll("[data-open-modal]");
   const modals = document.querySelectorAll("[data-modal]");
 
@@ -17,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     element.addEventListener("click", (event) => {
       const modalId = element.getAttribute("data-open-modal");
       const modal = document.querySelector(`[data-modal="${modalId}"]`);
+
       if (modal) {
         modal.showModal();
       }
@@ -85,17 +75,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateRewards(categorySelect.value);
 
-  const spendingType = document.getElementById("spendingType");
-  const amount = document.getElementById("amount");
-  if (spendingType && amount) {
-    spendingType.addEventListener("change", function () {
-      if (spendingType.value === "Annual Membership Fee") {
-        amount.value = 1000;
-        amount.readOnly = true;
-      } else {
-        amount.value = "";
-        amount.readOnly = false;
-      }
-    });
-  }
+  document.querySelectorAll('.spendingType').forEach((spendingType, index) => {
+    const amount = document.querySelectorAll('.amount')[index];
+    if (spendingType && amount) {
+        spendingType.addEventListener('change', function () {
+            if (spendingType.value === 'Annual Membership Fee') {
+                amount.value = 1000;
+                amount.readOnly = true;
+            } else {
+                amount.value = '';
+                amount.readOnly = false;
+            }
+        });
+    }
+  });
 });
