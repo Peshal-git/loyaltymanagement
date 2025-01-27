@@ -48,12 +48,7 @@ router.get('/delete-transaction', auth, superAdminCheck, verificationCheck, admi
 router.get('/delete-redemption', auth, superAdminCheck, verificationCheck, adminController.deleteRedemption)
 
 router.get('/profile-info', auth, adminCheck, verificationCheck, adminController.profileInformation)
-
-router.get('/privacy-pref', auth, adminCheck, verificationCheck, adminController.privacyAndPreferences)
-router.get('/membership-info', auth, adminCheck, verificationCheck, adminController.membershipInformation)
-router.get('/points-wallet', auth, adminCheck, verificationCheck, adminController.pointsWallet)
 router.get('/transaction-details', auth, adminCheck, verificationCheck, adminController.transactionDetails)
-router.get('/discounts', auth, adminCheck, verificationCheck, adminController.discounts)
 
 router.post('/discount-control', auth, superAdminCheck, verificationCheck, discountsUpdateValidator, adminController.updateDiscounts)
 router.post('/multiplier-control', auth, superAdminCheck, verificationCheck, multipliersUpdateValidator, adminController.updateMultipliers)

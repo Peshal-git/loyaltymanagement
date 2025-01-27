@@ -186,7 +186,15 @@ const deleteUser = async (req, res) => {
             res.redirect('/dashboard')
         }
     } catch (error) {
-        res.render('admin-dashboard', {error: error.message})
+        const { id } = req.query
+        const referer = req.get('Referer')
+        const redirectPath = referer ? new URL(referer).pathname : null;
+        req.session.reservationError = error
+        if(redirectPath=='/dashboard'){
+            return res.redirect(redirectPath)
+        }
+    
+        return res.redirect(`/profile-info?id=${id}#points-wallet`)
     }
 }
 
@@ -258,7 +266,7 @@ const deleteRedemption = async (req, res) => {
 const profileInformation = async (req, res) => {
     try {
         const id = req.query.id
-        const userToShow = await User.findOne({ _id: id })
+        const userToShow = await User.findById(id)
         const formattedDate = userToShow.dob.toISOString().split('T')[0]
         const parts = formattedDate.split('-');
         const mmddyyyy = `${parts[1]}-${parts[2]}-${parts[0]}`;
@@ -284,7 +292,7 @@ const profileInformation = async (req, res) => {
         const history = await PointsHistory.find({ userId: id }).sort({ transactionDate: -1 })
     
         const page = Number(req.query.page) || 1
-        const limit = 5
+        const limit = 10
         
         const { historiesToShow } = await getPaginations.getPaginatedHistory(history, page, limit)
 
@@ -315,8 +323,20 @@ const profileInformation = async (req, res) => {
             filteredRewards[category] = filtered
         }
 
+        const userTransactions = userToShow.transaction || [];
+        const totalExpenditure = userTransactions.length
+          ? userTransactions.reduce((accumulator, item) => accumulator + item.amount, 0)
+          : 0;
+
+        userToShow.membershipInfo.totalExpenditure = totalExpenditure
+        await User.findByIdAndUpdate(userToShow.id, {
+            $set: {
+              "membershipInfo.totalExpenditure": totalExpenditure
+            }
+        })
+
         return res.render('admin-page', { 
-            user: userToShow, 
+            user: userToShow,
             refUser, 
             mmddyyyy, 
             superadmin, 
@@ -330,48 +350,6 @@ const profileInformation = async (req, res) => {
             updateMemberMessage,
             filteredRewards
         })
-    } catch (error) {
-        return res.status(400).json({
-            success: false,
-            msg: error.message
-        })
-    }
-}
-
-const privacyAndPreferences = async (req, res) => {
-    try {
-        const id = req.query.id
-        const userToShow = await User.findOne({ _id: id })
-
-        return res.render('admin-page', { user: userToShow, activePage: 'privacy' })
-    } catch (error) {
-        return res.status(400).json({
-            success: false,
-            msg: error.message
-        })
-    }
-}
-
-const membershipInformation = async (req, res) => {
-    try {
-        const id = req.query.id
-        const userToShow = await User.findOne({ _id: id })
-
-        return res.render('admin-page', { user: userToShow, activePage: 'membership' })
-    } catch (error) {
-        return res.status(400).json({
-            success: false,
-            msg: error.message
-        })
-    }
-}
-
-const pointsWallet = async (req, res) => {
-    try {
-        const id = req.query.id
-        const requestedUser = await User.findOne({ _id: id })
-
-        return res.render('admin-page', { user: requestedUser, activePage: 'pointsWallet' })
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -415,29 +393,6 @@ const transactionDetails = async (req, res) => {
     }
 }
 
-const discounts = async (req, res) => {
-    try {
-
-        const { id } = req.query
-        const userToShow = await User.findById(id)
-
-        const discounts = await getValues.getDiscountValues()
-        const multipliers = await getValues.getMultiplierValues()
-
-        const user = req?.user?.user || req.user
-        const superadmin = user.isSuperAdmin
-
-        return res.render('admin-page', { user: userToShow, activePage: 'discounts', discounts, multipliers, superadmin })
-
-    } catch (error) {
-        return res.status(400).json({
-            success: false,
-            msg: error.message
-        })
-    }
-}
-
-
 
 const updateProfile = async (req, res) => {
     try {
@@ -468,7 +423,7 @@ const updateProfile = async (req, res) => {
             $set: data
         }, { new: true })
 
-        res.redirect(`/admin-page?id=${id}`);
+        res.redirect(`/dashboard?id=${id}`);
 
     } catch (error) {
         return res.status(400).json({
@@ -582,17 +537,17 @@ const getCSV = async (req, res) => {
 const updateDiscounts = async(req,res) => {
     try {
         const { id } = req.query
-        const userToShow = await User.findById(id)
-        const user = req?.user?.user || req.user
-        const superadmin = user.isSuperAdmin
-
-        var discounts = await getValues.getDiscountValues()
-        var multipliers = await getValues.getMultiplierValues()
-
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             const discountError = errors.errors[0].msg
-            return res.render('admin-page', { discountError, user: userToShow, discounts, multipliers })
+            const referer = req.get('Referer')
+            const redirectPath = referer ? new URL(referer).pathname : null;
+            req.session.reservationError = discountError
+            if(redirectPath=='/dashboard'){
+                return res.redirect(redirectPath)
+            }
+
+            return res.redirect(`/profile-info?id=${id}#points-wallet`)
         }
 
         const {
@@ -612,23 +567,27 @@ const updateDiscounts = async(req,res) => {
         await Pricing.updateOne({ "tierDiscount.tier": "Harmony" }, { $set: { "tierDiscount.discount": harmonyDiscountNew } })
         await Pricing.updateOne({ "tierDiscount.tier": "Serenity" }, { $set: { "tierDiscount.discount": serenityDiscountNew } })
 
-        discounts = await getValues.getDiscountValues()
-        multipliers = await getValues.getMultiplierValues()
-
         const discountMessage = "Discounts Updated"
 
-        return res.render('admin-page', { discountMessage, user: userToShow , activePage: 'discounts', discounts, multipliers, superadmin})
+        const referer = req.get('Referer')
+        const redirectPath = referer ? new URL(referer).pathname : null;
+        req.session.reservationMessage = discountMessage
+        if(redirectPath=='/dashboard'){
+            return res.redirect(redirectPath)
+        }
+    
+        return res.redirect(`/profile-info?id=${id}#points-wallet`)
 
     } catch (error) {
         const { id } = req.query
-        const userToShow = await User.findById(id)
-
-        const discounts = await getValues.getDiscountValues()
-        const multipliers = await getValues.getMultiplierValues()
-
-        const user = req?.user?.user || req.user
-        const superadmin = user.isSuperAdmin
-        return res.render('admin-page', { discountError: "An error occured", user: userToShow, activePage: 'discounts',superadmin, discounts, multipliers  })
+        const referer = req.get('Referer')
+        const redirectPath = referer ? new URL(referer).pathname : null;
+        req.session.reservationError = error
+        if(redirectPath=='/dashboard'){
+            return res.redirect(redirectPath)
+        }
+    
+        return res.redirect(`/profile-info?id=${id}#points-wallet`)
     }
 }
 
@@ -639,13 +598,17 @@ const updateMultipliers = async(req,res) => {
         const user = req?.user?.user || req.user
         const superadmin = user.isSuperAdmin
 
-        var discounts = await getValues.getDiscountValues()
-        var multipliers = await getValues.getMultiplierValues()
-
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             const multiplierError = errors.errors[0].msg
-            return res.render('admin-page', { multiplierError, user: userToShow, discounts, multipliers, superadmin })
+            const referer = req.get('Referer')
+            const redirectPath = referer ? new URL(referer).pathname : null;
+            req.session.reservationError = multiplierError
+            if(redirectPath=='/dashboard'){
+                return res.redirect(redirectPath)
+            }
+        
+            return res.redirect(`/profile-info?id=${id}#points-wallet`)
         }
 
         const {
@@ -660,24 +623,12 @@ const updateMultipliers = async(req,res) => {
         await Pricing.updateOne({ "spendingMultiplier.spendingType": "Vita Spa" }, { $set: { "spendingMultiplier.multiplier": vitaSpaMultiplier } })
         await Pricing.updateOne({ "spendingMultiplier.spendingType": "Retreats and YTT Packages" }, { $set: { "spendingMultiplier.multiplier": retreatsMultiplier } })
 
-        discounts = await getValues.getDiscountValues()
-        multipliers = await getValues.getMultiplierValues()
-
         const multiplierMessage = "Multipliers Updated"
-        return res.render('admin-page', { multiplierMessage, user: userToShow , activePage: 'discounts', discounts, multipliers, superadmin})
+        return res.redirect(`/profile-info?id=${id}#points-wallet`)
 
     } catch (error) {
         const { id } = req.query
-        const userToShow = await User.findById(id)
-
-        console.log("Error")
-
-        const discounts = await getValues.getDiscountValues()
-        const multipliers = await getValues.getMultiplierValues()
-
-        const user = req?.user?.user || req.user
-        const superadmin = user.isSuperAdmin
-        return res.render('admin-page', { multiplierError: "An error occured", user: userToShow, activePage: 'discounts', discounts, multipliers, superadmin })
+        return res.redirect(`/profile-info?id=${id}#points-wallet`)
     }
 }
 
@@ -1010,7 +961,6 @@ const rewardPointsPage = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error)
         return res.redirect('/dashboard')
     }
 }
@@ -1052,11 +1002,7 @@ module.exports = {
     profileInformation,
     updateProfile,
     mainlogin,
-    privacyAndPreferences,
-    membershipInformation,
-    pointsWallet,
     transactionDetails,
-    discounts,
     updatePrivacyAndPreference,
     updateMembershipInfo,
     updateTransactionInfo,

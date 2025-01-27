@@ -67,6 +67,9 @@ const MemberInfoSchema = new mongoose.Schema({
         type: String,
         enum: ["Active", "Pending", "Inactive", "Upgrade", "Downgrade"],
         default: 'Pending'
+    },
+    totalExpenditure: {
+        type: Number
     }
 })
 
