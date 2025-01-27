@@ -29,6 +29,7 @@
           {{#if (eq user.membershipInfo.status "Pending")}}
             <div class="pending-status"><img src="/images/warning.svg" height="24" />Hi {{user.name}}, please activate your membership by paying the membership fees.</div>
           {{/if}}
+
           <form class="profile-container">
 
             <div class="profile">
@@ -141,22 +142,25 @@
               </div>
 
             </div>
-            <div class="card-container">
+            <div class="card-container" id="capture">
+              <div class="download-overlay" id="download-card">
+                <img  src="/images/download-white.png" height="22px"  />
+              </div>
               <p class="cardholder-name">{{user.name}} <br>
               <small>{{user.memberId}}</small>
               </p>
               {{#if (eq user.tier "Balance")}}
                 <img  src="/images/balance-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
-                <img  src="/images/balance-card.svg" alt="Logo" class="balance-card back" id="cardImage" />
+                {{!-- <img  src="/images/balance-card.svg" alt="Logo" class="balance-card back" id="cardImage" /> --}}
                 {{else if (eq user.tier "Vitality")}}
                 <img  src="/images/vitality-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
-                <img  src="/images/vitality-card.svg" alt="Logo" class="balance-card back" id="cardImage" />
+                {{!-- <img  src="/images/vitality-card.svg" alt="Logo" class="balance-card back" id="cardImage" /> --}}
                 {{else if (eq user.tier "Harmony")}}
                 <img  src="/images/harmony-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
-                <img  src="/images/harmony-card.svg" alt="Logo" class="balance-card back" id="cardImage" />
+                {{!-- <img  src="/images/harmony-card.svg" alt="Logo" class="balance-card back" id="cardImage" /> --}}
                 {{else}}
                 <img  src="/images/serenity-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
-                <img  src="/images/serenity-card.svg" alt="Logo" class="balance-card back" id="cardImage" />
+                {{!-- <img  src="/images/serenity-card.svg" alt="Logo" class="balance-card back" id="cardImage" /> --}}
                 {{/if}}
             </div>
 
@@ -227,25 +231,30 @@
     </div>
 
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/dom-to-image"></script>
 
-  {{!-- <script type="text/javascript">
-    const cardImage = document.getElementById('cardImage');
+  <script type="text/javascript">
+  document.getElementById('download-card').addEventListener('click', function () {
 
-    document.addEventListener('DOMContentLoaded', function () {
-      cardImage.addEventListener('mouseenter', function () {
-        cardImage.classList.add('flipped');
-        setTimeout(function() {
-          cardImage.src = '/images/card.png';
-        }, 300);
-      });
+      const element = document.getElementById('capture');
+      const downloadLink = document.getElementById("download-card")
+      downloadLink.style.display='none';
+      domtoimage.toPng(element)
+        .then((dataUrl) => {
+ downloadLink.style.display = '';
+          const link = document.createElement('a');
+          link.download = 'screenshot.png';
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch((error) => {
+           downloadLink.style.display = '';
+          console.error('Error capturing the div:', error);
+        });
+            
 
-      cardImage.addEventListener('mouseleave', function () {
-        cardImage.classList.remove('flipped');
-        setTimeout(function() {
-          cardImage.src = '/images/card.png';
-        }, 300);
-      });
-    });
-  </script> --}}
+  })
+
+  </script>
   
 </html>
