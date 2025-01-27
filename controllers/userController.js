@@ -5,7 +5,7 @@ const getValues = require("../helpers/getValues");
 const PointsHistory = require("../models/pointsHistoryModel");
 const getPaginations = require("../helpers/getPaginations");
 const CsvParser = require("json2csv").Parser;
-const Pricing = require('../models/pricingModel')
+const Pricing = require("../models/pricingModel");
 
 const dashboardRedirect = async (req, res) => {
   try {
@@ -86,6 +86,7 @@ const walletPage = async (req, res) => {
       currentPage,
       pages,
       message,
+      userData,
     });
   } catch (error) {
     return res.status(400).json({
@@ -124,17 +125,21 @@ const membershipPage = async (req, res) => {
       userData = req.user;
     }
 
-    const tiers = await Pricing.find({}, 'tierDiscount.tier');
+    const tiers = await Pricing.find({}, "tierDiscount.tier");
     const tierValues = tiers
-    .filter(doc => doc.tierDiscount && doc.tierDiscount.tier)
-    .map(doc => doc.tierDiscount.tier)
+      .filter((doc) => doc.tierDiscount && doc.tierDiscount.tier)
+      .map((doc) => doc.tierDiscount.tier);
 
     const allTiers = tierValues.reduce((acc, tier, index) => {
       acc[`tier${index + 1}`] = tier;
-      return acc
-    }, {})
+      return acc;
+    }, {});
 
-    const tiersDoc = await Pricing.find({'tierDiscount.tier': { $in: ["Balance", "Vitality", "Harmony", "Serenity"] }})
+    const tiersDoc = await Pricing.find({
+      "tierDiscount.tier": {
+        $in: ["Balance", "Vitality", "Harmony", "Serenity"],
+      },
+    });
 
     const basePoints = tiersDoc.reduce((acc, tier) => {
       const tierName = tier.tierDiscount.tier;

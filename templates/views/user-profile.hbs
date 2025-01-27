@@ -26,7 +26,11 @@
           <div class="content">
                {{> banner}}
           {{!-- <form class="profile-container" action="/update-profileinfo?id={{user.id}}"> --}}
+          {{#if (eq user.membershipInfo.status "Pending")}}
+            <div class="pending-status"><img src="/images/warning.svg" height="24" />Hi {{user.name}}, please activate your membership by paying the membership fees.</div>
+          {{/if}}
           <form class="profile-container">
+
             <div class="profile">
               <!-- Profile Form Fields -->
               <div class="profile-field">
