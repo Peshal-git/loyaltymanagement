@@ -48,6 +48,16 @@ passport.use(new GoogleStrategy({
                 email: profile.emails[0].value,
                 isVerified: true,
                 memberId: uniqueMemberId,
+                privacy: {
+                    hasAcceptedPrivacyPolicy: false,
+                },
+                marketing: {
+                    hasGivenMarketingConsent: false,
+                },
+                membershipInfo: {
+                    pointsAvailable: 0,
+                    pointsForRedemption: 0
+                }
             })
 
             await newUser.save()
@@ -88,7 +98,19 @@ passport.use(new FacebookStrategy({
                 facebookId: profile.id,
                 email: profile.emails[0].value,
                 isVerified: true,
-                memberId: uniqueMemberId
+                memberId: uniqueMemberId,
+                privacy: {
+                    hasAcceptedPrivacyPolicy: false,
+                    createdAt: null
+                },
+                marketing: {
+                    hasGivenMarketingConsent: false,
+                    createdAt: null
+                },
+                membershipInfo: {
+                    pointsAvailable: 0,
+                    pointsForRedemption: 0
+                }
             })
             await newUser.save()
             done(null, newUser)

@@ -196,10 +196,10 @@ const updateAdditionalInfoAndConsent = async (req, res) => {
     let privacyCreated = new Date();
     let marketingCreated = new Date();
     if (user?.privacy?.createdAt) {
-      privacyCreated = userExits.privacy.createdAt;
+      privacyCreated = user.privacy.createdAt;
     }
     if (user?.marketing?.createdAt) {
-      marketingCreated = userExits.marketing.createdAt;
+      marketingCreated = user.marketing.createdAt;
     }
 
     let referrerId;
