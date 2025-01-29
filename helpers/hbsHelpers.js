@@ -10,14 +10,15 @@ hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
 
 hbs.registerHelper('makeDate', function (value) {
     if (value) {
-        const formattedDate = value.toISOString().split('T')[0]
-        const parts = formattedDate.split('-')
-        const mmddyyyy = `${parts[0]}-${parts[2]}-${parts[1]}`
-        return mmddyyyy
+        const date = new Date(value); 
+        if (!isNaN(date)) {
+            const formattedDate = date.toISOString().split('T')[0];
+            const parts = formattedDate.split('-');
+            const mmddyyyy = `${parts[0]}-${parts[1]}-${parts[2]}`;
+            return mmddyyyy;
+        }
     }
-    else {
-        return "Date not available"
-    }
+    return "N/A";
 })
 
 hbs.registerHelper('makeTime', function (value) {

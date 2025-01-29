@@ -267,9 +267,6 @@ const profileInformation = async (req, res) => {
     try {
         const id = req.query.id
         const userToShow = await User.findById(id)
-        const formattedDate = userToShow.dob.toISOString().split('T')[0]
-        const parts = formattedDate.split('-');
-        const mmddyyyy = `${parts[1]}-${parts[2]}-${parts[0]}`;
         const refUser = await User.findOne({memberId: userToShow.referredBy})
 
 
@@ -338,7 +335,6 @@ const profileInformation = async (req, res) => {
         return res.render('admin-page', { 
             user: userToShow,
             refUser, 
-            mmddyyyy, 
             superadmin, 
             activePage: 'profile', 
             discounts, 
