@@ -40,10 +40,12 @@ const MarketingSchema = new mongoose.Schema({
 
 const MemberInfoSchema = new mongoose.Schema({
     pointsAvailable: {
-        type: Number
+        type: Number,
+        default: 0
     },
     pointsForRedemptions: {
-        type: Number
+        type: Number,
+        default: 0
     },
     lastVisit: {
         type: Date
