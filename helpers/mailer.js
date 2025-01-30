@@ -6,7 +6,7 @@ const sendMail = async (email, subject, content) => {
     try {
         var message = {
             from: {
-                name: 'Peshal',
+                name: process.env.SENDGRID_NAME,
                 email: process.env.SENDGRID_MAIL
             },
             to: email,
