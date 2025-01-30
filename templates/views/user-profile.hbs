@@ -239,9 +239,11 @@
       const element = document.getElementById('capture');
       const downloadLink = document.getElementById("download-card")
       downloadLink.style.display='none';
+      element.style.margin= "0px";
       domtoimage.toPng(element)
         .then((dataUrl) => {
  downloadLink.style.display = '';
+  element.style.margin= "0px auto";
           const link = document.createElement('a');
           link.download = 'screenshot.png';
           link.href = dataUrl;
@@ -249,6 +251,7 @@
         })
         .catch((error) => {
            downloadLink.style.display = '';
+            element.style.margin= "0px auto";
           console.error('Error capturing the div:', error);
         });
             
