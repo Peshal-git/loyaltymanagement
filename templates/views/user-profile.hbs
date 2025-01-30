@@ -142,7 +142,10 @@
               </div>
 
             </div>
-            <div class="card-container" id="capture">
+
+
+            <div class="card-container" >
+              <div id="capture">
               <div class="download-overlay" id="download-card">
                 <img  src="/images/download-white.png" height="22px"  />
               </div>
@@ -162,7 +165,10 @@
                 <img  src="/images/serenity-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
                 {{!-- <img  src="/images/serenity-card.svg" alt="Logo" class="balance-card back" id="cardImage" /> --}}
                 {{/if}}
-            </div>
+                </div>
+
+                </div>
+
 
             {{!-- <div class="lastbuttons">
           <input class="update-button" type="submit" value="&#x1F4DD; Update"> 
@@ -239,11 +245,9 @@
       const element = document.getElementById('capture');
       const downloadLink = document.getElementById("download-card")
       downloadLink.style.display='none';
-      element.style.margin= "0px";
       domtoimage.toPng(element)
         .then((dataUrl) => {
  downloadLink.style.display = '';
-  element.style.margin= "0px auto";
           const link = document.createElement('a');
           link.download = 'screenshot.png';
           link.href = dataUrl;
@@ -251,7 +255,6 @@
         })
         .catch((error) => {
            downloadLink.style.display = '';
-            element.style.margin= "0px auto";
           console.error('Error capturing the div:', error);
         });
             

@@ -208,6 +208,10 @@ h2 {
   width: 370px;
 }
 
+.card-container #capture {
+  height: 100%;
+}
+
 .card-container:hover .download-overlay {
   opacity: 1;
   transition: opacity 0.5s ease;
@@ -229,7 +233,7 @@ h2 {
     opacity: 1;
   }
 }
-.card-container > img {
+.card-container .balance-card {
   position: absolute;
   top: 0;
   left: 0;
