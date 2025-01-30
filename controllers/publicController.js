@@ -6,6 +6,10 @@ const mailer = require('../helpers/mailer')
 const { validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
 
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+    ? process.env.API_BASE_URL_PROD
+    : process.env.API_BASE_URL_DEV;
+
 const verifyMail = async (req, res) => {
     try {
         const id = req.query.id
@@ -155,7 +159,7 @@ const sendMailToChangePassword = async (req, res) => {
         }
 
         const randomString = randomstring.generate()
-        const msg = '<p>Hello, ' + userData.name + `, Please click <a href = "${API_BASE_URL}/reset-password?token=` + randomString + '">here</a> to reset your password. </p>'
+        const msg = `<p>Hello, ${userData.name}. Please click <a href = "${API_BASE_URL}/reset-password?token=${randomString}">here</a> to reset your password. </p>`
 
         await PasswordReset.deleteMany({ user_id: userData._id })
 
