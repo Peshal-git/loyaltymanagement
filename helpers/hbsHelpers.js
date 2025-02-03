@@ -99,7 +99,7 @@ hbs.registerHelper('commaFormat', function (number) {
     if (typeof number !== 'number') {
         return number;
     }
-    return number.toLocaleString('en-US');
+    return Math.floor(number).toLocaleString('en-US');
 });
 
 hbs.registerHelper('sanitizeId', function(name) {
@@ -119,7 +119,7 @@ hbs.registerHelper('lessThan', function(a, b) {
 })
 
 hbs.registerHelper('minus', function(a, b){
-    return a-b
+    return Math.ceil(a-b);
 })
 
 hbs.registerHelper('isSelected', function (currentTier, tier) {
