@@ -163,3 +163,23 @@ hbs.registerHelper('progressTwo', function (tier, basePoints) {
     
     return pointsToBeShown
 })
+
+hbs.registerHelper('getTextColor', function (tier) {
+let textColor;
+    switch (tier) {
+        case 'Balance':
+            textColor = "balance-text";
+            break;
+        case 'Vitality':
+            textColor = "vitality-text";
+            break;
+        case 'Harmony':
+            textColor = "harmony-text";
+            break;
+        case 'Serenity':
+            textColor = "serenity-text";
+            break;
+    }
+    
+    return textColor
+})

@@ -136,8 +136,7 @@
                 <div class="profile-field">
                 <label for="member-since">Points Balance</label>
                 <div class="field-content">
-                  <p class="text">{{ commaFormat user.membershipInfo.pointsAvailable}}</p>
-                 
+                  <p class="text">{{ commaFormat user.membershipInfo.pointsForRedemptions}}</p>
                 </div>
               </div>
 
@@ -149,20 +148,22 @@
               <div class="download-overlay" id="download-card">
                 <img  src="/images/download-white.png" height="22px"  />
               </div>
-              <p class="cardholder-name">{{user.name}} <br>
-              <small>{{user.memberId}}</small>
-              </p>
+              <div class="cardholder-name {{getTextColor user.tier}}">
+              <p>{{user.name}} </p>
+              <p>{{user.memberId}}</p>
+              </div>
+              
               {{#if (eq user.tier "Balance")}}
-                <img  src="/images/balance-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
+                <img  src="/images/balance-card1.svg" alt="Logo" class="balance-card front" id="cardImage" />
                 {{!-- <img  src="/images/balance-card.svg" alt="Logo" class="balance-card back" id="cardImage" /> --}}
                 {{else if (eq user.tier "Vitality")}}
-                <img  src="/images/vitality-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
+                <img  src="/images/vitality-card1.svg" alt="Logo" class="balance-card front" id="cardImage" />
                 {{!-- <img  src="/images/vitality-card.svg" alt="Logo" class="balance-card back" id="cardImage" /> --}}
                 {{else if (eq user.tier "Harmony")}}
-                <img  src="/images/harmony-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
+                <img  src="/images/harmony-card1.svg" alt="Logo" class="balance-card front" id="cardImage" />
                 {{!-- <img  src="/images/harmony-card.svg" alt="Logo" class="balance-card back" id="cardImage" /> --}}
                 {{else}}
-                <img  src="/images/serenity-card.svg" alt="Logo" class="balance-card front" id="cardImage" />
+                <img  src="/images/serenity-card1.svg" alt="Logo" class="balance-card front" id="cardImage" />
                 {{!-- <img  src="/images/serenity-card.svg" alt="Logo" class="balance-card back" id="cardImage" /> --}}
                 {{/if}}
                 </div>
@@ -177,6 +178,13 @@
 
             <!-- Add remaining profile fields here as per original code -->
           </form>
+
+          <div class="button-div">
+          <a target="_blank" href="https://app.flywire.com/solutions/quick-pay/?code=VRK&amp;amount=1000&amp;invoice_number=Loyalty%20Program">
+            <button class="payment-button">Make your payment</button>
+          </a>
+          </div>
+
           </div>
 
         </div>
