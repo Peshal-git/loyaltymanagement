@@ -1,227 +1,227 @@
-const getMultipliersDiscounts = require('../helpers/getMultipliersDiscounts');
-const User = require('../models/userModel')
+const getMultipliersDiscounts = require("../helpers/getMultipliersDiscounts");
+const User = require("../models/userModel");
 
-const API_BASE_URL = process.env.NODE_ENV === 'production'
+const API_BASE_URL =
+  process.env.NODE_ENV === "production"
     ? process.env.API_BASE_URL_PROD
     : process.env.API_BASE_URL_DEV;
 
 const registerUser = async (req, res, next) => {
-    try {
-        const { firstname,
-            lastname,
-            email,
-            password,
-            dob,
-            mobile,
-            referredBy,
-            language,
-            hasAcceptedPrivacyPolicy,
-            hasGivenMarketingConsent } = req.body
-        const response = await fetch(`${API_BASE_URL}/api/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                firstname,
-                lastname,
-                email,
-                password,
-                dob,
-                mobile,
-                referredBy,
-                language,
-                hasAcceptedPrivacyPolicy,
-                hasGivenMarketingConsent
-            })
-        })
+  try {
+    const {
+      firstname,
+      lastname,
+      email,
+      password,
+      dob,
+      mobile,
+      referredBy,
+      language,
+      hasAcceptedPrivacyPolicy,
+      hasGivenMarketingConsent,
+    } = req.body;
+    const response = await fetch(`${API_BASE_URL}/api/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstname,
+        lastname,
+        email,
+        password,
+        dob,
+        mobile,
+        referredBy,
+        language,
+        hasAcceptedPrivacyPolicy,
+        hasGivenMarketingConsent,
+      }),
+    });
 
-        const responseData = await response.json()
+    const responseData = await response.json();
 
-        if (responseData?.errors) {
-            const enteredFields = req.body
-            return res.render('register', { enteredFields, error: responseData.errors[0].msg })
-        }
-        else {
-            if (!responseData.success) {
-                const enteredFields = req.body
-                return res.render('register', { enteredFields, error: responseData.msg })
-            }
-            else {
-                req.session.registrationMessage = responseData?.msg
-                const memberId = responseData?.user?.memberId
-                req.session.memberId = memberId
-            }
-        }
-
-        next()
-    } catch (error) {
-        return res.json({
-            success: false,
-            msg: error.message
-        })
+    if (responseData?.errors) {
+      const enteredFields = req.body;
+      return res.render("register", {
+        enteredFields,
+        error: responseData.errors[0].msg,
+      });
+    } else {
+      if (!responseData.success) {
+        const enteredFields = req.body;
+        return res.render("register", {
+          enteredFields,
+          error: responseData.msg,
+        });
+      } else {
+        req.session.registrationMessage = responseData?.msg;
+        const memberId = responseData?.user?.memberId;
+        req.session.memberId = memberId;
+      }
     }
-}
+
+    next();
+  } catch (error) {
+    return res.json({
+      success: false,
+      msg: error.message,
+    });
+  }
+};
 
 const createToken = async (req, res, next) => {
-    try {
-        const { email, password } = req.body
+  try {
+    const { email, password } = req.body;
 
-        const apiResponse = await fetch(`${API_BASE_URL}/api/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        })
+    const apiResponse = await fetch(`${API_BASE_URL}/api/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-        const data = await apiResponse.json()
+    const data = await apiResponse.json();
 
-        if (!data?.success) {
-            if (data?.errors) {
-                return res.render('main-login', { error: data.errors[0].msg })
-            }
-            return res.render('main-login', { error: data.msg })
-        }
-        next()
-
-    } catch (error) {
-        console.error('Error during login:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    if (!data?.success) {
+      if (data?.errors) {
+        return res.render("main-login", { error: data.errors[0].msg });
+      }
+      return res.render("main-login", { error: data.msg });
     }
-}
+    next();
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 const logout = async (req, res, next) => {
-    try {
-        if (req.user?.systemData?.authentication) {
-            const token = req.user?.systemData?.authentication
-            await fetch(`${API_BASE_URL}/api/logout`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': token
-                },
-            })
-        }
-
-        next()
-    } catch (error) {
-        return res.json({
-            success: false,
-            msg: error.message
-        })
+  try {
+    if (req.user?.systemData?.authentication) {
+      const token = req.user?.systemData?.authentication;
+      await fetch(`${API_BASE_URL}/api/logout`, {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      });
     }
-}
+
+    next();
+  } catch (error) {
+    return res.json({
+      success: false,
+      msg: error.message,
+    });
+  }
+};
 
 const updateMembershipInfo = async (req, res, next) => {
-    try {
-        const id = req.query.id
-        const userToUpdate = await User.findById(id)
+  try {
+    const id = req.query.id;
+    const userToUpdate = await User.findById(id);
 
-        const {
-            pointsAvailable,
-            lastVisit,
-            lastCommunication,
-            lastMarketingCommunication,
-            expiringPoints,
-            lastUsagePoints,
-            totalLifetimePoints,
-            status
+    const {
+      pointsAvailable,
+      lastVisit,
+      lastCommunication,
+      lastMarketingCommunication,
+      expiringPoints,
+      lastUsagePoints,
+      totalLifetimePoints,
+      status,
+    } = req.body;
 
-        } = req.body
+    const response = await fetch(`${API_BASE_URL}/api/update-member-info`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        memberId: userToUpdate.memberId,
+        pointsAvailable,
+        lastVisit,
+        lastCommunication,
+        lastMarketingCommunication,
+        expiringPoints,
+        lastUsagePoints,
+        totalLifetimePoints,
+        status,
+      }),
+    });
 
-        const response = await fetch(`${API_BASE_URL}/api/update-member-info`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                memberId: userToUpdate.memberId,
-                pointsAvailable,
-                lastVisit,
-                lastCommunication,
-                lastMarketingCommunication,
-                expiringPoints,
-                lastUsagePoints,
-                totalLifetimePoints,
-                status
-            })
-        })
+    const data = await response.json();
 
-        const data = await response.json()
-
-        if (!data?.success) {
-            if (data?.errors) {
-                const error = data.errors[0].msg
-                req.session.updateMemberError = error
-                return res.redirect(`/profile-info?id=${id}#membership-info`)
-            }
-            const message = data.msg
-            req.session.updateMemberMessage = message
-            return res.redirect(`/profile-info?id=${id}#membership-info`)
-        }
-
-        next()
-
-    } catch (error) {
-        return res.json({
-            success: false,
-            msg: error.message
-        })
+    if (!data?.success) {
+      if (data?.errors) {
+        const error = data.errors[0].msg;
+        req.session.updateMemberError = error;
+        return res.redirect(`/profile-info?id=${id}#membership-info`);
+      }
+      const message = data.msg;
+      req.session.updateMemberMessage = message;
+      return res.redirect(`/profile-info?id=${id}#membership-info`);
     }
-}
+
+    next();
+  } catch (error) {
+    return res.json({
+      success: false,
+      msg: error.message,
+    });
+  }
+};
 
 const updateTransactionInfo = async (req, res, next) => {
-    try {
-        const { id, tranCode } = req.query
-        const userToUpdate = await User.findById(id)
+  try {
+    const { id, tranCode } = req.query;
+    const userToUpdate = await User.findById(id);
 
-        const {
-            spendingType,
-            amount
-        } = req.body
-        
-        const multiplier = await getMultipliersDiscounts.getMultiplier(spendingType)
-        const pointsGained = amount * multiplier
+    const { spendingType, amount } = req.body;
 
-        const response = await fetch(`${API_BASE_URL}/api/update-transaction`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                tranCode,
-                memberId: userToUpdate.memberId,
-                spendingType,
-                amount,
-                pointsGained
-            })
-        })
+    const multiplier =
+      await getMultipliersDiscounts.getMultiplier(spendingType);
+    const pointsGained = amount * multiplier;
 
-        const data = await response.json()
+    const response = await fetch(`${API_BASE_URL}/api/update-transaction`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tranCode,
+        memberId: userToUpdate.memberId,
+        spendingType,
+        amount,
+        pointsGained,
+      }),
+    });
 
-        if (!data?.success) {
-            if (data?.errors) {
-                return res.render('transaction-details', { error: data.errors[0].msg })
-            }
-            console.log(data.msg) 
-            return res.redirect(`/profile-info?id=${id}#points-wallet`)
-        }
+    const data = await response.json();
 
-        next()
-
-    } catch (error) {
-        return res.json({
-            success: false,
-            msg: error.message
-        })
+    if (!data?.success) {
+      if (data?.errors) {
+        return res.render("transaction-details", { error: data.errors[0].msg });
+      }
+      console.log(data.msg);
+      return res.redirect(`/profile-info?id=${id}#points-wallet`);
     }
-}
 
+    next();
+  } catch (error) {
+    return res.json({
+      success: false,
+      msg: error.message,
+    });
+  }
+};
 
 module.exports = {
-    registerUser,
-    createToken,
-    logout,
-    updateMembershipInfo,
-    updateTransactionInfo
-}
+  registerUser,
+  createToken,
+  logout,
+  updateMembershipInfo,
+  updateTransactionInfo,
+};

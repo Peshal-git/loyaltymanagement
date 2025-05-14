@@ -26,12 +26,12 @@ const API_BASE_URL =
 
 const adminDashboard = async (req, res) => {
   try {
+    const admin = req?.user?.user || req.user;
+    const superadmin = admin.isSuperAdmin;
+
     const query = req.query.search || "";
     const section = req.query.section;
     const page = Number(req.query.page) || 1;
-
-    const admin = req?.user?.user || req.user;
-    const superadmin = admin.isSuperAdmin;
 
     let usersToShow, totalPages, prevPage, nextPage, currentPage, pages;
     let activePage = "members";

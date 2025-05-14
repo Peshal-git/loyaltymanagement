@@ -75,18 +75,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateRewards(categorySelect.value);
 
-  document.querySelectorAll('.spendingType').forEach((spendingType, index) => {
-    const amount = document.querySelectorAll('.amount')[index];
+  document.querySelectorAll(".spendingType").forEach((spendingType, index) => {
+    const amount = document.querySelectorAll(".amount")[index];
     if (spendingType && amount) {
-        spendingType.addEventListener('change', function () {
-            if (spendingType.value === 'Annual Membership Fee') {
-                amount.value = 1000;
-                amount.readOnly = true;
-            } else {
-                amount.value = '';
-                amount.readOnly = false;
-            }
-        });
+      spendingType.addEventListener("change", function () {
+        if (spendingType.value === "Annual Membership Fee") {
+          amount.value = 1000;
+          amount.readOnly = true;
+        } else {
+          amount.value = "";
+          amount.readOnly = false;
+        }
+      });
     }
   });
 });

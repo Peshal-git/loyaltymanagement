@@ -245,30 +245,51 @@
     </div>
 
   </body>
-  <script src="https://cdn.jsdelivr.net/npm/dom-to-image"></script>
+<script src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
 
-  <script type="text/javascript">
+<script type="text/javascript">
   document.getElementById('download-card').addEventListener('click', function () {
+    const element = document.getElementById('capture');
+    const downloadLink = document.getElementById('download-card');
+    downloadLink.style.display = 'none';
 
-      const element = document.getElementById('capture');
-      const downloadLink = document.getElementById("download-card")
-      downloadLink.style.display='none';
-      domtoimage.toPng(element)
-        .then((dataUrl) => {
- downloadLink.style.display = '';
-          const link = document.createElement('a');
-          link.download = 'screenshot.png';
-          link.href = dataUrl;
-          link.click();
-        })
-        .catch((error) => {
-           downloadLink.style.display = '';
-          console.error('Error capturing the div:', error);
-        });
-            
+    domtoimage
+      .toPng(element)
+      .then((dataUrl) => {
+        downloadLink.style.display = '';
+        // Option 1: Trigger download (existing behavior)
+        const link = document.createElement('a');
+        link.download = 'my-image.png';
+        link.href = dataUrl;
+        link.click();
 
-  })
+        // Option 2: Display image for manual saving
+        const img = document.createElement('img');
+        img.src = dataUrl;
+        img.style.maxWidth = '100%';
+        const modal = document.createElement('div');
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100%';
+        modal.style.height = '100%';
+        modal.style.background = 'rgba(0,0,0,0.8)';
+        modal.style.display = 'flex';
+        modal.style.alignItems = 'center';
+        modal.style.justifyContent = 'center';
+        modal.style.zIndex = '1000';
+        modal.appendChild(img);
+        modal.addEventListener('click', () => modal.remove());
+        document.body.appendChild(modal);
 
-  </script>
+        // Optional: Alert user to save manually
+        alert('Long-press the image and select "Save to Gallery" or download it from your Files.');
+      })
+      .catch((error) => {
+        downloadLink.style.display = '';
+        console.error('Error capturing the div:', error);
+      });
+  });
+</script>
   
 </html>

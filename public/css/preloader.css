@@ -10,7 +10,7 @@
   overflow: hidden;
   z-index: 9999;
 }
-    
+
 .preloader-img {
   width: 100px;
   height: auto;
@@ -19,29 +19,32 @@
   animation: fadeSwitch 1s infinite ease-in-out;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
-  
+
 .preloader-img.alternate {
   opacity: 0;
   animation: fadeAlternate 1s infinite ease-in-out;
 }
-  
-  
+
 @keyframes fadeSwitch {
-  0%, 40% {
-      opacity: 1;
+  0%,
+  40% {
+    opacity: 1;
   }
-  50%, 100% {
-      opacity: 0; 
+  50%,
+  100% {
+    opacity: 0;
   }
 }
-  
+
 @keyframes fadeAlternate {
-  0%, 40% {
-      opacity: 0; 
+  0%,
+  40% {
+    opacity: 0;
   }
-  50%, 100% {
-      opacity: 1; 
+  50%,
+  100% {
+    opacity: 1;
   }
 }

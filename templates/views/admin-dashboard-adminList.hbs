@@ -15,16 +15,18 @@
     />
 </head>
 <body>
-  <div class="main-wrapper">
-    <div class="bg-overlay"></div>
-    <div class="container">
+     <div class="main-wrapper">
+         
+        <div class="bg-overlay"></div>
+         <div class="container">
     {{> sidebar hideItems=true active="home" }}
-    <div class="main-container">
-    <div class="left-container">    
-      <div class="content about-us-banner">
+ <div class="main-container">
+    <div class="left-container">
+          
+           <div class="content about-us-banner">
 
-      {{> banner}}
-      <div class="content-wrapper">
+               {{> banner}}
+               <div class="content-wrapper">
 {{#if superadmin}}
 <div class="menu">
   <div class="menu-bar">
@@ -52,11 +54,12 @@
   <div class="header">
         <div class="search-container">
             <form action="/dashboard" method="GET">
+                <input type="hidden" name="section" value="{{activePage}}">
                 <input type="text" class="search-bar" name="search" placeholder="Search...">
                 <input type="image" src="/images/search-icon.png" alt="Search Icon" class="search-icon">
             </form>
         </div>
-    <a href="/add-member" class="btn add-btn btn-filled">
+         <a href="/add-member" class="btn add-btn btn-filled">
     <img src="/images/add.svg" height="20" alt="Add Icon"> Add Member
     </a>
 
@@ -64,10 +67,11 @@
     <img src="/images/download.svg" alt="CSV Icon"> Export CSV
     </a>
 
+   
 {{#if superadmin}}
     <form action="/import-admins" method="POST" enctype="multipart/form-data">
       <label for="csvFile" class="btn csv-btn btn-outlined">
-      <img src="/images/import.svg" alt="CSV Icon"> Import Admins
+         <img src="/images/import.svg" alt="CSV Icon"> Import Admins
       </label>
       <input type="file" id="csvFile" name="csvFile" accept=".csv" style="display: none;" />
     </form>
@@ -105,6 +109,7 @@
 
             <div id="rewardMessage" data-message="{{rewardMessage}}"></div>
             <div id="rewardError" data-error="{{rewardError}}"></div>
+           
             <dialog data-modal="{{this.id}}">
                 {{> addTransactionDialog}}
             </dialog>

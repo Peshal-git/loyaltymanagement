@@ -1,54 +1,54 @@
 <div class="user-information-container">
-    {{#if user.id}}
-    <form id="transaction-form" action="/add-transaction?id={{user.id}}" method="post" class="reservation-form" autocomplete="off">
-    {{else}}
-    <form id="transaction-form" action="/add-transaction?id={{this.id}}" method="post" class="reservation-form" autocomplete="off">
-    {{/if}}
-    
-    <div class="half-grid">
-        <div class="user-information-header">
-        <h2 class="title">Add Transaction</h2>
-        <div class="lastbuttons">
-            <button data-open-modal="confirm-dialog-1" type="submit" class="update-button">Confirm</button>
-        </div>
-        </div>
+{{#if user.id}}
+<form id="transaction-form" action="/add-transaction?id={{user.id}}" method="post" class="reservation-form" autocomplete="off">
+{{else}}
+<form id="transaction-form" action="/add-transaction?id={{this.id}}" method="post" class="reservation-form" autocomplete="off">
+{{/if}}
+
+<div class="half-grid">
+    <div class="user-information-header">
+    <h2 class="title">Add Transaction</h2>
+    <div class="lastbuttons">
+        <button data-open-modal="confirm-dialog-1" type="submit" class="update-button">Confirm</button>
+    </div>
+    </div>
+</div>
+
+<div class="user-information-grid">
+    <div class="user-information-field">
+        <label for="spendingType">Spending Type</label>
+        <select name="spendingType" id="spendingType" required value="{{#if enteredFields.spendingType}}{{enteredFields.spendingType}}{{/if}}">
+            <option value="Life Café">Life Café</option>
+            <option value="Yoga Class">Yoga Class</option>
+            <option value="Vita Spa">Vita Spa</option>
+            <option value="Retreats and YTT Packages">Retreats and YTT Packages</option>
+            <option value="Annual Membership Fee">Annual Membership Fee</option>
+            <option value="Bonus 1">Bonus 1</option>
+            <option value="Bonus 2">Bonus 2</option>
+            <option value="Bonus 3">Bonus 3</option>
+            <option value="Bonus 4">Bonus 4</option>
+        </select>
     </div>
 
-    <div class="user-information-grid">
-        <div class="user-information-field">
-            <label for="spendingType">Spending Type</label>
-            <select name="spendingType" id="spendingType" required value="{{#if enteredFields.spendingType}}{{enteredFields.spendingType}}{{/if}}">
-                <option value="Life Café">Life Café</option>
-                <option value="Yoga Class">Yoga Class</option>
-                <option value="Vita Spa">Vita Spa</option>
-                <option value="Retreats and YTT Packages">Retreats and YTT Packages</option>
-                <option value="Annual Membership Fee">Annual Membership Fee</option>
-                <option value="Bonus 1">Bonus 1</option>
-                <option value="Bonus 2">Bonus 2</option>
-                <option value="Bonus 3">Bonus 3</option>
-                <option value="Bonus 4">Bonus 4</option>
-            </select>
-        </div>
-
-        <div class="user-information-field">
-            <label for="amount">Amount</label>
-            <div class="currency-input">
-                <span class="currency-symbol">THB | </span>
-                <input type="number" name="amount" id="amount" 
-                    class="form-input" 
-                    value="{{getValue transactionObj.amount enteredFields.amount}}" 
-                    placeholder="Enter amount" required>
-            </div>
+    <div class="user-information-field">
+        <label for="amount">Amount</label>
+        <div class="currency-input">
+            <span class="currency-symbol">THB | </span>
+            <input type="number" name="amount" id="amount" 
+                class="form-input" 
+                value="{{getValue transactionObj.amount enteredFields.amount}}" 
+                placeholder="Enter amount" required>
         </div>
     </div>
+</div>
 </form>
 </div>
 
 {{> flexibleModal 
-    dialogId="confirm-dialog-1"
-    message="Are you sure you want to proceed with this transaction?"
-    confirmButtonText="Confirm"
-    cancelButtonText="Cancel"
-    source="form"
-    formId="transaction-form"
+dialogId="confirm-dialog-1"
+message="Are you sure you want to proceed with this transaction?"
+confirmButtonText="Confirm"
+cancelButtonText="Cancel"
+source="form"
+formId="transaction-form"
 }}
