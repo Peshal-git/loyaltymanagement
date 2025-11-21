@@ -1,7 +1,7 @@
 const User = require("../models/userModel");
 const randomstring = require("randomstring");
 const PasswordReset = require("../models/passwordReset");
-const mailer = require("../helpers/mailer");
+const mailer = require("../helpers/sfmcMailer");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 
